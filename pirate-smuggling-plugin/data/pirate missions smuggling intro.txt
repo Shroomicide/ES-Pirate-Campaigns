@@ -1,0 +1,1094 @@
+#  *  Notes on Pirate language style  *
+#  
+#	1. 		When not explicitely using "he, him, her, etc." or situations in which the context implies only men or women, most "group" terms are used to inflect either gender.
+#		This follows what I interpret as a continuation of the modern trend toward encompassing both genders into previously "male" or "female" terms. 
+#		For example, "Lads" equates to a group of men, women, or men and women in the same way as "guys" or "dudes". It does not strictly imply males unless contextually specified. 
+#		My intent is to provide thematic variability and allow conversations to flow naturally where NPCs would normally use the player character's gender 
+#		(which the game does not know) without always using implied addresses or the handful of neutral addresses we currently have (you, <first>, Captain).
+#	
+#	2.		Yes, you can flirt a little when prompted as either gender. There is no gender assumption going on here.
+#
+
+
+# * * * * * * * * * *  "INTRO"  * * * * * * * * * *
+mission "Etarip Intro"
+	invisible
+	name "Etarip Contract"
+	landing
+	source
+		government Republic
+	
+	to offer
+		#random < 5
+		"year" == 3013
+		"month" > 10
+	
+	on offer
+		conversation
+			`As you wander the spaceport, you gaze upon the massive freighters, majestic warships, and luxurious transports docked next to your own insignificant vessel. A small streak of envy worms its way into your heart. But for all the beauty and glamour of these expensive ships, they are matched only by the pride you carry in your own humble spaceship... Oh, the adventures you will-`
+			#	If the player started with a freighter...
+			branch freighter
+				"ships: Light Freighter" == 1
+			#	Else, if the player started with an interceptor...
+			branch interceptor
+				"ships: Interceptor" == 1
+			#	Otherwise, the player started with a shuttle.
+			`	"Brand-new Shuttle, huh?"`
+				goto meetup1
+			label freighter
+			`	"Brand-new Star Barge, huh?"`
+				goto meetup1
+			label interceptor
+			`	"Brand-new Sparrow, huh?"`
+				goto meetup1
+			label meetup1
+			`	A pleasant female voice interrupts your daydreaming. "Oh, I'm so sorry, I didn't mean to interrupt. I did the same thing when I got my first ship." Beside you stands a remarkably beautiful woman in her mid-twenties; her long auburn hair falls in natural streaks and waves, framing a thin, pleasant face.`
+			choice
+				`	"That puny thing? Oh, that's not my ship. My ship is that one... Over there."`
+				`	"She's a real beauty, isn't she? The '<ship>'..."`
+					goto beauty
+				`	"Well... Yeah, she's not much..."`
+					goto notmuch
+			`	You point to a well-polished, impressively-painted Firebird. The woman laughs and skeptically asks, "Oh, really?" She reads off the name printed across the hull. "'The Wandering Rogue'. That's a really impressive ship you've got there, captain. But you better run - it looks like they're taking off without you."`
+			choice
+				`	"What?"`
+			`	The Firebird primes its thrusters, lifts off its pad, and launches away. You stand there, dumbfounded at your poor luck.`
+			`	"I guess they're coming back for you, right? You know, since you're the captain. Can't have a ship without a captain."`
+			choice
+				`	"That's right. They're just going on a... Pleasure cruise of sorts. While I take care of very important business here. Because I'm the captain."`
+					goto business
+				`	"It seems I've been caught. It was for a good cause, though!"`
+			`	She laughs. "A good cause? What, trying to impress me?"`
+			choice
+				`	"Yes..."`
+				`	"No..."`
+			`	She sighs, grinning and rolling her eyes. "That's really not necessary. It's impressive enough that you're out here, piloting your own ship and making your own way, even if it's not some big warship." She smiles at you. "Honestly."`
+				goto meetup2
+	
+			label business
+			`	She laughs. "Right, right. You know, it's impressive enough that you're out here, piloting your own ship and everything, even if it isn't some big warship." She smiles at you. "Honestly."`
+				goto meetup2
+		
+			label beauty
+			`	The woman nods. "'<ship>? That's a wonderful name. And hey, if she flies straight and shoots straight, she's a beauty in my book."`
+				goto meetup2
+	
+			label notmuch
+			`	The woman stares thoughtfully at your ship. "I don't know about that; I mean, she's yours. So even if she isn't as big as some other ships, she's the one you've got to pin your hopes on, right?"`
+				goto meetup2
+		
+			label meetup2
+			`	Her smile hangs for a moment, then turns to a sigh. "It's just a real shame, making new captains into paupers, just so the banks can make themselves rich off other people's hard work."`
+			choice
+				`	"I don't know about that. Banks are often made out to be the enemy, but historically speaking, banks have allowed private business to flourish by providing security, allowing for collective funding, and giving the average person a safety net without relying on the government or communal goodwill. Even if they do take certain excesses and breed corruption when not kept in check, they're a necessary institution for free trade in modern society."`
+				`	"BURN THE BANKS!"`
+					goto burn
+				`	"Sorry, I don't really have time for this."`
+					goto endno
+			`	The woman appears genuinely surprised. "You might be right. But don't we have one of those excesses right here? How long did you have to dream about this moment before it became a reality? How hard did you have to work? And now they're breaking your back for more - and interest! It's disgusting. Isn't there a middle ground?"`
+				goto meetup3
+		
+			label burn
+			`	The woman laughs, then in a raucous tone responds, "A bonfire of banknotes! And kindling of the bankers! All debts forgiven!"`
+			label meetup3
+			`	You feel a small pang of nausea at the mention of your own outstanding debt. The woman offers a look of pity and understanding. "I'm sorry. No matter how you look at it, it's just not fair."`
+			`	The woman looks around for a moment, then exclaims, "Oh! But I had a reason for all this, and believe it or not, it's related! Now that I've taken up so much of your time, let me introduce myself - my name is Alexandra Merrin. May I ask your name?"`
+			choice
+				`	"I'm <first> <last>."`
+				`	"My name is <first> <last>, at your service, my dear."`
+					goto service
+			`	"It's a pleasure to meet you, <first>."`
+				goto meetup4
+			label service
+			`	Alexandra rolls her eyes. "Such ettiquette! It's nice to meet you, <first>."`
+	
+			label meetup4
+			`	"I'm a scout for a special courier firm. Basically, we look for new captains who bought their ships in debt, and are struggling to make due. We front enough money to forgive their debt in return for a few deliveries, passenger runs, you get the gist. Sort of like a network of amateur couriers spread across the Republic."`
+			choice
+				`	"That sounds a lot like starport job postings. What's the difference?"`
+			`	Alexandra smiles knowingly. "The difference is, we have a reliable courier, so we can cut expenses, and you get paid up front, so your debt goes away - no loan interest spoiling every delivery you make. I mean, if you took out a 500,000 credit loan to buy your ship, that's over 295,000 credits in interest by the end of the year. And all that assuming the bank gave you a 'fair' 0.3% daily interest rate."`
+			choice
+				`	"Pretty and good at math? I came to the right starport!"`
+					goto pretty
+				`	"Actually, it was 0.4%..."`
+					goto actually
+				`	"And why are you so interested? What's the catch?"`
+					goto why
+	
+			label pretty
+			`	Alexandra shakes her head, smiling. "Let's get back to the important part."`
+				goto meetup5
+			label actually
+			`	Alexandra sighs. "Which is exactly why I'm here."`
+				goto meetup5
+			label why
+			`	"No catch; like you said, it's a lot like job postings, except you don't have to wait for a perfect job to come around, and we don't have to wait for the perfect pilot." Alexandra smiles.`
+			label meetup5
+			`	"Here's the deal: Etarip Enterprises, my employer, will pay you 500,000 credits right now to pay off your debts. In exchange, we'll contact you when we need you to make a delivery or transport passengers."`
+			choice
+				`	"Sounds a lot like a contract."`
+				`	"How many deliveries will I have to make?"`
+			`	Alexandra pulls up some sort of document on her pad and shows it to you. "Don't worry - you're only on the hook for 5 deliveries, all to Republic space."`
+			label questions
+			choice
+				`	"Anything for you, angel."`
+					goto yes
+				`	"Sounds like deal to me! Let's make it happen."`
+					goto yes
+				`	"What happens if I only do a couple?"`
+					goto hook
+				`	"What would I be hauling?"`
+				`	"Sorry, I'm not interested. I'll make my own way."`
+					goto no
+			`	"TBD - simple goods and maybe passengers. Depends on what's needed at the time. Nothing too big, though. What do you say?"`
+				goto questions
+			label hook
+			`	Alexandra looks saddened. "Well, we'll keep asking you, but if you aren't there when you're needed too often, we'll have to report you to the Republic for breaking contract and collect our 500,000 again. It should go without saying, but abandoning deliveries and missing deadlines is a big no-no. But you don't look like the type of person who would do that! So what do you say?"`
+				goto questions
+	
+			label yes
+			`	Alexandra smiles. "Great! I'll be in touch, <first>. In the meantime, enjoy your new-found freedom!"`
+			`	When you make it back to your ship, you wonder if what Alexandra said is too good to be true; but sure enough, 500,000 credits have been transferred to your account... More money than you thought you'd see in a lifetime, and more than enough to pay off your debt.`
+				accept
+		
+			label no
+			`	Alexandra nods her head sadly. "Are you sure, <first>? I've heard horror stories... First-time pilots who suffer a few setbacks, being chased down by loan officers... I couldn't bear the thought."`
+			choice
+				`	"On second thought, being debt-free sounds awesome. I'll do it."`
+					goto yes
+				`	"Sorry, it's just not for me. I'll do it the old-fashioned way."`
+			label endno
+			`	Alexandra sighs, then smiles. "Alright! Well, thank you for your time. Perhaps we'll bump into each other again!"`
+				decline
+	
+	on accept
+		set "etarip agreement"
+		event "Etarip Delivery 1" 6
+		log "People" "Alexandra Merrin" `Alexandra Merrin is a representative of a courier firm named 'Etarip Enterprises.'`
+		log `Alexandra Merrin of Etarip Enterprises has wired me enough money to pay my debts in exchange for some on-demand work in Republic space.`
+		payment 500000
+		
+#conversation "Pirate Intro: Offer"
+	
+#* * *  (Intro END)  * * *
+
+#* * * * * (Mission 1)  * * * * *
+event "Etarip Delivery 1"
+
+mission "Etarip Delivery [1]"
+	name "Delivery to <planet>"
+	description "Deliver <cargo> to <destination> for Etarip Enterprises by <date>."
+	deadline 2
+	landing
+	cargo "Care Packages" 7
+	
+	to offer
+		or
+			and
+				has "etarip agreement"
+				has "event: Etarip Delivery 1"
+				not "deferred etarip delivery 1"
+				random < 40
+			and
+				has "event: Defer Etarip Delivery 1"
+				random < 40
+	
+	source
+		government Republic
+		not attributes "dirt belt"
+		not attributes "mining"
+	destination
+		government Republic
+		attributes "dirt belt"
+		attributes "mining"
+		
+	on offer
+		conversation
+			branch deferred
+				"deferred etarip delivery 1" == 1
+			`Shortly after landing, you receive an audio transmission from Alexandra. "Hello, <first>! I hope you're well-rested! Are you ready for your first cargo run?"`
+			choice
+				`	"Hey, Alexandra - sure, what do you need?"`
+					goto sure
+				`	"Ugh. Can it wait? I'm busy enjoying my freedom!"`
+			`	You hear Alexandra sigh over the comm line. "You're hilarious. There'll be plenty of time for that, don't you worry."`
+			label sure
+			`	"Another courier dropped a shipment there on <origin>, and it needs to be taken to <destination>. Etarip promised delivery by <day>. Got it?"`
+			label questions
+			choice
+				`	"Sounds good. I'm on the way!"`
+					goto yes
+				`	"What am I hauling?"`
+				`	"Will I get paid for this?"`
+					goto paid
+				`	"I'm too busy. Get someone else for this one."`
+					goto no
+			`	"Care packages for the miners. Things get pretty grim on <planet>, so Etarip is sponsoring a "Merriment for Miners" initiative. Big humanitarian publicity."`
+				goto questions
+			label paid
+			`	"No, silly. We already paid you. But once you've finished your 5 promised deliveries, I'm sure there'll be more in it for you."` 
+				goto questions
+			label yes
+			`	"Great! Should be a pretty simple one. I'll forward a message on to <planet> so they know to expect you. Have a nice trip!" Alexandra ends the transmission.`
+			`	You head to the cargo area to look for your consignment; you find a stray dockworker and give him the shipment code. He scratches his balding head uncertainly for a moment before remembering where it was stored. He returns with the cargo after a short delay.`
+			`	"I've got the manifest right here, captain. <tons>. Sound good?"`
+			choice
+				`	"That's the way I heard it. Load it up."`
+			`	The man sets about loading several large crates into your ship, each decorated with cheesy cartoon characters and pithy sayings. One reads, "Minor Miners Are No Minor Problem!"`
+				accept
+			
+			label no
+			`	At first, you think the transmission cut out, but Alexandra breaks the silence with a sigh. "Your first cargo run? That's not going to look good, <first>. This whole system only works because we have couriers we can rely on."`
+			choice
+				`	"Fair enough - I'll do it."`
+					goto yes
+				`	"I know, I know, but I just can't do it right now."`
+					goto strikes
+				
+			label deferred
+			`Almost immediately after powering down your ship, you receive another transmission from Alexandra.`
+			`	"Alright, <first> - you've had a nice break, and we're ready for you to do some deliveries! Same deal as before; pick up the shipment waiting there on <origin>, and take it to <destination> by <day>. Okay?"`
+			label questions2
+			choice
+				`	"Understood. I'll be there in a flash!"`
+					goto yes
+				`	"What am I hauling, again?"`
+				`	"Sorry, but will I get paid for this?"`
+					goto paid2
+				`	"Err... Still enjoying that freedom. Catch me next time, okay?"`
+					goto no2
+			`	"Care packages for the miners. Things get pretty grim on <planet>, so Etarip is sponsoring a "Merriment for Miners" initiative. Big humanitarian publicity."`
+				goto questions2
+			label paid2
+			`	"Yes. The 500,000 we've already paid you. But when you're finished with your promised deliveries, I'm sure we can find more work for an eager beaver like you!"` 
+				goto questions2
+			
+			label no2
+			`	"My god, you are as unreliable as they come. What do we need to do? Give you shipments that are already on the planet they need to go to?"`
+			choice
+				`	"Sorry... You're right. I'm on it."`
+					goto yes
+				`	"That would be nice. Can you do that for me?"`
+				`	"I'm afraid this particular chicken is flying the coop. Maybe I'll do the next one."`
+					goto strikes
+			`	You hear a frustrated sigh, then a brief chuckle. "So, is that a no?"`
+			choice
+				`	"No, I'll do it."`
+					goto yes
+				`	"Yes. Easier deliveries, please!"`
+					goto strikes
+			
+			label strikes
+			branch secondstrike
+				"rejected etarip" == 1
+			branch thirdstrike
+				"rejected etarip" == 2
+			`	Alexandra begins to say something, then stops. "Well... I suppose everyone needs a day off, right? Don't let it happen again."`
+				defer
+			label secondstrike
+			`	Alexandra sighs heavily; you note an undercurrent of frustration in her voice. "You do realize you signed up for this, right? It's not a surprise. I'll contact you on the next one." Alexandra ends the transmission.`
+				defer
+			label thirdstrike
+			`	You hear nothing but silence for a moment. Then, in a flat tone, Alexandra says, "Seems like you're not cut out for this." The transmission ends.`
+				decline
+	
+	on defer
+		"rejected etarip" += 1
+		set "deferred etarip delivery 1"
+		event "Defer Etarip Delivery 1" 8
+	
+	on decline
+		"rejected etarip" = 3
+		
+	on fail
+		"rejected etarip" += 1
+		set "deferred etarip delivery 1"
+		event "Defer Etarip Delivery 1" 8
+		
+	on complete
+		event "Etarip Delivery 2" 8
+		conversation
+			`You dock your ship on <planet>'s dingy spaceport and step out, looking for a dockmaster to sign off on your delivery. Two dockworkers and a man in official uniform approach you. "Delivery from Etarip Enterprises, yeah?"`
+			choice
+				`	"That's right. Care packages for the miners."`
+			`The dockworkers begin unloading your ship while the uniformed man looks over your manifest. After a moment, he signs off on the delivery. "Good of you to do your part for the miners, Captain." A short time later, the two men finish unloading the crates.`
+
+event "Defer Etarip Delivery 1"
+#* * *  (Mission 1 END)  * * *
+
+#* * * * *  (Mission 2)  * * * * *
+event "Etarip Delivery 2"
+
+mission "Etarip Delivery [2]"
+	name "Delivery to <planet>"
+	description "Deliver <cargo> to <destination> for Etarip Enterprises."
+	landing
+	cargo "Decorations" 3
+	deadline 2
+	stopover
+		planet "Chiron"
+		distance 1 6
+	
+	to offer
+		or
+			and
+				has "Etarip Delivery [1]: done"
+				has "event: Etarip Delivery 2"
+				not "deferred etarip delivery 2"
+			and
+				has "event: Defer Etarip Delivery 2"
+	
+	source
+		government Republic
+	destination
+		government Republic
+		attributes "paradise"
+		attributes "rich"
+	
+	on offer
+		conversation
+			branch deferred
+				"deferred etarip delivery 2" == 1
+			`As you're about to leave the ship, your computer notifies you of an incoming audio transmission from Alexandra. "Hi there, <first>! I bet you're never going to guess why I called."`
+			choice
+				`	"Let me try anyway - another cargo run?"`
+					goto business
+				`	"You've finally succombed to my charms?"`
+			
+			`	Alexandra laughs, though you can almost hear her eyes roll. "That's right. Your wit has swept me right off my feet; I'm not sure how I resisted so long. Let's run away from it all and live on Martini!"`
+			choice
+				`	"Really?"`
+				`	[Chuckle.]`
+					goto business
+			`	You hear Alexandra sigh. "No, silly. Unless you have half a billion credits laying around, in which case, I don't think you would have signed up for courier work. Speaking of..."`
+			
+			label business
+			`	Alexandra clears her throat. "Some Paradise World big-wig on <planet> wants some rare decorations to fill out his fancy house. We've got the cargo sitting on Chiron, ready for you to pick up. Etarip promised delivery by <day>, so you'll have to hurry."`
+			label questions
+			choice
+				`	"Can do. Anything else I need to know?"`
+					goto yes
+				`	"Rare decorations?"`
+				`	"How many more of these runs do I have to do again?"` 
+					goto howmany
+				`	"No can do, sorry."`
+					goto no
+			`	"Don't ask me what crazy billionaires want in their homes. Probably the stuffed heads of some endangered species."`
+				goto questions
+			label howmany
+			`	"After this, only three more. Look on the bright side - it takes an average of twenty-one small courier runs to turn a profit from scratch. You only have to do five!"`
+				goto questions
+			label yes
+			`	"Not much; just head to Chiron, pick up the cargo, and bring it to <destination>. Someone from Etarip will meet you at the spaceport and take it off your hands once you get there. And, of course, I'll be in touch after that. Got it?"`
+			choice
+				`	"Sounds good. Bye!"`
+					accept
+			
+			label no
+			`	"Sorry, I think the transmission cut out - what was that?"`
+			choice
+				`	"Er... I said, I can do that in a hurry. Anything else I need to know?"`
+					goto yes
+				`	"I said I can't do it right now."`
+					goto strikes
+			
+			label deferred
+			`Immediately after touching down, you receive another transmission from Alexandra.`
+			`	"I hope you had a nice break, but we need you for another pickup on Chiron. Same deal as before - Rare decorations, Paradise World, delivery by <day>. Got it?"`
+			label questions2
+			choice
+				`	"Sure. Anything else I need to know?"`
+					goto yes
+				`	"Rare decorations?"`
+				`	"How many more of these runs do I have to do again?"` 
+					goto howmany2
+				`	"I hate to do this to you again, but I can't do this one either."`
+					goto no2
+			`	"Don't ask me what crazy billionaires want in their homes. Probably the stuffed heads of some endangered species."`
+				goto questions2
+			label howmany2
+			`	"After this, only three more. Look on the bright side - it takes an average of twenty-one small courier runs to turn a profit from scratch. You only have to do five!"`
+				goto questions2
+			label no2
+			`	"Excuse me?"`
+			choice
+				`	"On second thought, I hear Chiron is lovely this time of year. Anything else I need to know?"`
+					goto yes
+				`	"No can do, sorry."`
+					goto strikes
+			
+			label strikes
+			branch secondstrike
+				"rejected etarip" == 1
+			branch thirdstrike
+				"rejected etarip" == 2
+			`	Alexandra sighs. "Well... I suppose everyone needs a day off, right? Don't let it happen again."`
+				defer
+			label secondstrike
+			`	Alexandra sighs heavily; you note an undercurrent of frustration in her voice. "You do realize you signed up for this, right? It's not a surprise. I'll contact you on the next one." Alexandra ends the transmission.`
+				defer
+			label thirdstrike
+			`	You hear nothing but silence for a moment. Then, in a flat tone, Alexandra says, "Seems like you're not cut out for this." The transmission ends.`
+				decline
+	
+	on defer
+		"rejected etarip" += 1
+		set "deferred etarip delivery 2"
+		event "Defer Etarip Delivery 2" 8
+	
+	on decline
+		"rejected etarip" = 3
+		
+	on fail
+		"rejected etarip" += 1
+		set "deferred etarip delivery 2"
+		event "Defer Etarip Delivery 2" 8
+	
+	on stopover
+		conversation
+			`Almost immediately upon arriving, a pair of dockworkers appear outside your ship. "You're with Etarip, right?" One of them taps his foot on the ground anxiously.`
+			choice
+				`	"That's right. You've got cargo for me?"`
+			`	Without answering, the two dockworkers hurriedly load several small containers onto your ship. When finished, one of them transfers the manifest and says, "Sorry for the rush, Captain. It's been a busy day here. Have a safe trip!"`
+				
+	on complete
+		event "Stolen Art" 6 12
+		event "Etarip Delivery 3"
+		conversation
+			`You take in <planet>'s breathtaking beauty as you step off your ship. Shortly after arriving, a man in a black suit and sunglasses approaches you. He looks down at his padd, then up at you. "Captain <last>, right?"`
+			choice
+				`	"That's me. You're from Etarip?"`
+			`	The man smiles. "Guess I don't fit in with the dockworkers around here, huh? Thanks for making the trip out here in such a hurry. You know how these Paradise Worlds guys are - they want the world on a platter, and they want it now. I'll take that cargo off your hands."`
+			`	You open the cargo hold. The man gracefully loads the boxes onto a large hovercart and heads off in the direction of a fancy passenger shuttle.`
+
+event "Defer Etarip Delivery 2"
+
+event "Stolen Art"
+
+mission "Event: Stolen Art [Text]"
+	invisible
+	landing
+	
+	to offer
+		has "event: Stolen Art"
+	
+	on offer
+		fail
+	
+	on fail
+		dialog
+			`As you wander <planet>'s spaceport, a newscast grabs your attention. "...with an estimated worth of 14.5 million credits, authorities are feverishly searching for any leads on the art theft on Chiron..."`
+
+#* * *  (Mission 2 END)  * * *
+
+#* * * * *  (Mission 3)  * * * * *
+event "Etarip Delivery 3"
+
+mission "Etarip Delivery [3]"
+	name "Transport businessman to <planet>"
+	description "Deliver a businessman to <destination> for Etarip Enterprises."
+	landing
+	passengers 1
+	deadline
+	
+	stopover
+		government Republic
+		distance 1 2
+	
+	to offer
+		or
+			and
+				has "Etarip Delivery [2]: done"
+				has "event: Etarip Delivery 3"
+				not "deferred etarip delivery 3"
+			and
+				has "event: Defer Etarip Delivery 3"
+		
+	source
+		government Republic
+	destination
+		planet Deep
+	
+	on offer
+		conversation
+			branch deferred
+				"deferred etarip delivery 3" == 1
+			`Upon landing, you instinctively tune your ear to the comm line for a transmission from Alexandra. Sure enough, it comes. "Hey there, <first>! If it isn't my lucky day - you're right where we need you."`
+			choice
+				`	"Alright. What am I in for this time?"`
+					goto business
+				`	"If it means I get to work with you longer, babe, count me in!"`
+					goto business
+				`	"Really bad timing there, Alexandra. Maybe another time."`
+			`	Alexandra blows a raspberry. "Exactly what part of 'on-demand work' confused you?"`
+			choice
+				`	"Sorry, I wasn't thinking - what am I doing this time?"`
+					goto business
+				`	"I'm taking this one off."`
+					goto strikes
+					
+			`	You hear Alexandra snort. "More of this? Sheesh. It didn't work the first time."`
+				goto business
+			
+			label deferred
+			`You gather your things, ready to head out onto <origin> when a transmission from Alexandra comes in. "<first> - talk about right place, right time!"`
+			choice
+				`	"That's right. What can I do for you today?"`
+					goto business
+				`	"Right place, wrong time - I'm gonna have to put a rain check on this one."`
+					goto strikes
+			
+			label business
+			`	"For a change of pace, we've got a businessman looking for transport down south immediately. He's waiting for you on <stopovers>. Pick him up and head to <destination> - he wants to get there by <day>."`
+			label questions
+			choice
+				`	"I'm on it."`
+					goto yes
+				`	"Who is he?"`
+				`	"Why the rush?"`
+					goto rush
+				
+			`	"He's what you might call a 'financial prospector' - apparently, he caught wind of some untapped market down on <planet>."`
+				goto questions
+			label rush
+			`	Aleandra clears her throat. "Well, he's a paranoid type, and he contacted Etarip specifically for their speed and discretion. He's worried about someone else butting in on his venture."`
+				goto questions
+			label yes
+			`	You hear Alexandra crinkling something over the comm line. "Great! I'll be in contact. Have a fun trip!" She closes the channel.`
+				accept
+			
+			label strikes
+			branch secondstrike
+				"rejected etarip" == 1
+			branch thirdstrike
+				"rejected etarip" == 2
+			`	Alexandra sighs. "Well... I suppose everyone needs a day off, right? Don't let it happen again."`
+				defer
+			label secondstrike
+			`	Alexandra sighs heavily; you note an undercurrent of frustration in her voice. "You do realize you signed up for this, right? It's not a surprise. I'll contact you on the next one." Alexandra ends the transmission.`
+				defer
+			label thirdstrike
+			`	You hear nothing but silence for a moment. Then, in a flat tone, Alexandra says, "Seems like you're not cut out for this." The transmission ends.`
+				decline
+			
+	on defer
+		"rejected etarip" += 1
+		set "deferred etarip delivery 3"
+		event "Defer Etarip Delivery 3" 8 14
+	
+	on decline
+		"rejected etarip" = 3
+		
+	on fail
+		"rejected etarip" += 1
+		set "deferred etarip delivery 3"
+		event "Defer Etarip Delivery 3" 8 14
+	
+	on stopover
+		conversation
+			`As you step off your ship, you notice a small, fidgety man in a cheap suit wandering around the spaceport. He sees you and runs over, his flimsy suitcase swaying.`
+			`	"You're with Etarip, right?"`
+			choice
+				`	"That's correct - you're heading down south?"`
+			`	The man rubs his hands together and smiles. "Yeah, yeah! That's right. Big things are happening. So, can we go?"`
+			choice
+				`	"I might need to take care of a few things first, but I'll show you to your-"`
+			`	The man vigorously shakes your hand before you finish. "Great, great!" He walks past you and ducks into your ship.`
+				
+	on complete
+		event "Etarip Delivery 4" 4 12
+		conversation
+			`As you land on Deep, you take note of the eerily dark ocean surrounding the main island. You find the businessman lounging in his room in a brightly-colored floral shirt, all traces of anxiety gone.`
+			choice
+				`	"We're here - I'll show you out."`
+			`	The man stands, stretches, and shakes your hand gently. "You're a miracle worker, captain. Thanks for the help." You show him to the exit and wave him off.`
+		
+event "Defer Etarip Delivery 3"
+#* * *  (Mission 3 END)  * * *
+
+#* * * * *  (Mission 4)  * * * * *
+event "Etarip Delivery 4"
+
+mission "Etarip Delivery [4]"
+	name "Delivery to <planet>"
+	description "Deliver <cargo> to <destination> for Etarip Enterprises."
+	landing
+	cargo "Personal Defense Weapons" 10
+	deadline 2
+	infiltrating
+	stopover
+		government Republic
+		outfits "Laser Rifle"
+		distance 3 5
+	
+	to offer
+		or
+			and
+				has "Etarip Delivery [3]: done"
+				has "event: Etarip Delivery 4"
+				not "deferred etarip delivery 4"
+				random < 50
+			and
+				has "event: Defer Etarip Delivery 4"
+				random < 50
+	source
+		government Republic
+	destination
+		government Republic
+		attributes "near earth"
+		attributes "urban"
+	
+	on offer
+		conversation
+			branch deferred
+				"deferred etarip delivery 4" == 1
+			`"Good afternoon, <first>!" Alexandra's cheerful voice fills the cabin as you perform final landing checks.`
+			choice
+				`	"Hey, Alexandra. What have you got for me?"`
+					goto business
+				`	"That's funny - I didn't think angels used comm lines."`
+					goto funny
+				`	"I take it this isn't a pleasure call?"`
+			`	"Not quite, but I guess that all depends on your attitude!"`
+				goto business
+			label funny
+			`	You hear Alexandra sigh. "A little advice, <first>? You're trying way too hard. But this angel has more important things to work on, so let's get down to it."`
+			label business
+			`	"There's a private security firm on <destination> that needs a batch of personal defense weapons. Pick them up at the outfitter on <stopovers>, and make sure they get to <planet> by <day>."`
+			label questions
+			choice
+				`	"I'm on it."`
+					goto yes
+				`	"Personal defense weapons?"`
+				`	"Isn't transporting weapons illegal?"`
+					goto transport
+				`	"I don't think I can do this right now."`
+					goto no
+			`	You hear Alexandra knock something metallic over. "Crap. Yeah, laser rifles, stun guns, you name it. If it can keep criminals out or in, they need it. You might even take this opportunity to get your hands on a few. No telling when someone might want to add your ship to their collection."`
+				goto questions
+			label transport
+			`	Alexandra pauses. "You know most starship weapons have enough firepower to level small buildings, right? And they frequently land in densely-populated cities? And you don't need more than a pilot's license to own and operate a torpedo launcher, for example? Of course a few pea-shooters aren't illegal. You just need the proper documentation."`
+				goto questions
+			
+			label deferred
+			`As you land, you receive a transmission from Alexandra. "I hope you've had some relaxing time off. We need you for another run."`
+			choice
+				`	"What's the gig?"`
+			`	"Pretty similar to last time. We got another request from a security firm on <destination>. We found a good deal on personal defense weapons for you at an armory on <stopovers>, so pick them up and get to <planet> by <day>."`
+			label questions2
+			choice
+				`	"Consider it done!"`
+					goto yes
+				`	"Personal defense weapons?"`
+				`	"Isn't transporting weapons illegal?"`
+					goto transport2
+				`	"I don't think I can do this right now."`
+					goto no
+			`	Alexandra's comm crackles for a moment. "Laser rifles, stun guns, you name it. If it can keep criminals out or in, they need it. Speaking of, you might take this opportunity to get your hands on a few. No telling when someone might want to add your ship to their collection."`
+				goto questions2
+			label transport2
+			`	Alexandra pauses. "So... You know most starship weapons have enough firepower to level small buildings, right? They frequently land in densely-populated cities. You really don't even need more than a pilot's license to own and operate a torpedo launcher, for example. Of course a few pea-shooters aren't illegal. Just make sure you have the right documentation, and you're golden."`
+				goto questions2
+			
+			label yes
+			`	"Alright. I'll forward you the manifest and authorization papers, and let them know you're on the way. You'll be dropping the weapons off at their facility rather than the starport, so use the attached coordinates once you're on <planet>."`
+				accept
+			
+			label no
+			branch secondstrike
+				"rejected etarip" == 1
+			branch thirdstrike
+				"rejected etarip" == 2
+			`	Alexandra sighs. "Well... I suppose everyone needs a day off, right? Don't let it happen again."`
+				defer
+			label secondstrike
+			`	Alexandra sighs heavily; you note an undercurrent of frustration in her voice. "You do realize you signed up for this, right? It's not a surprise. I'll contact you on the next one." Alexandra ends the transmission.`
+				defer
+			label thirdstrike
+			`	You hear nothing but silence for a moment. Then, in a flat tone, Alexandra says, "Seems like you're not cut out for this." The transmission ends.`
+				decline
+	
+	on defer
+		"rejected etarip" += 1
+		set "deferred etarip delivery 4"
+		event "Defer Etarip Delivery 4" 10 14
+	
+	on decline
+		"rejected etarip" = 3
+	
+	on fail
+		"rejected etarip" += 1
+		set "deferred etarip delivery 4"
+		event "Defer Etarip Delivery 4" 10 14
+	
+	on stopover
+		conversation
+			`You head to the local personal weapons outfitter, carefully memorizing the important bits from the documents Alexandra forwarded you. A stocky woman - the apparent operator of the establishment - glances at you lazily from behind the counter near the entrance.`
+			choice
+				`	"Excuse me; I'm here to pick up a shipment of small arms for Etarip Enterprises."`
+			`	The woman sighs and puts down her padd. You notice the still-frame of a popular show playing on it. "Alright, let me check here..." She takes your documents and spends an excrutiating amount of time looking between them and the workstation in front of her. It's hard to tell if she's actually examining the documents.`
+			`	After what seems like an eternity, she says, "Yep. Looks good to me." She gestures to a pair of workers chatting nearby. "They'll get the stuff and meet you around front. Have a nice day." You stretch and head outside. The workers follow you to your ship and load the crates.`
+				
+	on complete
+		event "Etarip Delivery 5" 6 10
+		conversation
+			`Alexandra's coordinates lead you to a remote landing strip just outside of <planet>'s largest metropolitan area. You land a short distance away from a small transport shuttle and greet the well-dressed group wating in the field. Most appear to be guards or professional workers. One larger, balding man greets you cordially, smiling and clapping you on the shoulder.`
+			`	"Greetings, greetings! I hear you've got some merchandise for us?"`
+			choice
+				`	"Yes, sir. Laser rifles, stun guns... Boom-boom sticks through and through."`
+				`	"Yeah, everything I was told to pick up... I'm sorry, but why are we meeting out here instead of the spaceport?"`
+					goto why
+			`	The man chuckles. "I like it - professional, but casual. Thanks for making your way out here." Two of his men break off and begin transferring cargo out of your ship.`
+				goto meetup1
+					
+			label why
+			`	The man gestures to his men to begin transferring cargo, then crosses his arms and looks off toward the outskirts of the city. "Friction, basically. We used to bring everything in through the spaceport, but we had a few misfires, and the authorities can't keep up with the demand in these urban airports. It takes *ages* to process everything. Plus, you never know what kind of city thugs might be hanging around, waiting to cause trouble."`
+			label meetup1
+			`	A female guard approaches a few moments later. "We've got everything, sir. It looks clean." The man smiles and shakes your hand. "Pleasure doing business, captain - we won't keep you any longer." The small group boards the transport as you head back to your ship.`
+			
+event "Defer Etarip Delivery 4"
+#* * *  (Mission 4 END)  * * *
+
+#* * * * *  (Mission 5)  * * * * *
+event "Etarip Delivery 5"
+
+mission "Etarip Delivery [5]"
+	name "Delivery to <planet>"
+	description "Deliver <cargo> to <destination> for Etarip Enterprises."
+	landing
+	cargo "Baking Supplies" 12
+	deadline 2
+	
+	stopover
+		attributes "farming"
+		distance 1 4
+	
+	to offer
+		has "Etarip Delivery [4]: done"
+		has "event: Etarip Delivery 5"
+		random < 30
+		
+	source
+		government Republic
+	destination
+		attributes "paradise"
+		attributes "rich"
+	
+	on offer
+		conversation
+			`You've developed a bit of a phobia for Alexendra calling you unexpectedly just as you arrive on planets. Sure enough, a transmission arrives, and her crisp voice comes over the comm line. "Hey there, <first>! You ready for your last cargo run?"`
+			choice
+				`	"What would I be in for?"`
+					goto business
+				`	"If it let me hear more of your voice, I'd eat Zeppadrogon Caviar."`
+			`	Alexandra laughs. "Disgusting, but charming! It's funny you mention that, though..."`
+				goto business
+			
+			label business
+			`	"We've got another pending delivery to the Paradise Worlds. Someone's estate is having a run on some kind of ultra-natural-vego baking goods, and the next scheduled shipment isn't for some time. Head to <stopovers>, pick up the supplies, and drop them off at <destination>."`
+			choice
+				`	"Alright. What's the deadline?"`
+					goto deadline
+				`	"I'm sorry, but I don't think I can."`
+			`	Alexandra pauses momentarily. "We really need you on this one, <first>. There are no other pilots in the area."`
+			choice
+				`	"Okay, okay. I'll do it. What's the deadline?"`
+					goto deadline
+				`	"Nope. I'm taking this one off."`
+			`	You hear nothing but silence for a moment. Then, in a flat tone, Alexandra says, "Seems like you're not cut out for this." The transmission ends.`
+				decline
+			
+			label deadline
+			`	"<day>. Apparently, the residents of this estate are a having a fit and threatened to personally hunt down any courier who doesn't make it in time. Better get on it!" Alexandra ends the transmission.`
+				accept
+		
+	on decline
+		"rejected etarip" = 3
+	
+	on fail
+		"rejected etarip" = 3
+	
+	on stopover
+		conversation
+			`You land on <stopovers>'s spaceport and oversee the cargo transfer. After exchanging pleasantries with you, the dockworkers begin loading several unmarked crates onto your ship.`
+			`	You notice a pair of Republic security officers watching you closely as you sign the manifest. When you prepare to leave, you see them talking quite energetically to one of the dockworkers who loaded your ship.`
+				
+	on complete
+		event "Etarip Intro Finale" 6
+		conversation
+			`Following an uneventful trip, you land on <planet>'s pristine spaceport. A few very professional dockworkers begin unloading your cargo. You take the opportunity to observe and relax a little.`
+			`	Everything happens at once - you hear a series of shouts and yells as Republic security officers, dressed in full tactical gear, swarm your ship. Several point weapons at you, while others begin breaking into the locked cargo inside and outside your hold.`
+			choice
+				`	[Put your hands up.] "Woah, woah, what's going on here?!?"`
+			`	The masked officers stand stock still, their weapons still trained on you. The ring of officers part as a massive, official-looking Navy man in dress uniform approaches you. He lights up a cigar, puffing smoke in your face. His deep, gruff voice fits him perfectly.`
+			`	"Thought you could get away with it, huh, kid? Playin' cops and robbers against the Navy? Not on my watch! Not when Lieutenant Ironside has your number!"`
+			choice
+				`	"What are you talking about?!?"`
+			`	"Pop 'em, boys!" Ironside points dramatically at your cargo. The officers simultaneously bust the lids off the crates, sending them clattering onto the ground. You watch, aghast, as white, chalky powder spills from each and every one. Ironside smiles, chuckling through his massive cigar as smoke bellows out.`
+			`	"Well, kid, the jig is up. You had your chance to play by our rules - the rules of freedom and justice - but you just had to go laugh in the face of liberty. You won't be laughing when-" One of the security officers pulls off his helmet and interrupts Ironside. "Sir..."`
+			`	Ironside pulls his cigar out of his mouth and shouts, "Don't interrupt me! Now, kid, you're going to spend the rest of your rotten life sitting in a 2x4 cell with nothing to keep you company but your own-" The security officer interrupts him again. "But, sir..."`
+			`	"WHAT?" The officer awkwardly fidgets, then says, "It's, uh... It's baking soda, sir." Ironside gasps and coughs, choking on his cigar smoke. "Baking soda!?!" The security officer clears his throat. "And, uh... Flour, sir."` 
+			choice
+				`	[Tug at your shirt suavely.] "Well, Lieutenant, I believe our business is done here. Now, if you would kindly ask your people to repair the damage they've done to my cargo..."`
+				`	"So... I'm not in trouble?"`
+					goto trouble
+			`	Ironside growls, points at you emphatically, then stops short.`
+			label trouble
+			`	"It was a surefire tip..." He sighs, glances around, and puts his hand on your shoulder apologetically. "I'm sorry, kid. To tell you the truth, I don't even smoke cigars. I just thought it would look good." Ironside sighs and stamps out the end of his cigarette on a cargo crate. "Listen, if you wouldn't mind keeping quiet about this, uh, accident here..." He puts the dormant cigar in your shirt pocket. "...I think that would be best. Wrap it up, boys."`
+			`	The Republic officers glance at each other awkardly, then set about replacing the lids and re-securing the cargo. A short time later, the Republic personnel shuffle off.`
+			`	You wait for someone to pick up the baking supplies, but after awhile, you head off and allow the dockmaster to send the crates to unclaimed storage. Perhaps Alexandra will shed some light on this... Nevertheless, you are quite relieved to have finished your contractual obligation.`
+
+#* * *  (Mission 5 END)  * * *
+
+event "Etarip Intro Finale"
+
+mission "Etarip Intro Finale"
+	invisible
+	landing
+	
+	to offer
+		has "event: Etarip Intro Finale"
+	
+	destination
+		planet Earth
+	
+	on offer
+		conversation
+			`Almost as soon as you land on <planet>, Alexandra opens a comm line. "I forgot to congratulate you on finishing your deliveries! You must be so excited." Somehow, her voice seems a touch more cynical than you're used to.`
+			choice
+				`	"It was a heck of a deal, if you ask me. Too good..."`
+					goto deal
+				`	"I'm just glad it's over. I don't want to be involved in this kind of stuff anymore."`
+					goto glad
+				`	"What the hell did you get me into? My ship was raided by Navy officers on the last run!"`
+			
+			`	You hear an outburst of laughter. "Oh, come on, <first>. It's not like they found anything. And you lived to tell the tale, right?"`
+			choice
+				`	"Yes, but that's not the point - why did they come after me in the first place?"`
+				`	"You used me as a decoy for a drug run, didn't you?"`
+					goto decoy
+			`	Alexandra giggles. "You must look suspicious! I guess it's the face."`
+			choice
+				`	"Har-har. You used me as a decoy for some kind of drug run, didn't you?"`
+			label decoy
+			`	There is a short pause before Alexandra continues, her tone only slightly more serious. "Quite frankly, yes. But don't tell me you bought the line about 'ultra-vego baking goods.' I think you're smarter than that."`
+				goto meetup1
+				
+			label deal
+			`	You hear Alexandra clear her throat. "Of course! Bad deals come from banks. Good deals are for hard-working couriers like you!"`
+			choice
+				`	"Hard-working couriers who are asked to do illegal things?"`
+			`	Alexandra puts on a tone of faux surprise. "What? Illegal things? No!" She starts laughing. "Then again, there is substantially more profit in slightly illegal affairs."`
+				goto meetup1
+				
+			label glad
+			`	Alexandra sounds shocked. "What kind of stuff?"`
+			choice
+				`	"Oh, you know. The usual - transporting definitely stolen art, acting as a decoy for a drug run..."`
+			`	Alexandra's tone turns distinctly to pretend surprise. "Oh, my! What villainy! Horrors upon horrors! Who would ask you to do such things?"`
+				goto meetup1
+				
+			label meetup1
+			choice
+				`	"I'm nobody's fool - I knew I was involved in something shady from the moment you complimented my ship."`
+					goto knew
+				`	"Hold on a second... It's all becoming clear... 'Etarip' backwards spells 'Pirate.' Wait - have I been smuggling this whole time?!?"`
+			`	You hear the sound of clapping. "Yay! You got it! I'll send you some cookies as a reward for all that brainwork you just did. We're not really pirates, though; it just makes for a clever business card."`
+				goto meetup2
+			label knew
+			`	You hear something crinkle on the other end of the line. "Of course you did. My charm and 500,000 credits had absolutely no effect on you."`
+			
+			label meetup2
+			choice
+				`	"Honestly, if the rest of Etarip's work pays this well, sign me up!"`
+				`	"What about all those runs I did? Were they all illegal?"`
+					goto illegal
+				`	"What if I got suspicious and opened some of that cargo? What if I reported you to the Republic? "`
+					goto reported
+				`	"Like I said, I'm just glad it's over."`
+					goto over
+			`	Alexandra laughs politely. "I'm glad to hear it! In retrospect, it makes you feel cool, right? Running around with a big secret nobody knows... Putting one over the lumbering Navy... And I did promise you more work, so if you're interested, head to Earth."`
+				goto meetup3
+				
+			label illegal
+			`	You can almost hear Alexandra smile. "Let's just say, it's a good thing you handed them off when you did. There was nothing- well, there were only a few things that were strictly illegal to transport... Means of acquisition is a separate matter. The important part is that you were never caught, and you made it out on top."`
+			choice
+				`	"You're right - I am dang sneaky. I guess I'm pretty good at this stuff, eh?"`
+					goto sneaky
+				`	"I don't care if I wasn't caught; I could have been! I don't want to be involved in this."`
+			`	She sighs. "Well, good news! You've completed your contract, and as far as Etarip is concerned, you're off the radar." After a brief pause, Alexandra continues. "But you still did a good job, pretending to be completely ignorant and all. If you change your mind, head to Earth.`
+				goto meetup3
+			label sneaky
+			`	Alexandra chuckles. "Sneaky, and just naive enough. A great combination for a... an honest courier. So if you want to put those skills to good use, you should head to Earth."`
+				goto meetup3
+				
+			label reported
+			`	Alexandra sighs. "It's happened. It doesn't end well. Let's just say, the Navy isn't too understanding about *how* someone ended up with... illicit materials. Possession is nine-tenths of the law, after all. Best-case, you end up sucking recycled air in some prison station alongside a drop-off contact."`
+			choice
+				`	"I was just curious. That's about how I would imagine it playing out."`
+					goto curious
+				`	"Prison would be worth it just to break one small link in this cruel charade!"`
+			`	Alexandra laughs. "Slow down there, tiger. You think we're just here for the profit? Yeah, there's a lot of illegal stuff that's also wrong, but between illegal and immoral, there's a pretty gray line. Wrongfully-convicted criminals, untaxed goods for Dirt Belt workers, and whatever or whoever the Republic decides is evil tomorrow. You're sounding pretty high and noble up there. Let's wait until your family is dying of a Dirt Belt disease and the only medicine left to try has been outlawed."`
+			`	She pauses a moment. "And a lot of drugs, because who doesn't love 'em? And if you don't want to get involved, no one is forcing you. But if you have a change of heart for any reason, why don't you head on over to Earth?"`
+				goto meetup3
+			label curious
+			`	You hear a small metallic tap on the other end. "Well, now you know! And if you want to do more than imagine being in prison, why don't you head on over to Earth? We have plenty of work for our best couriers. Just kidding about the prison part - if you're smart, you'll never see the inside of a cell. But head to Earth if you're interested in doing a little more."`
+				goto meetup3
+				
+			label over
+			`	"I mean, you did a few runs, you got out of debt... It's not like you just escaped from a POW camp. A lot of new pilots would be eager to swap places with you. If you change your mind, head to Earth."`
+				goto meetup3
+			
+			label meetup3
+			`	The signal fades momentarily. "...and there'll be profit for you this time. I think you'll be excited to see all the advancement opportunities Etarip has to offer!" She ends the transmission.`
+			choice
+				`	[Log Earth as a destination.]`
+					accept
+				`	[Forget about it.]`
+					decline
+
+	
+# If the player aborts or declines too many missions.
+mission "Etarip Bounty Hunters [Offer]"
+	invisible
+	landing
+	deadline 63
+	
+	to offer
+		"rejected etarip" >= 3
+		
+	source 
+		government Republic
+	
+	on offer
+		conversation
+			`As you walk away from your ship, you notice a wiry, middle-aged man with unkempt graying hair and odd clothing approaching you.`
+			choice
+				`	[Wait for him.]`
+					goto wait
+				`	[Turn around and head back to your ship.]`
+			`	Feeling that something isn't right, you turn around and nearly run into a man you can only describe as a well-dressed brute - just over seven feet tall, but without the lankiness associated with low-gravity humans. His dull, yet determined gaze is enough to hold you in place - and you get the feeling that he would use more conventional means if prodded.`
+			choice
+				`	[Turn and wait for the other man.]`
+					goto wait
+				`	"Out of the way, bub. I've got places to be." [Force your way through.]`
+			`	You try to push past the behemoth, but he simply grabs you by the shoulder and pushes down a little, almost completely immobilizing you with a fraction of his strength.`
+			
+			label wait
+			`	The other man approaches, hands in his pockets, a weasel-like smile plastered on his thin face. "Stay and chat a bit, will you?"`
+			choice
+				`	"What do you want?"`
+				`	"Who are you?"`
+					goto who
+			`	"Oh, I don't really want much of anything. But there are other people - people you broke a contract with - who want something from you." His disingenuous half-smile forms a spiderweb of tiny wrinkles on his face.`
+				goto meetup1
+			label who
+			`	"Me?" He sticks his face out and points to himself incredulously. "I'm just your average, run-of-the-mill errand boy. But who you are is a bit more interesting. See, you broke a contract, and there are certain costs involved in broken contracts."`
+			label meetup1
+			`	You feel a small pit form in your stomach. He seems to hint at your liberties taken with Etarip Enterprises.`
+			`	"Oh, don't worry, though. What was once lost can always be repayed. Say, 500,000 credits?" The pit in your stomach gets a bit bigger.`
+			branch pay
+				"credits" >= 500000
+			choice
+				`	"What? I don't have that kind of money!"`
+					goto meetup2
+			
+			label pay
+			choice
+				`	"I understand. Here, I have enough."`
+					goto enough
+				`	"You can take it over my dead body."`
+			`	You land a wad of spit right on his vest. For just a moment, you feel like the most badass pilot who's ever stared a bounty hunter down. Then the behemoth behind you puts his massive hands on your shoulders. You hear his voice for the first time; low and calm. "Well, boss?" That macho feeling passes rapidly.`
+			`	The other man looks down at the trailing bit of spit on his vest, then back at you, his hands still in his pockets. "Nah, the kid's just acting cool. I don't blame him." He begins pacing back and forth.`
+			label meetup2
+			`	"Well, bottom line, you owe 500,000 credits. I've been told you have until <day> to pay it back, give or take a few days for e-commerce friction. So, if you don't have it, I suggest you find the nearest bank and beg them to give you a loan." He laughs. "I'm a pretty generous sort, aren't I? Offering helpful advice like that?"`
+			`	"The moment you have it, contact us, and we'll talk. Until then, toodles." He gives you a contact code and signals to the large man behind you, and the pair wander off. You overhear him ask the brute, "So, Spacebucks? They've got this new Mochatini I've just been dying to try."`
+				accept
+			
+			label enough
+			`	The man leans over, then back, smiling that odd half-smile of his. "That's great! That makes our job a lot easier. You better send it, or we're going to have a slightly less pleasant chat sometime in the future."`
+			`	He gives you the transferring info, then signals to the large man behind you. The pair wander off. You overhear him ask the brute, "So, Spacebucks? They've got this new Mochatini I've just been dying to try."`
+			`	You head back to your ship and wire the money to the given account. You hope that's the last you hear of them.`
+				decline
+	
+	on accept
+		set "Etarip Debt"
+		log `I've got until <day> to collect 500,000 credits and pay back Etarip for breaking their on-demand contract.`
+
+	on decline
+		payment -500000
+
+mission "Etarip Bounty Hunters [Fail]"
+	invisible
+	landing
+	source
+		government Republic
+
+	to offer
+		has "Etarip Bounty Hunters [Pay]: declined"
+		
+	npc kill
+		government Bounty
+		personality nemesis vindictive
+		fleet "Small Northern Pirates"
+	
+	on offer
+		conversation
+			`You feel a queasy sensation in your stomach as you land, having failed to pay back your debt in time. You feel eyes on you as you wander the starport.`
+				accept
+
+mission "Etarip Bounty Hunters [Pay]"
+	invisible
+	landing
+	
+	to offer
+		has "Etarip Debt"
+		"credits" >= 500000
+	
+	on offer
+		conversation
+			`You've collected enough money to pay back Etarip and ward off the men you presume to be bounty collectors.`
+			choice
+				`	[Input the contact number.]`
+				`	[Wait.]`
+					defer
+			`	You enter the contact number into your ship's console, and after a strange series of beeps, you recognize the voice of the man who accosted you at the starport.`
+			`	"Hey, kid! It's so good to hear from you. You got the money?"`
+			choice
+				`	"Yeah, I've got it. Where do you want me to send it?"`
+				`	"I have it - and you're not getting a single credit. See you in hell." [End transmission.]`
+					decline
+			`	"How about... This account? You know, it's getting real hard to keep track of all these punk kids who don't pay off their debts. Could you look into that for me?" The man laughs hysterically as an account code appears on your display.`
+			choice
+				`	"It's getting hard to keep track of all these punk bounty hunters who think they're so cool."`
+				`	"Yeah, whatever. I'll send it over."`
+					goto yeah
+			`	The man laughs even harder. "You know, kid? I like you. I think you just might make it through this crazy world. But howzabout getting those credits my way?"`
+			choice
+				`	"Fine. I'm sending them over."`
+			label yeah
+			`	"Great! Trust me, I'm very eager to see it transferred."`
+			`	You end the transmission, input the account code, and watch the numbers count down as 500,000 credits are transferred.`
+				accept
+		
+	on accept
+		payment -500000
+		fail "Etarip Bounty Hunters [Offer]"
+
+# * * * * *  END OF INTRO"  * * * * *
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

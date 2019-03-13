@@ -1,0 +1,52 @@
+ship "Centennial Eagle"
+	sprite "ship/star queen"
+	thumbnail "thumbnail/star queen"
+	attributes
+		category "Transport"
+		"cost" 12500000
+		"shields" 11900
+		"hull" 1600
+		"required crew" 1
+		"bunks" 16
+		"mass" 150
+		"drag" 2.6
+		"heat dissipation" .8
+		"fuel capacity" 800
+		"cargo space" 60
+		"outfit space" 300
+		"weapon capacity" 80
+		"engine capacity" 160
+		weapon
+			"blast radius" 40
+			"shield damage" 400
+			"hull damage" 200
+			"hit force" 600
+	outfits
+		"Sidewinder Missile Launcher" 3
+		"Sidewinder Missile" 150
+		"Heavy Anti-Missile Turret" 2
+		
+		"NT-200 Nucleovoltaic"
+		"LP036a Battery Pack"
+		"D94-YV Shield Generator"
+		"Small Radar Jammer" 3
+		"Luxury Accommodations"
+		
+		"A520 Atomic Thruster"
+		"A525 Atomic Steering"
+		"Hyperdrive"
+		
+	engine -18 116
+	engine 18 116
+	gun 0 -116 "Sidewinder Missile Launcher"
+	gun -22 -80 "Sidewinder Missile Launcher"
+	gun 22 -80 "Sidewinder Missile Launcher"
+	turret -28 -9 "Heavy Anti-Missile Turret"
+	turret 28 -9 "Heavy Anti-Missile Turret"
+	leak "leak" 30 30
+	leak "flame" 30 40
+	explode "tiny explosion" 5
+	explode "small explosion" 10
+	explode "medium explosion" 20
+	"final explode" "final explosion small"
+	description "During the Alpha Wars, no Republic ships had the speed or durability to extract key resources and VIPs from besieged planets. Inspired by ancient Earth science-fiction, an independent manufacturer designed a sleek blockade runner for just that purpose, and it went on to rescue vital assets throughout the war. The Centennial Eagle was derived from the original design and manufactured on the 400th anniversary of the war, but the Navy halted production shortly afterward, concerned that its vast engine space and deceptively large cargo capacity would make it a tool for smugglers."

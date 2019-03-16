@@ -1,0 +1,29 @@
+ship "Firebird" "Firebird (Dutch)"
+	outfits
+		"Ion Cannon" 2
+		"Pulse Cannon"
+		"Pulse Turret"
+		"Hai Tracker" 56
+		"Hai Tracker Pod"
+		"Hai Ravine Batteries"
+		"Geode Reactor"
+		"Hai Chasm Batteries"
+		"Hai Corundum Regenerator"
+		"Hai Williwaw Cooling" 2
+		"Outfits Expansion" 2
+		`"Bondir" Atomic Thruster`
+		`"Biroo" Atomic Steering`
+		Hyperdrive
+
+
+ship "Headhunter "Headhunter (Brand)"
+	outfits
+		"Pulse Cannon" 4
+		"Geode Reactor"
+		"Hai Gorge Batteries"
+		"Hai Corundum Regenerator"
+		"Hai Williwaw Cooling" 3
+		"Outfits Expansion" 2
+		`"Biroo" Atomic Thruster`
+		`"Biroo" Atomic Steering`
+		Hyperdrive

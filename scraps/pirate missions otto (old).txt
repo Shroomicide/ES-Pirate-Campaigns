@@ -1,0 +1,1748 @@
+#  *  Notes on language style  *
+#  
+#	1. 	When not explicitely using "he, him, her, etc." or situations in which the context implies only men or women, most "group" terms are used to inflect either gender.
+#		This follows what I interpret as a continuation of the modern trend toward encompassing both genders into previously "male" or "female" terms. 
+#		For example, "Lads" equates to a group of men, women, or men and women in the same way as "guys" or "dudes". It does not strictly imply males unless contextually specified. 
+#		My intent is to provide thematic variability and allow conversations to flow naturally where NPCs would normally use the player character's gender (which the game does not know) without always using implied addresses or the handful of neutral addresses we currently have.
+#		
+
+# * * * * * * * * * *  "HAI STAKES"  * * * * * * * * * *
+# * * * * *  "Hai Stakes [1]"  * * * * *
+mission "Hai Stakes [1]"
+	name "Otto's Request"
+	description "Investigate the area between Cardax and Rigel, looking for anything suspicious in the uninhabited systems between."
+	deadline 30
+	source
+		# Alcyone System
+		planet "Stormhold"
+		# Almaaz System
+		planet "Freedom"
+	to offer
+		#has "combat rating" > 50
+		not "Discovered Hai Space: offered"
+		#"credits" > 999000000
+			
+	to complete
+		or
+			# Player returned to Otto before venturing into the Wormhole.
+			has "entered ultima"
+			# Player returned after venturing into the Wormhole.
+			has "entered waypoint"
+			# Player returned after contacting the Hai.
+			has "Discovered Hai Space: offered"
+	
+	to fail
+		has "rejected otto"
+		
+	npc
+		personality timid staying surveillance
+		government Hai
+		ship Aphid "Du Sook Ow"
+		system "Waypoint"
+	
+	on offer
+		# Break into conversation for readability.
+		conversation "Hai Stakes [1]: Offer"
+	
+	on complete
+		# Break into conversation due to multiple "complete" conditions (for readability).
+		conversation "Hai Stakes [1]: Complete"
+	
+	on accept
+		"reputation: Pirate" = 1
+	
+	on fail
+		"reputation: Pirate" -= 2
+		payment -5000
+	
+	on enter "Sumar"
+		dialog
+			`	Upon exiting hyperspace, you begin scanning the system for oddities. Nothing out of the ordinary. You double-check your fuel level, hoping you've brought enough before you head into empty space.`
+	
+	on enter "Danoa"
+		dialog 
+			`	You casually check the sensor logs. A few oversized asteroids, but nothing remarkable.`
+	
+	on enter "Hassaleh"
+		dialog
+			`You peruse each line of your sensor's feed as it flashes on the screen. Nothing.`
+	
+	on enter "Rajak"
+		dialog
+			`	You casually scan the sensor feed as the lines dribble in. Without warning, a flood of confusing, half-formed entries of contradictory information fill the screen before it flashes and collapses to black. It takes a few seconds to fully reboot; when it does, the erroneous entries are gone. A second scan reveals nothing.`
+	
+	on enter "Ultima Thule"
+		dialog
+			`	Suddenly, every sensor interface on the bridge flashes dozens of nonsensical messages as the cockpit is bathed in a purple glow.`
+			`	You jump to your feet, staring at the celestial miracle floating in the distance. Purple haze bends and folds in on itself, simultaneously pouring out of and into a rupture in space you can't seem to focus on. It looks eerily similar to the theoretical wormholes you read about in school.`
+			`	You contemplate whether to investigate, or head back and see what Otto makes of it.`
+		set "entered ultima"
+	
+	on enter "Waypoint"
+		dialog
+			`	After a surprisingly smooth ride, you find yourself in another system. You double-check the date on your ship's computer and are surprised to find a day has passed."`
+			`	Long-range scans reveal ships of unknown design. Your display scrambles to find a suitable image to display, but settles on its own hastily-rendered deep-space photographs. You wonder whether you should return, or see where this strange ship comes from.`
+		set "entered waypoint"
+	
+	on enter "Heia Due"
+		dialog
+			`	Your ship's computer floods you with dozens of messages; unidentified vessels which render on your display as crude icons, new minerals, and a handful of contradictory energy scans. But you've reached an inhabited system without being fired upon, and that's something. Perhaps a planetary visit is in order.`
+
+# "Hai Stakes [1]" Conversation 1: Offer
+conversation "Hai Stakes [1]: Offer"
+	`<planet>'s spaceport is about as clean as you've come to expect from pirate worlds - that is to say, you're in for a sonic shower once you return to your ship.`
+	`	Captains, crew, and a good number of slaves look at you with a mixture of confusion and outright hostility. But alongside the usual ruffians and scallywags, you spot a very sizeable older-looking gentleman - or, as near to a gentleman as you'd expect to find in these parts - strutting about merrily, inspecting ships and sharing the occasional laugh with the denizens of the spaceport. A sharpness in his eyes belies his large, jolly appearance. He spots you and approaches.`
+	`	"Captain, oh captain!"`
+	choice
+		`	[Wait for him to approach.]`
+		`	[Run back to your ship and wait for him to leave.]`
+			defer
+	
+	`	"What brings a young'n such as yourself to humble ol' <planet>?" The old man scratches his thick white beard. In a healthier life, he could have had a propsperous career as Santa.`
+	
+	choice
+		`	"I'm with the theater troupe. We're looking for talent."`
+		`	"I'm looking for work."`
+			goto introduction
+	
+	`	"Ah, a funny rascal, ye are! But I think yer talents are what we're in need of..." A mischevious grin spreads across his face.`
+	label introduction
+	`	"Perhaps an introduction is in order, then." The man takes a step backwards, holds his hand to his chest, and makes a dramatic bow.`
+	`	"Otto is me name, and this happens to be one of many dirty, smelly spaceports ye'll find me in. What's yer name?"`
+	choice
+		`	"My name is none of your business. You said you had work for me?"`
+		`	"My name is <first> <last>. I pilot the <ship>."`
+			goto name
+	
+	`	Otto laughs; a genuine laugh, as far as you can tell. "By all me stars and gas giants, have ye got a massive stick between the mud and yer rear! I make a point of knowing who walks down certain roads, ye see. So, what's yer name?"`
+	choice
+		`	"Did you not hear me the first time, bird-brain? My... name... Is... None of your business."`
+			goto threaten
+			
+		`	"Not that I don't trust you, but I'd rather not say."`
+			goto guess
+			
+		`	"Whatever. My name is <first>. Credits will get you more."`
+		`	"I'm <first> <last>. What's this all about?"`
+	label name
+	`	"Jolly good to make yer aquaintence, <first>! It has a nice ring to it, don't ye think? The pleasure is all mine."`
+		goto work
+	label guess
+	`	"Oh, me dear captain, ye've got me at last. How will I find out who ye are in this dark age, with no access to records, landing logs, or the captains of certain space vessels?" Otto makes a show of leaning past you and reading your ship's name, brightly emblazoned on the side. "Hm... '<ship>'. But anyhow!"`
+	label work
+	`	"Here's what's got me in such a stern mood. As ye no doubt know, we've got this whole northern sector of space wrapped around our fingers. No one gets between Farpoint and Icefall without our knowin' so, 'less they want to spend the better part of a month dallying about."`
+	choice
+		`	"Sounds like you have things pretty much under control."`
+		`	"Let me guess; it's not all jollies and rogers in <planet>."`
+			goto offer
+	
+	`	"It's not under control!" Otto slams his substantially-sized fist on a nearby crate, leaving a sizable dent in what appeared to be a sturdy metal container. He sighs and rubs his knuckles.`
+	label offer
+	`	"We're not the most organized bunch, but the lads have noticed things here and there. A freighter jumps into Sumar, and never makes it to Rigel. A merchant patrol is spotted in Danoa or Rajak, but by the time we get there, it's vanished. A whole damn fleet of Behemoths head to Hassaleh and never make it to Cardax!"`
+	`	Otto paces around for a few seconds before he regains his composure. A pleasant smile spreads across his face once more.`
+	`	"So, we're looking fer someone to investigate these irksome little disappearances. It's got the lads a little spooked - talk of space ghosts, biblical leviathans in the stars... Ye name it, the rumor's been started."`
+	choice
+		`	"I've always wanted to meet a space ghost!"`
+		`	"Why me?"`
+	
+	`	Otto takes off his patched beanie and scratches his head. "I ain't gonna coat it with sugar, laddie. The last few scoutin' parties we sent out never made it back. So we're lookin' fer someone a little more expendable."`
+	`	You bite your lips, not quite relishing the answer you've been given.`
+	`	Before you can react, Otto laughs and claps you on the shoulder, nearly knocking you over. "Lighten up, kid! Truth is, we pirates have a certain look, and ye fit the bill of a plucky young'n just out for a space-walk. If there is anything out there waitin' for us, maybe ye'll be able to sweet-talk 'em."`
+	
+	choice
+		`	"I'm not superstitious, but I'm a little stitious. You should find someone else for this job."`
+			goto no
+		`	"Will I get paid for this?"`
+		`	"Alright, I'll do it. Tell me where to go and I'll report back to you."`
+			goto accept
+	
+	`	"What's a few credits compare to helping a new friend?" Otto gives you a rogueish smile. "But if that ain't enough, how does 100,000 sound?"`
+	choice
+		`	"Sounds like a deal to me, Otto!"`
+			goto accept
+		`	"That's not enough."`
+		
+	`	"It's all yer gettin', I'm afraid! Ye've got a pretty face and a little experience, and only one of those things is helpin' ye right now."`
+	choice
+		`	"Alright, I'll do it."`
+		`	"Sorry, no deal."`
+			goto no
+		`	"Hear that? That's the sound of my fat bank account saying, 'I don't need your dirty money.'"`
+			goto threaten
+	label accept
+	
+	`	"That's the spirit!" Otto grabs you around the shoulders and smiles. He shows you a map on his padd and gestures toward it.`
+	`	"Here's the plan. Ships are disappearin' somewhere between Rigel and Cardax. I want ye to turn over every asteroid between those systems. Ye might want to bring a Ramscoop or spare fuel pods if ye don't have 'em. And if ye find somethin', ye let ol' Otto know; there'll be somethin' extra in it fer ye. Eh, kiddo?"`
+	
+	choice
+		`	"Got it."`
+		`	"I'll be back before you know it, gramps."`
+	
+	`	"Ah, they grow up so fast!" Otto takes a few steps backwards, holding his hands behind his back. "Remember - everythin' between Rigel and Cardax. If I don't hear from ye soon, we'll send a casket yer way. Oh, and I'll tell my lads not to bother ye in the meantime. Good luck!"`
+	`	You stare after Otto as he walks away, wondering exactly what you've gotten yourself into.`
+		accept
+	
+	label no
+	`	Otto smiles and cocks his face to the side, taking one of your comparatively tiny hands between his.`
+	`	"I'm pained to hear it, but I guess ye have too much promise for ol' Otto. Best of luck to ye!"`
+		decline
+	label threaten
+	apply
+		set "rejected otto"
+	`	Otto's smile fades. Your hand hovers over your gun. Just as quickly, his smile returns. "Well, kid, I ain't gonna waste any more of yer time. Ye have a good day, now!`
+	`	You feel proud to have scared off such an intimidating figure as Otto. But when you return to your ship a couple hours later, you notice several shady characters scatter as you approach. An acrid odor assaults your senses; as you walk past the forward landing gear, a dead fish flops onto the ground, followed by another. Upon closer inspection, someone has gone through a great deal of trouble to stuff rehydrated fish into every external nook and cranny of your ship. While more of an inconvenience than anything, you estimate that it's going to cost at least 5,000 credits to clean and deodorize.`
+		decline
+		
+
+
+# "Hai Stakes [1]" Conversation 2: Complete
+conversation "Hai Stakes [1]: Complete"
+	`Once again, you find yourself in <planet>'s crowded, dirty, but surprisingly busy spaceport. It's easy to spot the hefty form of Otto hurrying toward you; the various men and women in front of him clear a path well ahead of him.`
+	`	"Ah, ye've returned! Tell me lad, what exactly are the secrets of the universe?"`
+	branch wormhole
+		# Player flew through the wormhole (Branch).
+		has "entered waypoint"
+		
+	# * * * Outcome 1: Player did not fly through the wormhole. * * *
+	choice
+		`	"You'll be happy to know, it's not a space monster. But it's pretty close... There's a wormhole in the Ultima Thule system. A stable one."`
+		`	"There's a wormhole in the Ultima Thule system. That's all I know."`
+		`	"I couldn't find anything out there. I checked, double-checked, and even kicked the onboard computer. Nothing."`
+			goto nothing
+	`	Otto's face goes blank. He cups his chubby fingers around his chin, thinking. Then he starts laughing. "Ah, ye had me fer a moment there, kid! So tell me, is there a pirate lair out there, leeching off me lads' hard work?"`
+	
+	choice
+		`	"I'm serious, Otto. There's a huge, purple wormhole out there. It's conspicuous as can be."`
+		`	"Laugh all you want - there's a big ol' hole in space out there. Go see for yourself."`
+	`	"Yer serious! Well, that explains why ye looked so spooked." Otto paces back and forth in dark demeanor. "Ye've done me a great service. I'll get ye the money. If ye'd like to help a little more, come back to Stormhold or Freedom. I bet ye know what I'm going to ask!" Otto smiles and claps you on the shoulder before wandering off.`
+		accept
+			
+	label wormhole
+	branch hai
+		has "Discovered Hai Space: offered"
+		
+	# * * * Outcome 2: Player flew through the wormhole but did not contact the Hai. * * *
+	choice
+		`	"Did you know some wormholes are stable? Because they are, and you can fly ships right through 'em. Weird, huh?"`
+		`	"There's a stable wormhole in the Ultima Thule system. It leads to a sector of space my ship's computer didn't recognize... And there are aliens on the other side." [Show him the sensor logs]`
+			goto aliens
+		`	"I couldn't find anything out there. I checked, double-checked, and even kicked the onboard computer. Nothing."`
+			goto nothing
+	`	Otto's face goes blank. He cups his chubby fingers around his chin, thinking. Then he starts laughing. "Ah, ye had me fer a moment there, kid! So tell me, is there a pirate lair out there, leechin' off me lads' hard work?"`
+	choice
+		`	"It sounds like I was kidding, but it's just because what I saw really spooked me." [Show him the sensor logs]`
+		`	"Really. It's not a joke." [Show him the sensor logs]`
+	`	For the first time since you've known him, Otto looks to be at a complete loss for words. After a long pause, he begins mumbling, pauses, then speaks.`
+	`	"Ye... Aren't pullin' me leg, eh?" Otto paces back and forth, then addresses you in a low tone. "Flyin' into a wormhole. Yer braver than I gave ye credit for. And what's this at the end, here? 'Du Sook Ow'?" Otto points to the image of the ship you saw on the other side of the wormhole.`
+	choice
+		`	"Cute little bugger, eh? My best guess is aliens."`
+		`	"It's an alien ship, I guess."`
+	
+	label aliens
+	`	You don't notice anyone eavesdropping, but Otto looks around nervously before not-so-gently pushing you away from the landing area and into a dimly-lit utility shed. Other than a few casual glances, no one seems to notice your departure. Otto shuts the door. "My god kid, aliens!?!"`
+	choice
+		`	"I took a detour from reality just after I flew into the event-horizon of a wormhole. I'm as surprised as you."`
+		`	"The galaxy's a big place. We were bound to run into them sometime."`
+	`	You can't make out Otto's expression, and the thought crosses your mind that you may be the first person to discover aliens, and you may die in a dirty utility shed out in the middle of nowhere for that knowledge. Otto heaves a monumental sigh.`
+	`	"Did ye... Contact them? Find out where they live?"`
+	choice
+		`	"No."`
+		`	"I didn't think that was wise at the time."`
+	`	"No doubt, yer a smart one. There's no tellin' how many pieces ye'd be in if ye'd done something as foolish as land on an alien planet without knowing whether they were friendly or not." Otto sighs again. "I'll have yer payment, and throw in more than enough to make up fer yer trouble. I can't tell ye what to do with this, but remember - a little knowledge is a dangerous thing." Otto opens the door, and you squeeze past his massive frame. Looking back, you're not exactly sure how he fit in there. He walks you back to the landing area.`
+	`	"Ye can find me driftin' between Stormhold and Freedom, so drop by if yer interested in continuin' this little adventure we seem to have gotten ourselves into, eh? Keep safe."`
+		accept
+		
+	# Player flew through the wormhole AND contacted the Hai.
+	label hai
+	choice
+		`	"We're not alone out here."`
+		`	"Three things: There's a wormhole in Ultima Thule, it leads to aliens, and the aliens are giant squirrels."`
+			goto squirrels
+		`	"I couldn't find anything out there. I checked, double-checked, and even kicked the onboard computer. Nothing."`
+			goto nothing
+	`	Otto grimaces. You get the feeling that this is not the time for jokes. "Tell me what that means, exactly."`
+	choice
+		`	"There's a stable wormhole in Ultima Thule. It leads to a sector of space a small number of humans have found, and they coexist alongside... Giant squirrels, who call themselves the 'Hai'."`
+			goto squirrels
+		`	"Knock-knock."`
+	`	Otto snorts impatiently. "Who's there?"`
+	choice
+		`	"Hai are."`
+	`	"Hai are who?"`
+	choice
+		`	"Hai are giant squirrel aliens who live peacefully alongside humans in a secret sector of space on the other side of the wormhole in Ultima Thule... Get it?"`
+	`	Otto bludgeons you across the face with his club-like hand. "This is not the time fer jokes!"`
+	
+	label squirrels
+	`	Before you can react, Otto half-pushes, half-drags you to a nearby utility shed. He shoves you in, looks around, then ducks inside, shutting the rusty door behind him.`
+	`	"Sorry about that, kid, but yer gonna have to explain yerself."`
+	choice
+		`	"That's perfectly understandable. It's a strange situation. Basically, there's a stable wormhole and it leads to aliens. Aliens who resemble giant squirrels who call themselves the 'Hai'. Look, I landed on one of their worlds." [Show him your sensor logs]`
+		`	"No need to be so rough! Here, take a look. This is a picture of a ship the Hai call the 'Aphid'. This is a picture of their closest planet, where many humans live. And..." Your face turns red as the screen displays a selfie you took of you and one of the Hai dockworkers on Allhome.`
+	`	Though you can't really see him, you can hear Otto slap his face with his palm.`
+	`	"Don't tell me ye flew through a wormhole, saw an ALIEN ship, and then decided to tour the place?!?"`
+	choice
+		`	"Actually... That's exactly what happened."`
+		`	"It wasn't so bad. There were human ships in orbit, so I figured it was safe."`
+	`	"By the gods. I wish I had a dozen men half as reckless as ye! Most of 'em turn yellow at the sight of a Navy patrol." Otto sighs deeply, and you can hear the shed creak as he relaxes against it. "This is no place to discuss such things, but ye've done great work here, kid. I can't thank ye enough. I'll have payment fer ye by the end of the day."`
+	`	He opens the shed door. Light streams in, but his head is in shadow. As you push past him to leave, he firmly grabs your shoulder. "I can't keep ye from spreading this, but I think ye'd be safer keepin' it between us." He walks back to the landing area with you and shakes your hand.`
+	`	"I'll be dallyin' around Freedom in Almaaz for awhile, so stop by if ye'd like to continue this merry little adventure of ours. Fer now, keep safe! There's no tellin' what's out there." You leave, but can't help wondering about the odd nature of his last comment.`
+		accept
+	
+	label nothing
+	apply
+		set "the ultima lie"
+	`	Otto heaves and sighs, blowing a raspberry as he exhales. "Thanks fer looking anyway, kid. I guess I'll have to make up somethin' fer the lads, eh? I'll get yeu that money fer yer troubles."`
+		accept
+
+# $ $ $ $ $  REWARDS FOR "Hai Stakes [1]"  $ $ $ $ $
+mission "Hai Stakes 1 - Reward 1 (Lie)"
+	invisible
+	landing
+	to offer
+		has "Hai Stakes [1]: done"
+		has "the ultima lie"
+		
+	on offer
+		payment 100000
+		#event "otto discovers wormhole" 60 120
+		conversation
+			`	It's impossible to say how long it will take for Otto and his crew to discover the wormhole, but you hope it's a long time. Regardless, the 100,000 credits which appear in your bank account soften any moral quandary you may have about lying.`
+				decline
+
+mission "Hai Stakes 1 - Reward 2 (Wormhole)"
+	invisible
+	landing
+	to offer
+		and
+			has "Hai Stakes [1]: done"
+			has "entered ultima"
+			not "entered waypoint"
+			not "Hai Stakes 1 - Reward 3 (Waypoint): offered"
+			not "Hai Stakes 1 - Reward 4 (Hai Contact): offered"
+			
+	on offer
+		payment 100000
+		conversation
+			`	You've told Otto about the Wormhole to the sweet, sweet tune of 100,000 credits. A small part of you wonders if it was a good idea, but he would have discovered it eventually... Right?`
+				decline
+
+mission "Hai Stakes 1 - Reward 3 (Waypoint)"
+	invisible
+	landing
+	to offer
+		and
+			has "Hai Stakes [1]: done"
+			has "entered waypoint"
+			not "Discovered Hai Space: offered"
+			not "Hai Stakes 1 - Reward 2 (Wormhole): offered"
+			not "Hai Stakes 1 - Reward 4 (Hai Contact): offered"
+			
+	on offer
+		payment 200000
+		conversation
+			`	You return to your ship to find that 200,000 credits have been transferred to your account. No doubt Otto is already thinking about how to make the most of this discovery...`
+				decline
+		
+mission "Hai Stakes 1 - Reward 4 (Hai Contact)"
+	invisible
+	landing
+	to offer
+		and
+			has "Hai Stakes [1]: done"
+			has "Discovered Hai Space: offered"
+			not "Hai Stakes 1 - Reward 2 (Wormhole): offered"
+			not "Hai Stakes 1 - Reward 3 (Waypoint): offered"
+			
+	on offer
+		payment 300000
+		conversation
+			`	You nearly fall out of your chair when you see that Otto has transferred 300,000 credits to your account. Despite his serious demeanor during your meeting, it seems he's found a reason to reward you... or perhaps, purchase your silence.`
+				decline
+
+# * * * * *  END OF "Hai Stakes [1]" * * * * *
+
+# * * * * * * * * * *  BRIDGE MISSIONS TO "Hai Stakes [2]"  * * * * * * * * * *
+#	Bridge missions in case the player has not contacted the Hai.
+#		Here, the player has not gone through the wormhole.
+mission "Hai Stakes [1] [Bridge 1]"
+	name "Investigate the Wormhole"
+	source
+		planet "Stormhold"
+		planet "Freedom"
+	
+	to offer
+		has "Hai Stakes [1]: done"
+		not "the ultima lie"
+		not "entered waypoint"
+		not "Discovered Hai Space: offered"
+	
+	npc
+		personality timid staying surveillance
+		government Hai
+		ship Aphid "Du Sook Ow"
+		system "Waypoint"
+	
+	to complete
+		has "Discovered Hai Space: offered"
+#		and
+#			has "entered waypoint"
+#			has "Discovered Hai Space: offered"
+	
+	on offer
+		conversation "Hai Stakes [1] [Bridge 1]: Offer"
+	
+	on enter "Ultima Thule"
+		dialog
+			`	Once more, your sensors scramble to make sense of the strange anomoly here. Somehow, the wormhole seems even more beautiful and terrifying than it was the first time you saw it.`
+	
+	on enter "Waypoint"
+		dialog
+			`	After a surprisingly smooth ride, you find yourself in an unknown system. You double-check the date on your ship's computer and are surprised to find a day has passed."`
+			`	Long-range scans reveal ships of unknown design. Your display scrambles to find a suitable image to display, but settles on its own hastily-rendered deep-space photographs. It appears friendly; perhaps it is worth investigating where it comes from.`
+#		set "entered waypoint"
+	
+	on enter "Heia Due"
+		dialog
+			`	Your ship's computer floods you with dozens of messages; unidentified vessels which render on your display as crude icons, new minerals, and a handful of contradictory energy scans. But you've reached an inhabited system without being fired upon, and that's something. Perhaps a planetary visit is in order.`
+	
+	on complete
+		# Break into conversation for readability.
+		conversation "Hai Stakes [1] [Bridge 1]: Complete"
+		payment 100000
+
+# "Hai Stakes [1] [Bridge: 1]" Conversation 1: Offer
+conversation "Hai Stakes [1] [Bridge 1]: Offer"
+	`After landing on <planet>, you take a look around the spaceport to find Otto.`
+	choice
+		`	[I've got better things to do.]`
+			defer
+		`	[Search for him.]`
+	`	Soon enough, you see him chatting merrily with a much slighter freighter captain in the cargo drop-off area; despite Otto's apparent laughter and friendly demeanor, you can't help but notice the captain appears to be having much less fun. You wonder what they're talking about, but by the time you get close enough to hear them over the din of the spaceport, the freighter captain begins walking away.`
+	`	"Ah, fancy meetin' ye here! Come along, come along." Otto leads you to a corner of the cargo area. He lowers his voice. "I think it's time we see exactly what's out there. Ye ready to go back?"`
+		
+	choice
+		`	"What were you talking to that freighter captain about?"`
+		`	"Yes."`
+			goto yes
+		`	"Ain't gettin' any deader - Let's do it!"`
+			goto yes
+		`	"Can't you send someone else to go wormhole-spelunking?"`
+			goto ask
+	`	Otto laughs, apparently remembering something funny in their conversation. "Oh, Ryuk? He and I go way back. He had to leave his Argosy here in port while he was out on vacation, but got stranded on the way back. He was gone so long that one of the boys here made off with his fancy new A370 Atomic Thrusters and replaced 'em with Chipmunk Thrusters!" Otto laughs boisterously for much longer than you think necessary. "It'll take him some time to get going, but I'm sure he'll be fine! But enough about him. Are ye ready?"`
+	
+	choice
+		`	"Yes."`
+			goto yes
+		`	"Ain't gettin' any deader - Let's do it!"`
+			goto yes
+		`	"Can't you send someone else to go wormhole-spelunking?"`
+	label ask
+	`	Otto glances around. He lowers his voice and rather harshy states, "First off, don't go spreadin' that around. Second, I have very few people I trust to do this kind of thing, and those people are important to me. Ye know what's out there, ye know where to find it, yer expendable, flat nose, blah blah blah."`
+	choice
+		`	"Too bad. Send someone else."`
+		`	"Alright, I'll do it."`
+			goto yes
+	`	Otto grimaces momentarily, then sighs and puts on a pleasant expression. "I suppose it is a bit much to ask. Alright, then. Off with ye." Otto walks back toward the landing area, leaving you to wonder what he's planning to do with the knowledge you've given him.`
+		decline
+	
+	label yes
+	`	Otto grabs you around the shoulders and shakes you. "That's the spirit, kid!" After recovering from Otto's excitement, you note that he seems almost uncomfortably excited. "Go see what's on the other side."`
+		accept
+
+# "Hai Stakes [1] [Bridge: 1]" Conversation 2: Complete		
+conversation "Hai Stakes [1] [Bridge 1]: Complete"
+	`Back on <planet>, you search around the spaceport for Otto.`
+	choice
+		`	['Otto's a busy man. I'd better wait'.]`
+			defer
+		`	[Search for him.]`
+	`	You find Otto inspecting a ship as a scrawny-looking fellow hesitantly follows him. Judging by his appearance and body language, you take it Otto is inspecting his ship for some reason, though the whole affair seems more casual than professional. As you approach, Otto waves the captain off.`
+	`	"Ye made it back! Tell me, what did ye find?"`
+
+	choice
+		`	"We're not alone out here."`
+		`	"Three things: The wormhole in Ultima Thule connects to a secret sector of space, there are aliens there, and the aliens are giant squirrels."`
+			goto squirrels
+	`	Otto's cheerful expression goes blank. "Tell me what that means, exactly." You get the feeling that this is not the time for jokes.`
+	
+	choice
+		`	"The wormhole leads to a sector of space a small number of humans have found, and they coexist alongside... Giant squirrels, who call themselves the 'Hai'."`
+			goto squirrels
+		`	"Knock-knock."`
+	`	Otto snorts impatiently. "Who's there?"`
+	
+	choice
+		`	"Hai are."`
+	`	"'Hi are' who?"`
+	
+	choice
+		`	"Hai are giant squirrel aliens who live peacefully alongside humans in a secret sector of space on the other side of the wormhole in Ultima Thule... Get it?"`
+	`	Otto bludgeons you across the face with his club-like hand. "This is not the time fer jokes!"`
+	
+	label squirrels
+	`	Before you can react, Otto half-pushes, half-drags you to a nearby utility shed. He shoves you in, looks around, then ducks inside, shutting the rusty door behind him.`
+	`	"Sorry about that, kid, but yer gonna have to explain yerself."`
+	choice
+		`	"That's perfectly understandable. It's a strange situation. Basically, there's a stable wormhole and it leads to aliens. Aliens who resemble giant squirrels and call themselves the 'Hai'. They actually live quite peacefully with humans. Look, I landed on one of their worlds." [Show him your sensor logs]`
+		`	"No need to be so rough! Here, take a look. This is a picture of a ship the Hai call the 'Aphid'. This is a picture of their closest planet, where many humans live. And..." Your face turns red as the screen displays a selfie you took of you and one of the Hai dockworkers on Allhome.`
+	`	Though you can't really see him, you can hear Otto slap his face with his palm. He whispers angrily`
+	`	"Don't tell me ye flew through a wormhole, saw an ALIEN ship, and then decided to tour the place?!?"`
+	
+	choice
+		`	"Actually... That's exactly what happened."`
+		`	"It wasn't so bad. There were human ships in orbit, so I figured it was safe."`
+	`	"By the gods. I wish I had a dozen men half as reckless as ye! Most of 'em turn yellow at the sight of a Navy patrol." Otto sighs deeply, and you can hear the shed creak as he relaxes against it. "This is no place to discuss such things, but ye've done great work here, kid. I can't thank ye enough. I'll have payment fer ye by the end of the day."`
+	`	He opens the shed door. Light streams in, but his head is in shadow. As you push past him to leave, he firmly grabs your shoulder and whispers to you. "I can't keep ye from spreadin' this, but I think ye'd be safer keeping it between us." He walks back to the landing area with you and shakes your hand.`
+	`	"I'll be in and around Freedom in Almaaz, so stop by if ye'd like to continue this merry little adventure of ours. Fer now, keep safe! There's no telling what's out there." You leave, but can't help wondering about the odd nature of his last comment.`
+	`	When you next check your account, you see that Otto has transferred 100,000 credits to you.`
+		accept
+
+
+#		Here, the player has gone through the wormhole, but has not contacted the Hai.
+mission "Hai Stakes [1] [Bridge 2]"
+	name "Investigate the Wormhole"
+	source
+		planet "Stormhold"
+		planet "Freedom"
+	stopover "Allhome"
+	
+	to offer
+		has "Hai Stakes [1]: done"
+		has "entered waypoint"
+		not "the ultima lie"
+		not "Discovered Hai Space: offered"
+	
+	to complete
+		has "Discovered Hai Space: offered"
+	
+	on offer
+		conversation "Hai Stakes [1] [Bridge 2]: Offer"
+	
+	on enter "Ultima Thule"
+		dialog
+			`	Once more, your sensors scramble to make sense of the strange anomoly here. Somehow, the wormhole seems even more beautiful and terrifying than it was the first time you saw it.`
+	
+	on enter "Heia Due"
+		dialog
+			`	Your ship's computer floods you with dozens of messages; unidentified vessels which render on your display as crude icons, new minerals, and a handful of contradictory energy scans. But you've reached an inhabited system without being fired upon, and that's something. Perhaps a planetary visit is in order.`
+	
+	on complete
+		conversation "Hai Stakes [1] [Bridge 2]: Complete"
+		payment 25000
+
+# "Hai Stakes [1] [Bridge: 2]" Conversation 1: Offer
+conversation "Hai Stakes [1] [Bridge 2]: Offer"
+	`After landing on <planet>, you take a look around the spaceport to find Otto.`
+	choice
+		`	[I've got better things to do.]`
+			defer
+		`	[Search for him.]`
+	`	Soon enough, you see him chatting merrily with a much slighter freighter captain in the cargo drop-off area; despite Otto's apparent laughter and friendly demeanor, you can't help but notice the captain appears to be having much less fun. You wonder what they're talking about, but by the time you get close enough to hear them over the din of the spaceport, the freighter captain begins walking away.`
+	`	"Ah, fancy meetin' ye here! Come along, come along." Otto leads you to a corner of the cargo area. He lowers his voice. "I think it's time we see exactly who's flying around out there. Ye ready to go back?"`
+	
+	label question1
+	choice
+		`	"Ain't gettin' any deader - Let's do it!"`
+			goto yes
+		`	"What were you talking to that freighter captain about?"`
+		`	"Can't you send someone else to go wormhole-spelunking?"`
+			goto ask
+	`	Otto laughs, apparently remembering something funny in their conversation. "Oh, Ryuk? He and I go way back. He had to leave his Argosy here in port while he was out on vacation, but he got stranded on the way back. He was gone so long that one of the boys here made off with his fancy new A370 Atomic Thrusters and replaced 'em with Chipmunk Thrusters!" Otto laughs boisterously for much longer than you think necessary. "It'll take him some time to get going, but I'm sure he'll be fine! But enough about him. Are ye ready?"`
+		goto question1
+		
+	label ask
+	`	Otto glances around. He lowers his voice and rather harshy states, "First off, don't go spreadin' that around. Second, I have very few people I trust to do this kind of thing, and those people are important to me. Ye know what's out there, ye know where to find it, yer expendable, flat nose, blah blah blah."`
+	choice
+		`	"Too bad. Send someone else."`
+		`	"Alright, I'll do it."`
+			goto yes
+	`	Otto grimaces momentarily, then sighs and puts on a pleasant expression. "I suppose it is a bit much to ask. Alright, then. Off with ye." Otto walks back toward the landing area, leaving you to wonder what he's planning to do with the knowledge you've given him.`
+		decline
+	
+	label yes
+	`	Otto grabs you around the shoulders and shakes you. "That's the spirit, kid!" After recovering from Otto's excitement, you note that he seems almost uncomfortably excited. "Go see exactly what's on the other side..."`
+		accept
+
+# "Hai Stakes [1] [Bridge: 2]" Conversation 2: Complete		
+conversation "Hai Stakes [1] [Bridge 2]: Complete"
+	`Back on <planet>, you search around the spaceport for Otto.`
+	choice
+		`	['Otto's a busy man. I'd better wait'.]`
+			defer
+		`	[Search for him.]`
+	`	You find Otto inspecting a ship as a scrawny-looking fellow hesitantly follows him. Judging by his appearance and body language, you take it Otto is inspecting his ship for some reason, though the whole affair seems more casual than professional. As you approach, Otto waves the captain off.`
+	`	"Ye made it back! Come along, come along." Otto leads you to a small, unfinished room near the cargo drop-off area. He makes a show of professionalism and calmness, perhaps for any interested observers, but you can sense his eagerness. He closes the door behind him and motions for you to sit on a crate. He speaks quietly.`
+	`	"Alright, kid. Lay it on me; what kind of bug-eyed space aliens are we dealing with?"`
+	choice
+		`	"They are space aliens, but they're not bug-eyed. The other side of the wormhole is home to a race of... um... giant squirrels. They call themselves the 'Hai'."`
+		`	"I found a race of intelligent aliens who resemble giant squirrels. They call themselves the 'Hai', and humans have lived amonng them peacefully for some time."`
+			goto noise
+	`	Otto appears to be relishing every moment of this. "Were they surprised to see ye?"`
+	
+	choice
+		`	"Actually, humans have been living alongside them for quite some time."`
+			goto noise
+		`	"Yes - when I landed, they flocked to my ship and worshipped me as a god. I've got 9 sacrifices scheduled for next Tuesday."`
+	`	Otto laughs. Evidently, he shares your dark sense of humor. "Well, I'd better not keep ye waiting, then!" Otto chuckles to himself, then continues. "But tell me true; what did they make of ye?"`
+	
+	choice
+		`	"I was more surprised than they were. Humans have been living among them for decades, if not longer."`
+		
+	label noise
+	`	A short, sharp noise outside the room draws Otto out of his revelry. He walks slowly to the door, listens for a moment, then returns. "I forget the company I keep at times. Come, I'll take ye to yer ship."`
+	`	Otto accompanies you back to your ship. He grabs one of your hands in both of his and smiles pleasantly. "I'll send some money to cover yer travels today. We've got exciting times ahead of us, laddy. Stop by Freedom in the Almaaz system when yer ready, and let's continue this merry little adventure!"`
+	`	When you return to your ship, you notice Otto has transferred 25,000 credits to your account.`
+		accept
+
+# * * * * *  END OF BRIDGE MISSIONS  * * * * *
+
+#	The purpose of this mission is just to mark "Freedom" (which players coming from Alcyone may not know of) on the map.
+mission "Hai Stakes [Find Otto]"
+	landing
+	name "Find Otto"
+	description "Otto said he would be in Freedom in the Alcyone system if I wanted to 'continue our adventure.'"
+	source
+		not planet "Freedom"
+	destination
+		system "Almaaz"
+	
+	to offer
+		not "Hai Stakes [2]: offered"
+		or
+			has "Hai Stakes [1] [Bridge 1]: done"
+			has "Hai Stakes [1] [Bridge 2]: done"
+			has "Hai Stakes 1 - Reward 4 (Hai Contact): offered"
+	
+# * * * * *  "HAI STAKES [2]"  * * * * *
+mission "Hai Stakes [2]"
+	name "Retrieve Outfit Specs"
+	description "Otto wants technical specifications on all Hai outfits. Travel to Hai space and find the largest outfitter available."
+	source
+		planet "Freedom"
+	stopover "Makerplace"
+	
+	to offer
+		or
+			has "Hai Stakes [1] [Bridge 1]: done"
+			has "Hai Stakes [1] [Bridge 2]: done"
+			has "Hai Stakes 1 - Reward 4 (Hai Contact): offered"
+	on offer
+		conversation "Hai Stakes [2]: Offer"
+		
+	on stopover
+		conversation "Hai Stakes [2]: Stopover"
+	
+	on complete
+		conversation "Hai Stakes [2]: Complete"
+		payment 50000
+		
+	on enter "Heia Due"
+		dialog
+			`Upon entering 'Heia Due', you run a query through your ship's computer to find the nearest full-scale outfitter in Hai space. It points you to the manufacturing world Makerplace in the 'Ula Mon' system.`
+		
+conversation "Hai Stakes [2]: Offer"
+	`After landing on Freedom, you take a look around the dusty spaceport to find Otto.`
+	choice
+		`	[I'd rather grab a bowl of rice.]`
+			defer
+		`	[Search for Otto.]`
+	`	As you walk the perimeter of the landing area, you spot a joyously animated crowd of male and female pirates gathered around Otto - he stands half a head taller than most of them. His movements are bold, dramatic - you see him grab one of the men by the collar as he hits the high note of a catchy song. You catch the tail end of his very obviously adapted ballad:`
+	`	"United stand! Divided fall! Wolves of space we're roamin'! From port to port, from land to land, raiding ships so grand!"`
+	`	The crowd breaks into hoots and cheers as they drift back to their work; Otto claps several on the back, smiling and laughing with them. You wait for the last few pirates to disperse before Otto notices you and gives you a big smile. "Good to see ye alive and whole, kid! Are ye back fer more merriment with ol' Otto?"`
+	
+	choice
+		`	"Not right now. I've had too much excitement in the last few days; I'm just here to say hi."`
+		`	"What was all that about?"`
+			goto what
+		`	"For you, I'd chart all the stars in Alpha Centauri."`
+			goto chart
+		`	"Sure. What do you have for me?"`
+			goto sure
+	`	"Well, thanks fer stopping by this ol' rust-bucket just to catch up. Come back when ye'd like to have some more fun!"`
+		defer
+		
+	label what
+	`	"Oh, just a pep talk fer the lads. I try to lift their spirits every once in awhile; they'd never admit it, but life out here gets to 'em. What most of 'em would like is anarchy with a stable economy, but short of that, they'll settle for anarchy with the promise of riches!"`
+	choice
+#		`	"If life is so hard out here, why don't they go back to the Republic? There are plenty of worlds to choose from."`
+#			goto life
+		`	"You're surprisingly compassionate for a space pirate."`
+			goto compassionate
+		`	"I understand wanting a place to call home, even if it's not perfect."`
+
+	`	Otto's face takes on a deeply sobered look. Then he breaks into a smile and puts his arm around your shoulder, gesturing to the dusty lanes of Freedom.`
+	`	"Sounds like ye need a hug! Ye see, far as I see, home ain't about findin' the perfect place and bringin' yer life there. That'll wind ye up in a world of trouble and treasure-seekin'. Findin' home is goin' wherever life leads ye, and tryin' to make the place ye end up perfect. Freedom ain't perfect, but it's got plenty of people tryin' to make it that way."`
+	`	Just as Otto finishes, you see two groups of rough-looking men fly out of the local bar down the road, brawling and shouting expletives, many of which you've never heard before. Otto sighs. "Maybe just a few people."`
+		goto ask
+		
+#	label life
+#	`	Otto laughs, and you can't help but feel it's a touch derisive. "Ah, kid, we ain't all selfish brigands who just decided to loot and kill one day. Look around. What do you see?"`
+#	choice
+#		`	"Poverty."`
+#		`	"Suffering."`
+#		`	"Lawlessness."`
+#		`	"Freedom."`
+#		`	"Opportunity."`
+
+	label compassionate
+	`	"Ah, m'lad, ye'll bring a tear to this old buccaneer's eye yet! I'm just tryin' to make their lives a little more fun, that's all. Life don't have to be all gallows and fiery explosions, but they sure do spice up life!"`
+	label ask
+	`	"Anyway, ye ready to get down to business?"`
+	choice
+		`	"Sure. What do you have for me this time?"`
+			goto sure
+			
+	label chart
+	`	Otto laughs. "Ho ho ho! That's a good one. Me lads can never muster that much enthusiasm when I ask 'em to do somethin'."`
+				
+	label sure
+	`	"Come along; let's find some place a little more private."`
+	`	You follow Otto away from the dusty spaceport to what can only be described as a 'tavern'. The dusty sign above reads 'Freedom's Fortune' Various characters - from shady, to extremely shady - crowd the tables, booths, and floorspace. It's not as clean as the well-regulated drinking establishments you've seen in Republic space, and the whole place has a distinctly raucous atmosphere, as men and women take advantage of the flexible hours offered by anarchy to dance and enjoy other entertainment. It certainly doesn't scream 'privacy' to you, though you've heard many other words screamed in the short time you've been here.`
+	`	You pass by a table with several empty glasses and two stylish but comfortably-dressed men arguing loudly. You notice Otto swipe two fresh neon-lime-colored drinks from their table. For such a big guy, he seems to have surprisingly nimble hands. He leads you up a set of stairs and nods at a very rough-looking woman in her 20's with many scars standing guard outside a curtained door. Her steely gaze seems to pierce your soul for one fleeting moment as she opens the door to let you in.`
+	`	Otto leads you into the small, elaborately furnished yet rustic room; when the door closes, everything outside goes eerily silent. You make your way to the circular booth and table occupying much of the room. The upholstery is made of a shiny, soft fabric you've never seen before. Otto gestures for you to sit, setting drinks down on each side of the table.`
+	choice
+		`	[Take a sip.]`
+		`	[Abstain.]`
+			goto business
+	`	You take a small sip of the strange drink. A dozen things happen at once; your lips seem to freeze, then burn; your teeth start buzzing; your tongue starts to dance; and the air seems to rush out of your lungs. You can't help but spit it out immediately, followed by rapid sputtering and coughing. You down most of a glass of water in response.`
+	`	Otto begins laughing hysterically. "That's a clap o' thunder fer ye, eh, laddy? Ye ain't gonna find a Mintaka Manticore in Republic space!"`
+	
+	choice
+		`	"My mouth has a migraine."`
+		`	"What's in this wretched brew?"`
+		`	*Cough* It's really not *sputter* so bad. Just gotta *wheeze* get used to it."`
+	`	Otto continues laughing. "Glad you like it! The recipe changes every day, dependin' on the purity of the uranium. But it ain't so rough after the first couple dozen."`
+	
+	choice
+		`	"Uranium?!?"`
+		`	"Are you trying to kill me?!?"`
+	`	"Don't worry, laddy, they get rid of the dangerous bits before it goes in the drink! Most of 'em, at least. Ye can only do so much with a sieve." Otto chuckles, and you sincerely hope this is just his dry wit. "Now, let's get down to more important matters."`
+	
+	label business
+	`	"These rooms are made fer delicate matters, so we're safe discussin' things here. Tell me about these "Hai" ye found on the other side o' the wormhole."`
+	choice
+		`	"Their society is advanced to the point that they barely have to maintain anything. The only struggle their society seems to have is with so-called 'renegade Hai'."`
+		`	"They're a technologically advanced, peace-loving people who allow humans to live among them. The only source of conflict they have is with 'renegade Hai' in the far north of their territory."`
+	`	"Renegade Hai? Tell me a little about 'em."`
+	
+	choice
+		`	"I don't know much, but the Hai I met told me they were bandits and pirates who plunder and steal... But, you know, without the good reasons you guys have."`
+			goto reasons
+		`	"They're basically the Hai version of pirates."`
+			goto pirates
+		`	"Imagine giant squirrels with rabies and a thirst to kill."`
+	`	"No need to imagine that, I've run into those before." Otto scratches his beard. "None that piloted starships, though."`
+		goto technology
+	label reasons
+	`	"Good catch there, lad! I was almost offended!" Otto chuckles.`
+		goto technology
+	label pirates
+	`	"Ah, free thinkers with a knack fer style and a flair fer excitement? We might get along!" Otto chuckles.`
+		goto technology
+	
+	label technology
+	`	"So, to sum it all up, they've got quite a bit workin' under the hood." You start to see where Otto is going with all this.`
+	choice
+		`	"They're definitely ahead of us, but not by much. They hardly have any drive to invent new technology. Even their conflict with the other Hai is just a series of raids."`
+			goto better
+		`	"Everything they have is a little better than what we have, but there's not as much variance."`
+			goto better
+		`	"We'd have a fair shake if war broke out. Their ship technology is only a hundred years ahead of ours, really."`
+	`	"A hundred years is a long time, laddy! Imagine..." Otto's voice trails off.`
+	
+	label better
+	`	"Even so, with tech like that, they must keep it under a pretty tight net!"`
+	choice
+		`	"Actually, anyone with credits to pay can purchase outfits and have them installed."`
+		`	"Oh, a real tight net. It costs a fraction of a shuttle to get your hands on a Pulse Cannon, and all they say is 'please don't tell anyone about us!'"`
+	`	Otto laughs. "Hah! Well, it seems I sent ye to the right aliens." Otto takes a sip of water. "What do ye say to another little trip to Hai space? Find their biggest outfitter, get the specs of everythin' available, and bring the data back here. There'll be money in it fer ye, of course, but I'm thinkin' there'll be bigger fish down the road..."`
+	
+	choice
+		`	"What do you have in mind?"`
+		`	"I don't think this is a good idea."`
+			goto no
+		`	"Consider it done."`
+			goto yes
+	`	Otto smirks playfully. "Oh, nothin' much. I'm just thinkin' that with all that advanced technology up fer grabs, it's high time someone made use of it. Fer a good cause, ye know?"`
+	
+	choice
+		`	"What's the point? You can't just purchase thousands of ship outfits without the Hai noticing."`
+		`	"How are you going to get enough technology to make a difference without the Hai noticing?"`
+	`	"Well, m'lad, I have a plan! I'll fill ye in on the details when ye get back. That is, if yer willin' to go."`
+	
+	choice
+		`	"I'm sorry, Otto, but I don't think I can."`
+			goto no
+		`	"I'll do it!"`
+			goto yes
+	
+	label no
+	`	Anger flashes across Otto's face; only momentarily, but you can tell he's gritting his teeth behind his pleasant smile. "Are ye sure about that, lad?"`
+	choice
+		`	"I'm sure. I won't sell out the Hai."`
+		`	"On second thought, I'd love to take a trip to Hai space!"`
+			goto yes
+	`	Another flash of anger, replaced by complacency. You notice Otto's face turns just a shade redder. "Well then... I suppose that's the end of our business. Get out o' here, kid."`
+	`	You awkwardly stand and head toward the door. As you walk out, you look back at Otto. His hands are folded together; he does not look at you. The woman outside the door gives you a cutting gaze as you walk past, but you make it out the door and back to the spaceport without event."`
+		decline
+	
+	label yes
+	`	"Alright!" Otto reaches across the table and claps you on the shoulder, nearly spilling your drink in the process. "Let's see what they've got!" Otto walks you out, and you catch a signal pass between him and the woman standing guard at the door. He wishes you luck as you exit the tavern and head back to the spaceport.`
+		accept
+		
+conversation "Hai Stakes [2]: Stopover"
+	`Upon exiting your ship, intense heat drives you to visit the interior office of the local outfitter. A vast number of Hai weapons, defenses, and other ship components are on display here.`
+	`	As you enter, you spot a surly-looking Hai behind the counter near the entrance. He sports an old-style human military cap with ear-holes cut out of it, giving him a somewhat comical appearance. A black patch of fur surrounds his left eye. He calls out to you. "Greetings. You want to buy, yes?"`
+	choice
+		`	"No, I just stopped by to say, 'Hai!'"`
+			goto joke
+		`	"No, I'm just looking."`
+			goto no
+		`	"Yes... Show me your most expensive item."`
+	`"Most expensive item? That is our Boulder Reactor. We keep them elsewhere. Too big for this place. You want to buy one? 5,750,000 credits."`
+	choice
+		`	"I'll take one."`
+		`	"No, I can't afford that."`
+			goto no
+		`	"No, I guess I'm looking for something else."`
+			goto no
+	`	"Good, good. That is 5,750,000 credits."`
+	branch buy
+		#"net worth" > 5750000
+		"credits" > 5750000
+	
+	choice
+		`	"I'm afraid I couldn't affort that even if I wanted to."`
+		`	"Whoops, I left my wallet on the ship."`
+	`	The Hai looks annoyed. "I tell you the price up front. You say you want Boulder Reactor. Now you say you can't afford Boulder Reactor. Which is it, human?"`
+	
+	choice
+		`	"Woah, man. Don't get your fur in a tangle."`
+		`	"I'm sorry, I didn't mean to annoy you."`
+			goto sorry
+	`	The Hai hops up and down; this is the first time you've seen an angry Hai of the peaceful variety. "You and your kind! You come in and wash your eyes in Hai technology. You make promises, so many promises! Then one of you with short legs and fat belly asks to borrow Biroo thrusters to 'see if they work on his ship' and never comes back! It is not fair!"`
+	`	After making a sound between a squeak and a shout, the Hai storms off into a room behind the counter. You notice he left a datapad on the counter; upon inspection, it appears to be contain a comprehensive technical inventory of the outfitter. You glance around to make sure no one is looking and take the pad before heading back to your ship.`
+		accept
+	
+	label buy
+	choice
+		`	"On second thought, I think I'll hold off for now."`
+			goto no
+		`	"I could afford it, but perhaps another time."`
+			goto no
+	label sorry
+	`	"It is I who should apologize. Many humans come in and... 'oggle' Hai merchandise. They cannot afford it, but they make many promises. What is it you want then?"`
+		goto end
+	label joke
+	`	You laugh hysterically. The Hai frowns. "You laugh, but in Hai, 'Hu-man' sounds like 'dirty soup'. So we have the 'last laugh'. The Hai holds up two clawed fingers and makes air quotes. "Now, what do you want?`
+		goto end
+	label no
+	`	The Hai scowls. "Hmph. What is it you want then?"`
+	label end
+	choice
+		`	"There's a lot of stuff I want, but I'm not exactly sure what I can fit on my ship. Do you have a digital database I could download so I can see how these wonderfully cared-for outfits would affect my ship's performance?"`
+	`	The Hai narrows his eyes at you for a moment before retrieving a small digital card. "Enter this into your datapad. Look, then come back. Do not use information I give you and then buy from outfitters online. I do not like freeloaders."`
+	`	You return to your ship and register the card to your datapad. Otto will be pleased.`
+		accept
+	
+conversation "Hai Stakes [2]: Complete"
+	`You land on the familiar ground of Freedom's dusty spaceport, intentionally parking your ship between two of the nicest pirate vessels there. As you walk down the landing ramp, you see the recognizable figure of Otto approaching from town. He greets you warmly, grabbing you around the shoulders and smiling. "Good to see ye again, kid! Ye had a safe trip, I trust?"`
+	`	Remembering all the coolest pirate movies you watched as a kid, you suavely glance side to side, then pull open your jacket to reveal the datapad, flashing an image of one the Hai outfits. Quick as lightning, Otto pulls your jacket closed, nearly wrenching your arm out of its socket. "Stop that! Don't ye have any sense at all?!?"`
+	choice
+		`	"But that's what all pirates do!"`
+			goto pirates
+		`	"I guess I wasn't thinking."`
+	`	Otto leans over and growls in your ear. "Damn right ye weren't thinking."`
+		goto continue
+		
+	label pirates
+	`	Otto sighs gruffly. "Yes, yes, all short-lived pirates! Don't be so foolish."`
+	label continue
+	`	You say nothing as Otto leads you through the spaceport and into town. But soon enough, he walks with his usual swagger, and it seems his high spirits have returned.`
+	`	As you approach the tavern, two men burst out of it and tumble into the dust, fists flying. Otto cheers as he leads you past them. "Get 'em, Kharim! Ho ho! 'Atta boy!"`
+	choice
+		`	"Aren't you worried they'll hurt each other?"`
+		`	[Say nothing.]`
+			goto nothing
+	`	Otto pauses, standing beside the entrance and looking thoughtfully toward the pair, now circling one another in a cloud of dust.`
+	`	"Way I see it, if a man threw a few punches in his youth, he resents a few people when he gets old. If a man threw no punches in his youth, he resents everyone." It sounds wise, but you wonder if that's only because it's vague and hard to prove.`
+	
+	label nothing
+	`	Otto leads you into the tavern. He takes you straight to the stairs without getting drinks. The scarred woman you saw last time stands up from a table in the corner and walks past you, up the stairs. You and Otto follow. She stares at you coldly as she opens the door; you follow Otto in.`
+	`	Two glasses of cold water occupy the lavish table. You sit down, but Otto unexpectedly occupies the position next to you. You scoot deeper into the curved booth. "Alright, lad! Let's see what ye've got here." You pull out your datapad and set it up on table. Otto's eyes light up.`
+	`	"Pulse Cannon... Pulse Turret... Ion Cannon! That sounds promising, eh?" You nod. Otto retrieves a pad of his own and sets about comparing Human and Hai outfits. You try to follow him, but he flips past data faster than you can process it.`
+	choice
+		`	[Awkwardly sip your water until he's done.]`
+		`	[Awkwardly shift in your seat until he's done.]`
+	`	In the span of half an hour, Otto pours over the entire database, transfixed like a Dirt Belt child in a Paradise World candy store. Finally, he finishes. "I copied the info off yer pad; I hope ye don't mind."`
+	choice
+		`	"Not at all."`
+		`	"Anything for you, gramps."`
+	`	Otto smiles and claps you on the shoulder. "Thanks fer gettin' this, kid. Ye won't regret it! Come back to Freedom when yer ready for somethin' with a little more bite, and we can really get crackin'! In the meantime, if ye find yourself headin' to Hai space, pick up some outfits fer me crew, eh? I'd like to see 'em get some use out o' this stuff."`
+	`	You retrieve your datapad and follow Otto out of the room. Otto waves to you as you head down the stairs; you catch part of an exchange between Otto and the woman at the door. "Aye, that young'n is gonna bring ye somethin' special fer yer ship..."`
+	`	On your way out of the building, you notice small stains of blood in the dirt outside. An ancient, scrawny-looking man with long grey hair scuffles out of the tavern behind you and begins sweeping it away. "Every Tuesday..." he mumbles.`
+	`	Back on your ship, you find that Otto has contributed another <payment> to your account. Whether a small scrap of meat to keep you interested, or simply the end of Otto's no-doubt limited reserves, is impossible to say.`
+	choice
+		`	[New Job-Board missions are now available.]`
+			accept
+
+# * * * * *  END OF "Hai Stakes [2]" * * * * *
+
+# * * * * *  "HAI STAKES [3]"  * * * * *
+
+mission "Hai Stakes [3]"
+	name "Escape Plan"
+	description "Rescue a scientist being transported to a prison lab on Quicksilver."
+	deadline 30
+	passengers 1
+	source
+		planet "Freedom"
+	destination
+		planet "Stormhold"
+	waypoint "Ruchbah"
+
+	to offer
+		and
+			has "Hai Stakes [2]: done"
+			not "got hai outfits"
+			not "Hai Stakes [3] [Hai]: offered"
+	
+	to fail
+		has "scientist rescued"
+	
+	npc board
+		government "Syndicate"
+		personality nemesis disables entering target
+		system "Ruchbah"
+		ship "Vanguard" "Prisoner Transport"
+		conversation "Hai Stakes [3]: Rescue"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive staying
+		system "Ruchbah"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Sheratan"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Zaurak"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Menkar"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Mirfak"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Alcyone"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Ankaa"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Diphda"
+		fleet "Small Syndicate"
+	
+	npc kill
+		personality heroic disables escort
+		ship "Firebird (Plasma)" "Flying Dutchman"
+		conversation "Dutch Dies"
+	
+	npc kill
+		personality heroic disables escort
+		ship "Headhunter (Particle)" "The Brand Name"
+		conversation "Brand Dies"
+	
+	on offer
+		conversation "Hai Stakes [3]: Offer"
+	
+	on defer
+		set "Hai Stakes [3]: deferred"
+	
+	#	Sadly, both of these appear as the mission does not "fail" until you land somewhere.
+	#on enter "Sheratan"
+	#	dialog
+	#		`	Dutch's face appears on your display. "Cap'n, might be a good idea t'stop n' refuel 'ere. Up to you. Dutch out."`
+	
+	#on enter "Ankaa"
+	#	dialog
+	#		`	Dutch's face appears on your display. "Cap'n, might be a good idea t'stop n' refuel 'ere. Up to you. Dutch out."`
+		
+	on enter "Ruchbah"
+		dialog
+			`	You twitch nervously as you come out of hyperspace. Dutch's face appears on your display. "Cap'n, target should be comin' through 'ere any day now - might be a good idea t'stop n' refuel. Up to you. Dutch out."`
+		
+mission "Hai Stakes [3] [Hai]"
+	name "Escape Plan"
+	description "Rescue a scientist being transported to a prison lab on Quicksilver."
+	deadline 30
+	passengers 1
+	source
+		planet "Freedom"
+	destination
+		planet "Stormhold"
+	waypoint "Ruchbah"
+
+	to offer
+		and
+			has "Hai Stakes [2]: done"
+			has "got hai outfits"
+			not "Hai Stakes [3]: offered"
+	
+	to fail
+		has "scientist rescued"
+	
+	npc board
+		government "Syndicate"
+		personality nemesis disables entering target
+		system "Ruchbah"
+		ship "Vanguard" "Prisoner Transport"
+		conversation "Hai Stakes [3]: Rescue"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive staying
+		system "Ruchbah"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Sheratan"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Zaurak"
+		fleet "Small Syndicate"
+	
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Menkar"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Mirfak"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Alcyone"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Ankaa"
+		fleet "Small Syndicate"
+		
+	npc
+		government "Syndicate"
+		personality nemesis vindictive
+		system "Diphda"
+		fleet "Small Syndicate"
+	
+	npc kill
+		personality heroic disables escort
+		ship "Firebird (Dutch)" "Flying Dutchman"
+		conversation "Dutch Dies"
+	
+	npc kill
+		personality heroic disables escort
+		ship "Headhunter (Brand)" "The Brand Name"
+		conversation "Brand Dies"
+	
+	on offer
+		conversation "Hai Stakes [3]: Offer"
+	
+	on accept
+		"reputation: Syndicate" = 1
+	
+	on defer
+		set "Hai Stakes [3]: deferred"
+	
+	#	Sadly, both of these appear as the mission does not "fail" until you land somewhere.
+	#on enter "Sheratan"
+	#	dialog
+	#		`	Dutch's face appears on your display. "Cap'n, might be a good idea t'stop n' refuel 'ere. Up to you. Dutch out."`
+	
+	#on enter "Ankaa"
+	#	dialog
+	#		`	Dutch's face appears on your display. "Cap'n, might be a good idea t'stop n' refuel 'ere. Up to you. Dutch out."`
+		
+	on enter "Ruchbah"
+		dialog
+			`	You twitch nervously as you come out of hyperspace. Dutch's face appears on your display. "Cap'n, target should be comin' through 'ere any day now - might be a good idea t'stop n' refuel. Up to you. Dutch out."`
+	
+conversation "Hai Stakes [3]: Offer"
+	# NOT PREVIOUSLY DEFERRED
+	branch "deferred"
+		"Hai Stakes [3]: deferred" == 1
+	
+	`You wander the spaceport looking for Otto, but he is conspicuously absent. As you approach your ship, you hear banging and several muffled screams coming from a nearby Berserker-class vessel.`
+	choice
+		`	[Investigate.]`
+		`	[Ignore.]`
+			defer
+	`	As you approach the ship, Otto emerges. He leads two pirates who bear a stretcher between them; a bloody cloth covers the still form on the stretcher. He pauses upon seeing you, then waves you over.`
+	`	"C'mere, lad! Don't fright, now. Follow me."`
+	choice
+		`	"I get queasy at the sight of blood. I think I'll stay here"`
+		`	"What happened here?"`
+			goto what
+		`	"I don't think he's going to make it."`
+			goto makeit
+	`	Otto frowns, then turns away. He leads the group away from the spaceport, toward a valley edge a short distance away. He returns a short time later. Most of the group disperses, but the female pirate in the group hangs back and exchanges a few words with Otto. He gives her a small badge, hugs her, and then offers a short salute.`
+	choice
+		`	"What was that about?"`
+		`	[Say nothing.]`
+			goto stay
+	`	Otto sighs. You can sense a mix of anger and frustration in his tone. "We lost a captain. His first mate gets the ship now."`
+		goto stay
+	
+	label makeit
+	`	Otto chuckles. "Not one for tact, eh? A captain after my own bleedin' heart, I tell ye!" Otto continues walking, but his mood quickly turns sour.`
+	label what
+	`	You follow beside Otto as he leads the pair of pirates away from the spaceport. You see subdued anger in the eyes of the man; the woman appears apathetic. Several other pirates emerge from the ship, following you.`
+	`	"This bastard here raped a passenger aboard a merchant vessel." Otto spits into the dirt. "Young one, too." He continues on, solemnly measuring every step. It appears the procession is heading toward one of the mesa's valleys.`
+	choice
+		`	"I don't mean to pry, but how did he go from that, to this?"`
+			goto how
+		`	"Looks like he got what he deserved."`
+	`	"Damn right." Otto mutters something you can't quite hear, then continues. "I ain't a saint myself, and I don't expect the lads to be. If they were, they'd be off playing nurse with the Humanitarian Corps or somethin'." Though you don't ask, he continues on.`
+	
+	label how
+	`	"He came back to port, boastin' about his great victory - typical braggin', it's what ye do. All the captains take turns. When he was about to leave, Denver here..." - he points to the man at the head of the stretcher - "...told me about certain 'excesses' the good captain took while the crew was seizing the cargo." You look back at the man. He avoids your glance. For the first time, you notice a little blood on Otto's left hand.`
+	choice
+		`	"That still doesn't explain how he ended up like this."`
+		`	"So... You killed him?"`
+	`	Otto halts, bringing the procession to a standstill. He glances back at the lingering crowd, then continues walking. It appears he doesn't mind sharing this in front of his cohort. "Denver told me in confidence. But it's one o' our rules." Otto clears his throat; his tone shifts distinctly toward anger.`
+	`	"So I went back to his ship and asked. He said he didn't do nothin'. I asked who'd swear fer him, and no one did. But Ilena confirmed it. And even then, he said he only 'does it when they give him trouble.'" Otto curses. "It ain't the action, kid; it's the denial. Ye can save a man with remorse in his heart. There's nothin' to be done when his heart is twisted too."`
+	`	The group arrives at the edge of the valley cliff. Otto makes a motion to the two stretcher-bearers, who turn the body toward Otto. He unceremoniously throws the cheap cloth over the cliff's edge, revealing the wounds inflicted upon the dead man; you wretch when you see that a metal sheet has been nailed into his chest, roughly over his heart, labeled simply, "RAPE". A cheap knife has been driven through a slit in the plate up to the handguard.`
+	`	Otto solemnly addresses the silent group. Judging by their expressions, you get the impression they witnessed much worse than the aftermath. "Everyone knows the crime. This ain't vengeance; this is justice, pure and simple." Otto gives a signal, and the two stretcher-bearers cast the body into the rocky valley below.`
+	choice
+		`	[Peek over the edge.]`
+	`	Roughly a hundred feet below, a long-dry riverbed runs through the valley, now partially overrun by rocks originating from the near slope. You see about half a dozen bodies below, each roughly adorned with a metal plate. You can't make out any words from here.`
+	`	As everyone begins meandering back to the town, Otto puts his hand on your shoulder briefly, though you don't grasp the significance. Perhaps he requests understanding, or is trying to comfort you from what you witnessed. When you make it back to the spaceport, most of the group disperses, but the female pirate in the group hangs back and exchanges a few words with Otto. He gives her a small badge, hugs her, and then offers a short salute.`
+	
+	label stay
+	`	"C'mon, kid. Let's turn our attention to more pleasant matters, eh?" You accompany Otto to the now-familiar tavern. The noise inside has lowered to a dull roar since your last visit; you wonder if it has something to do with the events of the day. You follow Otto upstairs to your usual meeting room, noting the presence of the scarred woman once more.`
+	branch "hai outfits"
+		"got hai outfits" == 1
+		
+	`	"Ye did a great thing, bringin' that info back. We don't have any outfits yet, but we can change that right quick."`
+		goto meetup1
+	label "hai outfits"
+	`	"Ye did a great thing, bringin' that info back. And a fine job o' sneakin' those outfits back here right under their tails!" Otto chuckles.`
+	
+	label meetup1
+	`	"Unfortunately, I'm going to have to ask ye to do somethin' a little more dangerous. See, it's real grand to have a spare piece of advanced tech here and there, but it ain't gonna change anythin' in the long run."`
+	
+	choice
+		`	"What do you have in mind?"`
+	`	"We need a way to engineer this tech ourselves. And as ye might imagine, we couldn't engineer a wooden box." You chuckle a bit, knowing that Otto is exaggerating, but understanding the reputation pirates have as idiots and fools. "Most of our tech is stolen or outdated castoffs from the Syndicate."`
+	choice
+		`	"Stolen? Is that why it all looks so old?"`
+			goto stolen
+		`	"The Syndicate?"`
+		`	"So where do I come in?"`
+			goto business
+	`	"Aye. If ye imagine it this way, the organized pirates are kinda like the Syndicate's ugly cousin, twice removed. The Syndicate don't talk about us, they don't invite us to birthday parties, but when we have something they need they'll be the first to remember us. The Syndicate is a business, and it's the way of business to go smoother without competition."`
+	choice
+		`	"So they pay you to raid non-Syndicate trade routes?"`
+			goto raid
+		`	"The Syndicate is legendarily wealthy. What do you have that they could possibly want?"`
+		`	"But I see Pirates fighting the Syndicate all the time."`
+			goto fighting
+		`	"Got it. Let's get down to business."`
+			goto business
+	`	"Wealthy, aye, but they have their problems. Customers who back out o' deals. Clients who know too much. Merchants who turn down their protection service. Republic officials who distrust the Syndicate and dig a little too deep... Problems ye can't solve with a string of suspicious deaths. No one likes an unsolved murder."`
+	choice
+		`	"I knew the Syndicate was bad news."`
+			goto badnews
+		`	"You're lying! The Syndicate would never hire Pirates to assassinate a member of the Republic."`
+	`	Otto chuckles, but doesn't appear perturbed by your accusation in the slightest. "Believe what ye want, kid. But the next time ye hear about a Republic diplomatic convoy attacked by pirates, take note, they're rarely taken hostage. And the only thing more worthless than a politician is a dead polititian." Otto sighs. "Now, about yer part in all this."`
+		goto business
+	
+	label badnews
+	`	"And ye'd be right. Watch yer back around 'em. At least a Pirate announces his intentions before killin' ya!" Otto chuckles. "Now, about yer part in this mess."`
+		goto business
+		
+	label raid
+	`	"Trade routes, certain Navy patrols... Anythin' that'll get 'em what they want." Otto sighs heavily. "Now, about yer part in all this."`
+		goto business
+	
+	label fighting
+	`	Otto chuckles knowingly. "Yer right, they do. But yer probably thinkin' about Pirates as one big group of people who kinda decide what to do. But fer every well-organized bunch ready to play their cards, there are a hundred star-kissers blowin' themselves to kingdom come tryin' to score big and make their own way." Otto clears his throat. "Make a deal one day, make another deal the next. That's how some do it. But about yer part in this."`
+		goto business
+	
+	label stolen
+	`	"It may come as a great surprise to ye that we're all pitifully poor out here. In the grand scheme o' things, I mean. Sure, we've got our moments, and even a few wealthy speculators who like the sound of planets without law. But even when we do get a lucky break, ye can only divide a piece o' bread among so many rats before all you're left with is crumbs." Otto clears his throat. "But about yer part in all this."`
+	
+	label business
+	`	"We've got three big problems keepin' us from exploitin' this tech. One, we don't have the raw materials. Two, we don't have the manufacturin' facilities. And three, we have absolutely no bleedin' idea how to make anythin' close to the damn things. And I know I look smart, but even ol' Otto can't make a blaster out o' sand!" Otto laughs.`
+	`	"So we're going to solve that last problem first. There's a certain less-than-respectable member of the Syndicate who's been utilizing the services of a convicted scientist."`
+	choice
+		`	"A convicted scientist?"`
+		`	"Alright. Where do I go?"`
+			goto meetup2
+	`	Otto nods. "She used to be one of the Republic's leadin' researchers on Quarg tech. Talk is, she came close to figurin' out what made their weapons work."`
+	choice
+		`	"Quarg?"`
+		`	"What did she do?"`
+			goto scientist
+	`	"Tall, funny-lookin' guys down south. Don't ask me, never met one."`
+	choice
+		`	"So what did she do?"`
+	label scientist
+	`	Otto laughs. "Well, legend is, she eventually figured out how to make a powerful beam laser. Twice as strong as a Heavy Laser, and half the weight. But... Well, she wasn't the most careful, let's just say. Covered up a few anomolies in the test results and rushed it off for testing. Long tale short, the Republic ship it was installed on blew up, and all hands were lost."`
+	choice
+		`	"Sounds like an honest mistake."`
+		`	"Why did she cover up her mistakes?"`
+	`	"Well... It's not exactly a gray area, lad. I don't know her personally, but talk is, she's got a few screws loose, and don't take questioning well. During the investigation, they found dozens of faked results, missin' prototypes, and a handful o'... Morally questionable studies. The Syndicate saw an opportunity and swiped her before trial. Faked her death in a lab accident and all that."`
+	choice
+		`	"How do you know all this? And why do you want a scientist who faked lab results?"`
+	`	Otto chuckles. "I may be partially responsible fer a few missing prototypes. One of my nephews worked with her back in the day. Crazy then. Probably moreso now." Otto scratches his forehead. "But smarter than half the Syndicate eggheads all put together."`
+	
+	label meetup2
+	`	"She's been shipped between Syndicate prison labs fer the past five years or so. But she's bein' moved to Quicksilver sometime soon, which means an opportunity fer us! You and two of my captains will intercept the prison convoy in Ruchbah, disable the transport, and bring her back to Stormhold. I'll meet you there and prepare the way."`
+	choice
+		`	"Won't the Syndicate be upset?"`
+	`	Otto laughs. "Kid, I'd count on it! They'll be breathing down your neck all the way back to unclaimed space. But if you managed to plunder a handful of incriminatin' documents, and it were exposed to the Republic..."`
+	choice
+		`	"The Syndicate would be forced to denounce the man using her for research."`
+	branch "hai outfits2"
+		"got hai outfits" == 1
+	`	"Ah, what a smart chap! The Syndicate shouldn't know about this, so as long as ye take 'er at the right time, there shouldn't be much resistance... But if yer feelin' a touch weak, I'd suggest bringin' some of that Hai tech back for your escorts."`
+		goto meetup3
+	label "hai outfits2"
+	`	"Ah, what a smart chap! The Syndicate shouldn't know about this, so as long as ye take 'er at the right time, there shouldn't be much resistance... And with that rightfully-purchased plunder ye brought back, yer escorts should be more than a match for those corporate suits."`
+	label meetup3
+	
+	choice
+		`	"Let's do it. Who am I riding with?"`
+		`	"I'd like to get a little more firepower before I go."`
+			goto firepower
+	`	Otto stands up and gestures for you to follow. "Ye've seen Dutch; she's the one who stands outside the door in case ye or someone else does somethin' foolish. Ye've never met Brand, but he'll have your back." Otto opens the door to let you out. He addresses the woman outside. "Dutch, get Brand. Our young friend is ready to fly!" Otto laughs and pats you on the back. "They'll meet you at the spaceport, kid. Buckle up. And don't be an idiot. My people are responsible for themselves, but I don't want any deaths out there."`
+	`	As you turn to leave, Dutch jogs up the stairs with a younger man you presume to be Brand. Tattoes and several unconventional piercings adorn his face; he gives you a friendly grin through what appears to be a translucent lip guage filled with glycerin water and sparkles, exposing a glittery view of his teeth. You try to put the image out of your mind as you make your way back to the ship.`
+	`	During take-off prep, Dutch opens a comm line: "If 'tings go south, cap'n, we'll meet you at Stormhold."`
+		accept
+	
+	label firepower
+	`	"Aye, a fine idea! Get what ya need and come back here." You bid Otto farewell and head back to your ship.`
+		defer
+	
+
+	#	PREVIOUSLY DEFERRED
+	label "deferred"
+	`	Otto intercepts you as you walk through the spaceport. "Ye ready to go, kid?"`
+	choice
+		`	"Absolutely. Who am I riding with?"`
+			goto yes
+		`	"Not yet."`
+	`	Otto sighs, but appears excited nonetheless. "Alright; I'll stop pesterin' you. Get on with what yer doin', but come back soon. The window's closin'."`
+		defer
+			
+	label yes
+	`	"Fantastic, lad! Ye've met Dutch before; she's the one guardin' the meetin' room when we talk. And Brand is one of the best pilots I have; a tad new-fashion for my taste, but reliable. He'll have yer back." Otto smiles for a moment, then gives you a stern look. "Be careful out there, kid. Don't be an idiot. My people are responsible for themselves, but I don't want any deaths out there."`
+	`	As you make your final preparations, Dutch and the man you presume to be Brand head toward you. Dutch appears more relaxed than you've seen her. Brand has a remarkable number of tattoos and unusual facial piercings. Dutch crosses her arms and, with a noticeable Irish accent, says "We're ready when ye are." Brand smiles and playfully remarks, "Guess we're flyin' with you, huh? Don't get us fried, yeah?" Glitter, suspended in some glycerin, creates a snowglobe effect in his translucent lip guage. You try to ignore it.`
+	choice
+		`	"I'll do my best."`
+		`	"No promises."`
+	`	Brand laughs, makes finger guns at you, and heads in the direction of a Headhunter parked a little ways away. Dutch wanders away toward a Firebird. During take-off prep, Dutch opens a comm line: "If 'tings go south, cap'n, we'll meet you at Stormhold."`
+		accept
+
+conversation "Hai Stakes [3]: Rescue"
+	apply
+		set "scientist rescued"
+	`With the prison transport disabled, you and all non-essential crew members rush to the airlock, huddling around the door to the Vanguard's cargo bay. You give the crew a countdown; "Three, two, one..." The Vanguard's damaged airlock door slides open slowly and loudly as atmosphere from your ship rushes in, swirling the smoky haze; finally, a crack wide enough to slip through is gained.`
+	`	Scattered blaster fire flies through the smoky haze, but it seems wild and undirected. Your crew spreads out, taking cover behind supply crates. Another shot rings out; a pained scream from the opposite end of the hold cuts through the acrid air, followed by the sound of metal rods tumbling. Out of the corner of your eye, you see a Syndicate guard peek out of his hiding place.`
+	choice
+		`	[Take the shot.]`
+		`	[Hold your fire.]`
+			goto wait
+	`	The Syndicate guard ducks back into cover; you line up the shot. He leans out, ready to shoot, just as you pull the trigger; the blast catches him in the chest. He yells and collapses to the ground.`
+		goto rescue
+	label wait
+	`	The Syndicate guard ducks back into cover. He leans out with his blaster aimed at one of your crew across the bay; the shot goes wide. Another blast rings out. He yells and collapses to the ground. Your crew rushes to interior door, preparing for any stragglers.`
+	label rescue
+	`	You spot an electrified holding cell - more of a small crate in size -  in the corner of the cargo bay, partially obscured by fallen boxes. Inside, an unkempt woman of about 45 sits cross-legged in the center, chained to and holding a set of metal braces bolted to the floor.`
+	choice
+		`	"Hold on, we're here to rescue you!"`
+		`	"You seem surprisingly calm."`
+			goto calm
+	`	She meets your gaze, smiles, and mutters something; you can't make out more than a number. "8.7..." Then she frowns. "What took you so long?!?"`
+		goto meetup1
+	label calm
+	`	She meets your gaze, smiles, and mutters something; you can't make out more than a number. "Hm... 8.7..." Then she rolls her eyes. "If I stand up, I get zapped. If I let go of the straps while you bump the ship around, or lean over too far, I get zapped. I've been sitting like this for 4 days now. So thank you, I think I'm doing a good job of remaining calm. Now what took you so long?!?" As she talks, your crew mechanic begins tinkering with the holding cell's control mechanism.`
+		
+	label meetup1
+	choice
+		`	"Geez, lady. We're doing out best, you know, rescuing you."`
+		`	"What do you mean? We got here as fast as we could, and no one even knows about this!"`
+	`	She releases her straps and lightly punches the floor of the cage. "You want to hear a sob story? I've been carted around Syndicate planets for 5 years now. I've been in leg shackles for 4 - that's a fun story - and you're here now, so SOMEONE knew that I wasn't dead. So yeah, I've been waiting a long time. But definitely not for you. Who are you?"`
+	
+	choice
+		`	"I'm the dashing rogue who's rescuing you, Buttercup."`
+			goto dashing
+		`	"I'm <first>. Otto sent me."`
+	`	The woman puts on a posh British accent. "Charmed, I'm sure." Then, in a normal voice, "Otto? Doesn't ring a bell."`
+		goto meetup2
+	label dashing
+	`	The woman makes gagging noises. "Oh, wow, and a flirt too. Pinch me, I must be in heaven. Someone get this damn ship to Quicksilver already, I'm getting nauseous."`
+	
+	label meetup2
+	`	As you're about to respond, you hear a snap and a sizzling noise. Your technician hustles back to you. "Containment field down, Captain! We'll load it up."`
+	
+	choice
+		`	"I don't want her sitting in a cage any longer. Get her out now."`
+		`	"Bring it on board; we'll figure out how to release her when we're out of danger."`
+			goto release
+		`	"Bring it aboard, but don't let her out."`
+			goto aboard
+	`	You hear the sound of debris pinging off the ship's hull. A couple of your crew look at you hesitantly. One half-heartedly objects, "But, captain..."`
+	choice
+		`	"I know we're in danger, so quit stalling and do it!"`
+	`	Your crew springs to action. Your tech grabs a plasma torch from his belt and begins cutting through the chains. The woman addresses the tech; "Hm... 6.4. Keep your eyes on the prize there, deadeye. Let's not get wild with the plasma now."`
+	`	It takes a few tense moments, but luckily, nothing catastrophic happens. It appears the rest of the crew is incapacitated or hiding in the fore of the ship. Your crew carefully tip the cage over, exposing a locked trapdoor in the bottom of the cage. You breathe a sigh of relief, as this lock has a manual release. The woman crawls out of the cell, and you rush to the airlock door, squeezing through one at a time. You notice your former prisoner has lagged behind you, but follows quickly enough. Back on your ship, the woman takes a seat in the cockpit as you disengage from the Vanguard.`
+	`	As you pull away, you see your rescuee tossing a small, juryrigged electronic device up and down. "Thanks, cap."`
+	choice
+		`	"You're welcome... What is that?"`
+	`	"Homemade detonator." Just then, an explosion rocks your ship, and wreckage hurls past the cockpit. The Vanguard is gone.`
+		launch
+	
+	label release
+	`	Your crew struggles to wrench open the Vanguard's airlock door the rest of the way. It eventually gives way, and you're able to tip the cage onto a hovercart and rush it into your ship. Once aboard, you and the crew rush back to their duties. The woman says, "Smart move, captain. Don't blow us up now."`
+		accept
+	
+	label aboard
+	apply
+		set "not free"
+	`	You expect a response from the woman, but she just smiles at you. You can't help but feel there's a lack of sincerity behind it, or perhaps an overwhelming amount of malicious intent. Your crew wrenches the Vanguard's airlock door the rest of the way; it gives in with a shriek and a crunch. You're able to wrestle the cage onto a hovercart and rush it into your ship; the crew rush back to their duties. You notice your 'rescuee' still smiling menacingly as you head to the cockpit.`
+		accept
+
+conversation "Dutch Dies"
+	`Dutch's voice crackles across the open comms channel. "Bring 'er around! Get-" a muffled scream, a rush of air, then static."`
+	apply
+		set "dutch dead"
+
+conversation "Brand Dies"
+	`You hear Brand's slightly maniacle voice shout across the open comms channel. "Say your prayers, boys! We're goin-" the voice is cut off by a muffled explosion."`
+	apply
+		set "brand dead"
+		
+#	Mission for if you land to inform you that your escorts will leave.
+mission "Hai Stakes [3] [Escorts Leave]"
+	invisible
+	landing
+	source
+		not planet "Stormhold"
+	
+	to offer
+		has "scientist rescued"
+		not "Hai Stakes [3] [Complete]: offered"
+		or
+			not "dutch dead"
+			not "brand dead"
+	
+	on offer
+		conversation
+			branch "dutch"
+				not "dutch dead"
+			`	As you land, Brand contacts you. "Hey, Cap, I ain't cozy stoppin' here. See ya back at Stormhold!"`
+		
+			label dutch
+			`	As you land, Dutch contacts you. "Not sure I like the idea of hangin' here too long - meet ya back in Stormhold. Dutch out."`
+		
+#	Since the previous mission relies on "Fail" conditions to operate correctly, this mission fills in the gap if the player happens to land somewhere else in the meantime.
+mission "Hai Stakes [3] [Filler]"
+	name "Escape Plan (Return)"
+	description "Make your way back to Stormhold in one piece!"
+	landing
+	passengers 1
+	source
+		not planet "Stormhold"
+	destination
+		planet "Stormhold"
+	
+	to offer
+		has "scientist rescued"
+		not "Hai Stakes [3] [Complete]: offered"
+		
+		
+#	"Ghost" mission for completing the previous mission due to its reliance on fail conditions.
+mission "Hai Stakes [3] [Complete]"
+	invisible
+	name "Escape Plan"
+	description "Rescue a scientist being transported to a prison lab on Quicksilver."
+	landing
+	source
+		planet "Stormhold"
+	
+	to offer
+		has "scientist rescued"
+	
+	on offer
+		fail "Hai Stakes [3]"
+		fail "Hai Stakes [3] [Hai]"
+		payment 300000
+		conversation "Hai Stakes [3]: Complete"
+	
+conversation "Hai Stakes [3]: Complete"
+	branch dutch
+		"dutch dead" == 1
+	branch brand
+		"brand dead" == 1
+	# NO ONE DIED.
+	`You feel extremely relieved to have made it out of Syndicate space with your ship intact, and moreover, that Dutch and Brand have made it back safely. They meet you outside your ship, looking rather pleased.`
+	`	"Good stuff out there, that was." Dutch cracks a small smile, if only for a moment. Brand pats you on the shoulder. "Man, that was intense!" His lip gauge sparkles as he shakes his head vigorously.`
+	`	You spot a very excited-looking Otto jogging toward you. "Ah, lads, I knew you could do it!" He wraps you and Brand in a big group hug. "You did get her?"`
+	choice
+		`	"We did. She's on the ship."`
+		`	"Could you really doubt me? She's waiting on the ship."`
+	`	Otto nods his head and smiles. "Alright, alright - well, let's see her! Dutch, Brand, you make an old man proud. Go have some fun!" You can't imagine Dutch as a 'party girl', but the two take their leave nonetheless.`
+		goto meetscientist
+	
+	label dutch
+	branch dutchbrand
+		"brand dead" == 1
+	# Only DUTCH is dead.
+	`You're relieved to set foot on solid ground, but you can't help wondering if there was a way you could have saved Dutch. Brand meets you outside your ship, shaking and smoking a recreational of some form.`
+	`	"Man, I can't believe it. Just, gone. Man, Otto's gonna be mad." He takes another puff.`
+	choice
+		`	"It's not your fault, Brand."`
+			goto fault
+		`	"Cool it, Brand. It's not the end of the world."`
+			goto coolit
+		`	"Maybe if you weren't busy getting high, you could have saved her!"`
+	`	In one quick motion, Brand spits out his cigarette and punches you in the nose. You feel something crack.`
+	choice
+		`	[Punch him.]`
+		`	[Apologize.]`
+			goto apologize
+	`	You swing wide, catching him in the jaw. A few more blows are exchanged when you and Brand are dragged apart from each other. Otto holds your collar and shouts, "What in the nine hells is goin' on here?!?"`
+	`	Brand collapses to the ground, weeping. "He let her die! Oh, god, I let her die!"`
+	choice
+		`	"We lost Dutch."`
+	`	Otto's face goes blank. He inhales very slowly, almost painfully, as he turns toward a shuttle parked nearby. In a tone of anger and remorse you didn't think possible from a pirate, Otto shouts, "Damn it!"`
+	`	His fist flies into the shuttle's hull, creating a small but impressive dent in the outside. Otto wipes his bloody knuckles off, then addresses Brand. "Brand, get cleaned up. Yer a mess." Brand scrambles to his feet and walks away unsteadily. Otto presses his finger onto your chest. "And you are not to loosen that man's nerves any more than they are. Understand?`
+	choice
+		`	"Understood."`
+			goto meetup1
+	
+	label apologize
+	`	You hold one hand up, covering your nose with the other. "Stop, stop! I'm sorry. I didn't mean it." Brand huffs, shakes out his arms, and begins sniffling. Otto approaches you and calls out, "Welcome back, lads! Where's Dutch?"`
+	`	Brand collapses to the ground, weeping. "He let her die! Oh, god, I let her die!"`
+	choice
+		`	"We lost Dutch."`
+	`	Otto's face goes blank. He inhales very slowly, almost painfully, as he turns toward a shuttle parked nearby. In a tone of anger and remorse you didn't think possible from a pirate, Otto shouts, "Damn it!"`
+	`	His fist flies into the shuttle's hull, creating a small but impressive dent. Otto wipes his bloodied knuckles off, then addresses Brand. "Brand, get cleaned up. Yer a mess." Brand scrambles to his feet and walks away unsteadily.`
+		goto meetup1
+		
+	label coolit
+	`	Brand paces around unsteadily, taking puffs on his cigarette. "No, god, no, it's not cool. Dutch was Otto's fave. That ain't right, no, I don't think so."`
+	choice
+		`	"Keep it together, Brand! Otto knew the risks involved. He knew he might lose someone."`
+	`	After taking another drag, Brand spits his cigarette out and paces back and forth. "Yeah. Yeah, yeah. Okay. Yeah, It's risky business." You spot Otto approaching; he calls out, "Welcome back, lads! Where's Dutch?" Brand looks at you nervously.`
+	choice
+		`	"I'm so sorry. We lost her."`
+		`	"There was nothing we could do. I'm sorry."`
+	`	Otto's face goes blank. He inhales very slowly, almost painfully, as he turns toward a shuttle parked nearby. In a tone of anger and remorse you didn't think possible from a pirate, Otto shouts, "Damn it!"`
+	`	His fist flies into the shuttle's hull, creating a small but impressive dent. Otto wipes his bloodied knuckles off before addressing you and Brand. His tone carries reluctant restraint. "Well, damn. If you say, there was nothin' to be done."`
+		goto meetup1
+	
+	label fault
+	`	Brand paces around unsteadily, taking puffs on his cigarette. "Yeah, yeah, okay, but I was there, I could have... Oh, god, Otto's gonna kill us."`
+	choice
+		`	"No one's killing anyone. You did everything you could. It's okay."`
+	`	After taking another drag, Brand spits his cigarette out and paces back and forth. "Yeah, yeah, okay, yeah, you're right. We'll just tell him." You spot Otto approaching; he calls out, "Welcome back, lads! Where's Dutch?"`
+	`	As you're about to respond, Brand stutters out a response. "I'm- I'm so sorry, I- I let her down, Otto. I'm so sorry." Otto's face goes blank. He inhales very slowly, almost painfully, as he turns toward a shuttle parked nearby. He reaches out, touches one of the landing braces, and mutters something indecipherable. "Well, damn."`
+	`	He puts his hand on Brand. "It ain't yer fault, Brand. It's mine if it's anyone's. Go get cleaned up."`
+	.
+	label meetup1
+	`	Otto mutters lowly and scratches his beard. "What happened?"`
+	choice
+		`	"Syndicate forces were stronger than we expected. It seemed like they had patrols ready all the way back to Stormhold."`
+	`	Otto sighs. "I see... Not what I was expectin'." Otto paces back and forth and mutters for a moment. "Damn it all. If it weren't for..." Otto spits. "Nevermind. Let's see 'er." You lead Otto into your ship.`
+		goto meetscientist
+		
+	label brand
+	# only BRAND is dead.
+	`You're relieved to set foot on solid ground, but you can't help wondering if there was a way you could have saved Brand. Dutch meets you outside your ship.`
+	choice
+		`	"I can't believe he's gone."`
+			goto cantbelieve
+		`	"I'm gonna miss ol' clear-lip."`
+		`	[Say nothing.]`
+			goto meetup2
+	`	Dutch chuckles. "He 'ad a knack fer style, that one." She exhales deeply and crosses her arms.`
+		goto meetup2
+			
+	label cantbelieve
+	`	Dutch crosses her arms. "Here ye are, havin' slain a hundred faceless men. And ye want to shed a tear for one who went willin'ly? What are ye?"`
+		goto meetup2
+	
+	label meetup2
+	`	You spot Otto approaching; he calls out, "Welcome back, lads! Where's Brand?"`
+	choice
+		`	"That boy's spacedust."`
+		`	"There was nothing we could do. I'm sorry."`
+			goto sorry
+	`	Otto grabs you by the collar and rams you into the landing gear of a nearby ship. "I'd have ye not talk so about the dead, child." Dutch stares, uninterested. Otto releases you and curses under his breath. "'Course, we all know what we're in for up there. Dutch, the day is yours." Dutch wanders off toward the town. "Come on, let's see this scientist of yours." You lead him into your ship.`
+		goto meetscientist
+	label sorry
+	`	Otto sighs and shakes his head. He lightly punches at a small cargo container. "So it is. Dutch, the day is yours." Dutch wanders off toward the town. "Let's see this scientist of yours." You lead him into your ship.`
+		goto meetscientist
+	
+	label dutchbrand
+	# DUTCH and BRAND are dead.
+	`You sigh as you land at Stormhold's dreary spaceport. A large part of you wonders if there was a way to save Dutch and Brand... You only hope Otto will understand how difficult the fighting was. After a few anxious moments, you spot him heading toward you. His face bears a grim visage.`
+	`	"You... They didn't make it, did they?"`
+	choice
+		`	"I'm sorry. There was nothing I could do."`
+		`	"The Syndicate was all over. That scientist must be worth more than you... Worth a lot to them."`
+	`	Otto paces back and forth, taking short, sharp breaths. In a flash, he grabs you by the collar and runs you into the landing gear of the closest starship. "Damn it!" After a moment, he lets you go. "I'm sorry, kid. It ain't your fault, I know." You nod, rubbing your sore neck and coughing. "Come on, let's see this scientist." You lead Otto into your ship.`
+	
+	label meetscientist
+	branch imprisoned
+		"not free" == 1
+	# Player freed her at some point.
+	`	You take him to the crew quarters. Otto makes the hallways look cramped, and you can't help but notice him ducking under each doorway. You open one of the larger rooms and find the woman sitting upside-down on a reclining chair, her bare feet swinging over the back as she studies a data padd. Upon noting Otto's presence, she not-so-gracefully rolls off the chair and approaches you.`
+	`	Otto takes the initiative by keeling in front of her and kissing her hand. "A genuine pleasure, lass. The name's Otto, at yer service." The woman smiles, apparently enjoying Otto's dramatic introduction. "3.2... Ick. But what a gentleman he is, true? Quite rare to find these days, I should think."`
+	`	She sighs and tosses her padd on the floor. "I'm Edna Munch. How does a humble scientist find herself in such illustrious company, I wonder?" She cocks her head toward Otto.`
+		goto meetup3
+	
+	# Player kept her locked up.
+	label imprisoned
+	`	You take him to your cargo hold. His eyes widen when he sees the 'rescuee', still sitting uncomfortably in the small prison. "Ye put her in a cage?!? Are ye mad, child?!?" She smiles pleasantly toward Otto, despite her discomfort. That same smile, directed toward you, bears an aspect most sinister.`
+	choice
+		`	"Actually, that's the cage from the Syndicate ship. They thought it was a good idea, so I did too."`
+			goto cage
+		`	"Do you see that smile? That's the smile of a killer. That's why she's on that side of the iron."`
+			goto smile
+		`	"Oh, cripes, we forgot to unlock it..."`
+	`	Otto sighs and buries his head in his hands in disbelief. "A prisoner... Ye were rescuin'... By the gods, yer seven hells of a fool."`
+		goto letherout
+	
+	label cage
+	`	"And ye didn't think it was a good idea to let the prisoner you were rescuing out?!? By the gods, yer heartless.`
+		goto letherout
+		
+	label smile
+	`	"A very pleasant smile, indeed! By the hells, lad, you're a sadist."`
+	
+	label letherout
+	`	He addresses one of your crew. "Go on, get her out." Your crew member looks at you.`
+	choice
+		`	"Alright, get her out..."`
+	`	Two of your crew tip over the cage and disengage the lock on the base, allowing the woman to crawl out. The motion appears incredibly painful for her, though she takes great care not to give you the pleasure of hearing any moans of pain. When she is finally able to stand, you could swear she growls at you, but no one else seems to notice.`
+	`	After she finishes stretching her sore limbs, Otto kneels in front of her and kisses her hand. "A genuine pleasure to meet you, lass. The name's Otto, at yer service." The woman smiles, apparently enjoying Otto's dramatic introduction. "3.2... Ugh. But what a gentleman he is, true? Such arts are lost on the youth of today, are they not?" She glares at you.`
+	`	"I'm Edna Munch. How does a humble scientist find herself in such illustrious company?" She eyes you for a moment, before resting her sharp gaze upon Otto.`
+	
+	label meetup3
+	`	Without giving you a chance to answer, Otto makes a dramatic gesture. "When I first heard yer tragic tale of conviction and imprisonment, I said to m'self, 'Otto, ye'd better do everythin' in yer power to make sure that poor woman escapes the clutches of-'"`
+	`	Edna shakes her head and waves her hand dismissively, but you notice her grinning. "Adorable, simply adorable! But the short version, now."`
+	`	Otto looks at you for a moment and scratches his beard thoughtfully. "Do you remember Eddie, from Ada?" Edna sighs. "Ugh. He smelled like liver." Otto clears his throat. "Well, he remembered ye from before the... 'accident-'" Edna interrupts. "Yes, yes, before those Republic fools installed my beloved prototype wrong. Continue."`
+	choice
+		`	"They only managed to recover 8 bodies from that explosion, you know."`
+		`	[Say nothing.]`
+			goto saynothing
+	`	Edna tilts her head and gives you a look of mock pity. "Boo-hoo. Blame the nimrods at the Navy yards."`
+			
+	label saynothing
+	`	Otto glances at you, a hint of worry tracing his eyes. "Well... He remembered ye, seein' as you and I had some... facilitated dealin's in the past, and of course he's always fond of Syndicate conspiracies. So I kept an ear out, and a gaggle of Syndicate yellow-bellies later, heard about yer little predicament."`
+	`	Edna sighs. "And let me guess - from your bleeding little pirate heart, you just couldn't sleep at night knowing I was held captive. And here's the knight in shining armor who rescued me! A quaint little tale, don't you think? What noble aspirations-" Otto growls abruptly. "I was gettin' to that! Of course there's reason for it. <first> over here discovered something big, and I ain't able to do much with it. Tell her, kid."`
+	choice
+		`	"We found aliens with advanced technology."`
+		`	"We found giant alien squirrels... With awesome guns."`
+#	`	Edna smiles. "More aliens, hm? That's not so impressive, I don't think. Perhaps I would be impressed if we didn't already know those jolly grey giants down south. Maybe if we had some specifics, I could help."`
+#	choice
+#		`	[Hand her your padd.]`
+#		`	[Let Otto answer.]`
+#			goto letotto
+#	`	Otto grabs the padd away from you. "No, no, not yet!"`
+#	
+#	label letotto
+#	`	Otto winces and scratches his forehead. "You'll have to take me word for it." Edna laughs derisively, and in a high pitched tone calls out, "Oh, the noble word of a pirate! Be still, my heart - how can I-" Otto cuts her off by slamming his fist into the wall. "Pay attention, you insufferable wench!" Edna appears genuinely shocked for a moment, but regains her air of indifference.`
+	`	Edna smiles. "More aliens, hm? Maybe if we had some specifics, I could help."`
+	choice
+		`	[Hand her your padd.]`
+	`	Edna hesitates, then takes the padd. As she glances through the Hai technology, you note a glimmer of excitement in her eyes - one she immediately hides with practiced indifference. "Hm, hm. Not so impressive, but perhaps worth someone else's time."`
+	`	Otto sighs impatiently. "I went through a great deal o' trouble to get ye out. As of right now, yer free to go. Courtesy of our past dealins'. But... If yer lookin' for a safe place to continue yer work, here it is. Not so grand as those Navy labs, but at least ye'll be able to put yer hands on the tech."`
+	choice
+		`	"I'll attend to that personally."`
+	`	Edna glances your way, then considers for a moment. "Will I get my own lab?" Otto smiles. "Why, of course! And the kid here will even test out everythin' ye make. No one'll miss 'em!" Otto laughs and pats you on the back. "What d'ye say?" Edna cracks a small smile. "I'll consider it... Why don't you show me what you have, and we'll go from there?"`
+	branch gothai
+		"got hai outfits" == 9
+	`	Otto laughs heartily. "Aye! Come along, and we'll see what ye make of the place." Otto addresses you in a low voice as Edna wanders off. "Great job, kid. I'll bring 'er up to speed - head to Freedom when yer ready for more. In the mean, if ye want to... 'import' some more goods from those furry buggers, I would approve heartily!"`
+		decline
+		
+	label gothai
+	`	Otto laughs heartily. "Aye! Come along, and we'll see what ye make of the place." Otto addresses you in a low voice as Edna wanders off. "Great job, kid. I'll bring 'er up to speed - head to Freedom when yer ready for more."`
+		decline
+		
+# * * * * *  END OF "Hai Stakes [3]"  * * * * *
+
+mission "Hai Stakes [4]"
+	name "Establish 'Friendly' Trade"
+	description "Ensure a steady supply of certain industrial metals by intimidating a nearby mining colony."
+
+
+
+
+
+# * * * * *  "Missions" to trigger outfitter events.  * * * * *
+mission "Haibrid Outfitter Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		#has "Hai Stakes [5]: done"
+	
+	on offer
+		event "Haibrid Outfitter Stormhold"
+
+mission "Pulse Cannon (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [1]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Pulse Cannon (Haibrid) Available" 30 60
+		set "haibrid tech in progress"
+
+mission "Pulse Turret (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [2]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Pulse Turret (Haibrid) Available" 30 60
+		set "haibrid tech in progress"
+
+mission "Ion Cannon (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [3]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Ion Cannon (Haibrid) Available" 60 120
+		set "haibrid tech in progress"
+
+mission "Tracker Pod (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [4]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Tracker Pod (Haibrid) Available" 70 140
+		set "haibrid tech in progress"
+
+mission "Anti-Missile (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [5]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Anti-Missile (Haibrid) Available" 40 80
+		set "haibrid tech in progress"
+
+mission "Shields (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [6]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Shields (Haibrid) Available" 50 100
+		set "haibrid tech in progress"
+	
+mission "Batteries (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [7]: done"
+		has "Purchase Hai Outfits [8]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Batteries (Haibrid) Available" 40 80
+		set "haibrid tech in progress"
+		
+mission "Reactors (Haibrid) Available"
+	invisible
+	landing
+	
+	to offer
+		has "Hai Stakes [3] [Complete]: offered"
+		has "Purchase Hai Outfits [9]: done"
+		not "haibrid tech in progress"
+	
+	on offer
+		event "Reactors (Haibrid) Available" 60 120
+		set "haibrid tech in progress"
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

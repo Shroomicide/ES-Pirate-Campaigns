@@ -1,0 +1,95 @@
+event "Haibrid Outfitter Stormhold"
+	planet "Stormhold"
+		add outfitter "Haibrids"
+
+event "Pulse Cannon (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Pulse Cannon (Haibrid)"
+	clear "haibrid tech in progress"
+		
+event "Pulse Turret (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Pulse Turret (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Ion Cannon (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Ion Cannon (Haibrid)"
+		add "Mini Ion Cannon (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Tracker Pod (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Tracker (Haibrid)"
+		add "Tracker Storage Pod (Haibrid)"
+		add "Tracker Pod (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Anti-Missile (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Komodo Anti-Missile (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Shields (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Hai Corundum Regenerator (Haibrid)"
+		add "Hai Diamond Regenerator (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Batteries (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Hai Chasm Batteries (Haibrid)"
+		add "Hai Fissure Batteries (Haibrid)"
+		add "Hai Gorge Batteries (Haibrid)"
+		add "Hai Ravine Batteries (Haibrid)"
+		add "Hai Valley Batteries (Haibrid)"
+	clear "haibrid tech in progress"
+
+event "Reactors (Haibrid) Available"
+	outfitter "Haibrids"
+		add "Boulder Reactor (Haibrid)"
+		add "Geode Reactor (Haibrid)"
+		add "Pebble Core (Haibrid)"
+		add "Sand Cell (Haibrid)"
+	clear "haibrid tech in progress"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

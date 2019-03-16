@@ -1,0 +1,109 @@
+mission "Etarip Bounty Hunters [Offer]"
+	invisible
+	landing
+	deadline 60
+	
+	to offer
+		"rejected etarip" >= 3
+		
+	source 
+		government Republic
+	
+	on offer
+		conversation
+			`As you walk away from your ship, you notice a wiry, middle-aged man with unkempt graying hair and odd clothing approaching you.`
+			choice
+				`	[Wait for him.]`
+					goto wait
+				`	[Turn around and head back to your ship.]`
+			`	Feeling that something isn't right, you turn around and nearly run into a man you can only describe as a well-dressed brute - just over seven feet tall, but without the lankiness associated with low-gravity humans. His dull, yet determined gaze is enough to hold you in place - and you get the feeling that he would use more conventional means if prodded.`
+			choice
+				`	[Turn and wait for the other man.]`
+					goto wait
+				`	"Out of the way, bub. I've got places to be." [Force your way through.]`
+			`	You try to push past the behemoth, but he simply grabs you by the shoulder and pushes down a little, almost completely immobilizing you with a fraction of his strength.`
+			
+			label wait
+			`	The other man approaches, hands in his pockets, a weasel-like smile plastered on his thin face. "Stay and chat a bit, will you?"`
+			choice
+				`	"Who are you?"`
+					goto who
+				`	"What do you want?"`
+			`	"Oh, I don't really want much of anything. But there are other people - people you broke a contract with - who want something from you." His disingenuous half-smile forms a spiderweb of tiny wrinkles on his face.`
+				goto meetup1
+			label who
+			`	"Me?" He sticks his face out and points to himself incredulously. "I'm just your average, run-of-the-mill errand boy. But you're a little more interesting. See, you broke a contract, and there are certain costs involved in broken contracts."`
+			label meetup1
+			`	You feel a small pit form in your stomach. He seems to hint at your liberties taken with Etarip Enterprises.`
+			`	"Oh, don't worry, though. What was once lost can always be repayed. Say, 500,000 credits?" The pit in your stomach gets a bit bigger.`
+			branch pay
+				"credits" >= 500000
+			choice
+				`	"What? I don't have that kind of money!"`
+					goto meetup2
+			
+			label pay
+			choice
+				`	"I understand. Here, I have enough."`
+					goto enough
+				`	"You can take it over my dead body."`
+			`	You land a wad of spit right on his vest. For just a moment, you feel like the most badass pilot who's ever stared a bounty hunter down. Then the behemoth behind you puts his massive hands on your shoulders. You hear his voice for the first time; low and calm. "Well?" That macho feeling passes rapidly.`
+			`	The other man looks down at the trailing bit of spit on his vest, then back at you, his hands still in his pockets. "Nah, the kid's just acting cool. I don't blame him." He begins pacing back and forth.`
+			label meetup2
+			`	"Well, bottom line, you owe 500,000 credits. I've been told you have until <day> to pay it back, give or take a few days for e-commerce friction. So, if you don't have it, I suggest you find the nearest bank and beg them to give you a loan." He laughs. "I'm a pretty generous sort, aren't I? Offering helpful advice like that?"`
+			`	"The moment you have it, contact us, and we'll talk. Until then, toodles." He gives you a contact code and signals to the large man behind you, and the pair wander off. You overhear him ask the brute, "So, Spacebucks? They've got this new Mochatini I've just been dying to try."`
+				accept
+			
+			label enough
+			`	The man leans over, then back, smiling that odd half-smile of his. "That's great! That makes our job a lot easier. You better send it, or we're going to have a slightly less pleasant chat sometime in the future."`
+			`	He gives you the transferring info, then signals to the large man behind you. The pair wander off. You overhear him ask the brute, "So, Spacebucks? They've got this new Mochatini I've just been dying to try."`
+			`	You head back to your ship and wire the money to the given account. You hope that's the last you hear of them.`
+				decline
+	
+	on accept
+		set "Etarip Debt"
+		log `I've got until <day> to collect 500,000 credits and pay back Etarip for breaking their on-demand contract.`
+
+	on decline
+		payment -500000
+
+
+
+mission "Etarip Bounty Hunters [Pay]"
+	invisible
+	landing
+	
+	to offer
+		has "Etarip Debt"
+		"credits" >= 500000
+	
+	on offer
+		conversation
+			`You've collected enough money to pay back Etarip and ward off the men you presume to be bounty collectors.`
+			choice
+				`	[Input the contact number.]`
+				`	[Wait.]`
+					defer
+			`	You enter the contact number into your ship's console, and after a series of beeps, you recognize the slightly nasal voice of the man who accosted you at the starport.`
+			`	"Hey, kid! It's so good to hear from you. You got the money?"`
+			choice
+				`	"Yeah, yeah. I've got it. Where do you want it?"`
+				`	"I have it - and you're not getting a single credit. See you in hell." [End transmission.]`
+					decline
+			`	"How about... This account? You know, it's getting real hard to keep track of all these punk kids who don't pay off their debts. Could you look into that for me?" The man laughs as an account code appears on your display.`
+			choice
+				`	"It's getting hard to keep track of all these punk bounty hunters who think they're really cool."`
+				`	"Yeah, whatever. I'll send it over."`
+					goto yeah
+			`	The man laughs even harder. "You know, kid? I like you. I think you just might make it in this crazy world. But how about getting those credits my way first?"`
+			choice
+				`	"Fine. I'm sending them over."`
+			label yeah
+			`	"Great! It's been a real pleasure, Captain."`
+			`	You end the transmission, input the account code, and watch the numbers count down as 500,000 credits are transferred.`
+				accept
+		
+	on accept
+		payment -500000
+		fail "Etarip Bounty Hunters [Offer]"
+	

@@ -1,0 +1,284 @@
+# * * *  JOB BOARD MISSIONS AVAILABLE AFTER "Hai Stakes [2]" * * *
+mission "Purchase Hai Outfits [1]"
+	name "Purchase Hai Weapons"
+	job
+	repeat
+	description "Otto wants you to purchase a 'Pulse Cannon' from the Hai and bring it back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Pulse Cannon"
+		
+	to offer
+		#random < 20
+		#has "Hai Stakes [2]: done"
+		"credits" > 130000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of weapon smuggling, according to your computer. It reminds you to pick up a Pulse Cannon before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 130000
+		outfit "Pulse Cannon" -1
+		dialog
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+		
+		
+mission "Purchase Hai Outfits [2]"
+	name "Purchase Hai Weapons"
+	job
+	repeat
+	description "Otto wants you to purchase a 'Pulse Turret' from the Hai and bring it back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Pulse Turret"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 590000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of weapon smuggling, according to your computer. It reminds you to pick up a Pulse Turret before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 590000
+		outfit "Pulse Turret" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+
+
+mission "Purchase Hai Outfits [3]"
+	name "Purchase Hai Weapons"
+	job
+	repeat
+	description "Otto wants you to purchase an 'Ion Cannon' from the Hai and bring it back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Ion Cannon"
+		
+	to offer
+		random < 30
+		has "Hai Stakes [2]: done"
+		"credits" > 490000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of weapon smuggling, according to your computer. It reminds you to pick up an Ion Cannon before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 490000
+		outfit "Ion Cannon" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+		
+			
+mission "Purchase Hai Outfits [4]"
+	name "Purchase Hai Weapons"
+	job
+	repeat
+	description "Otto wants you to purchase 'Trackers' from the Hai and bring them back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Hai Tracker"
+		outfits "Tracker Storage Pod"
+		outfits "Hai Tracker Pod"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 179000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of weapon smuggling, according to your computer. It reminds you to pick up a 'Hai Tracker', 'Tracker Storage Pod', and a 'Hai Tracker Pod' before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 179000
+		outfit "Hai Tracker" -1
+		outfit "Tracker Storage Pod" -1
+		outfit "Hai Tracker Pod" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+
+
+			
+mission "Purchase Hai Outfits [5]"
+	name "Purchase Hai Weapons"
+	job
+	repeat
+	description "Otto wants you to purchase Anti-Missile weapons from the Hai and bring them back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Bullfrog Anti-Missile"
+		outfits "Chameleon Anti-Missile"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 195000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of weapon smuggling, according to your computer. It reminds you to pick up 'Bullfrog' and 'Chameleon' Anti-Missile turrets before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 195000
+		outfit "Bullfrog Anti-Missile" -1
+		outfit "Chameleon Anti-Missile" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+		
+		
+mission "Purchase Hai Outfits [6]"
+	name "Purchase Hai Shields"
+	job
+	repeat
+	description "Otto wants you to purchase shields from the Hai and bring them back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Hai Corundum Regenerator"
+		outfits "Hai Diamond Regenerator"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 1450000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of tech smuggling, according to your computer. It reminds you to pick up 'Corundum' and 'Diamond' Regenerators before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 1450000
+		outfit "Hai Corundum Regenerator" -1
+		outfit "Hai Diamond Regenerator" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+
+mission "Purchase Hai Outfits [7]"
+	name "Purchase Hai Batteries"
+	job
+	repeat
+	description "Otto wants you to purchase several batteries from the Hai and bring them back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Hai Chasm Batteries"
+		outfits "Hai Fissure Batteries"
+		outfits "Hai Gorge Batteries"
+		outfits "Hai Ravine Batteries"
+		
+	to offer
+		random < 30
+		has "Hai Stakes [2]: done"
+		"credits" > 219000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of tech smuggling, according to your computer. It reminds you to pick up 'Chasm, Fissure, Gorge, and Ravine' Batteries before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 219000
+		outfit "Hai Chasm Batteries" -1
+		outfit "Hai Fissure Batteries" -1
+		outfit "Hai Gorge Batteries" -1
+		outfit "Hai Ravine Batteries" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> credits in your account.`
+
+
+mission "Purchase Hai Outfits [8]"
+	name "Purchase Hai Batteries"
+	job
+	description "Otto wants you to purchase 'Hai Valley Batteries' from the Hai and bring them back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Hai Valley Batteries"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 300000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of tech smuggling, according to your computer. It reminds you to pick up 'Hai Valley Batteries' before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 300000
+		outfit "Hai Valley Batteries" -1
+		dialog
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+		
+mission "Purchase Hai Outfits [9]"
+	name "Purchase Hai Reactor"
+	job
+	description "Otto wants you to purchase a 'Geode Reactor' from the Hai and bring it back to <planet>."
+	source
+		planet "Freedom"
+		planet "Stormhold"
+	stopover
+		outfits "Geode Reactor"
+		
+	to offer
+		random < 20
+		has "Hai Stakes [2]: done"
+		"credits" > 1750000
+	
+	on stopover
+		dialog
+			`This is the Hai planet currently least likely to arouse suspicion of tech smuggling, according to your computer. It reminds you to pick up a 'Geode Reactor' before departing.`
+			`[Hint: check 'Show outfits in Cargo' in lower-left corner to store outfits in cargo hold.]`
+	
+	on complete
+		"got hai outfits" += 1
+		payment 1750000
+		outfit "Geode Reactor" -1
+		dialog 
+			`Otto sends you coordinates for a drop-off point far away from the main starport. You unload the Hai technology, and a short time later, find <payment> in your account.`
+		
+		
+# * * * * * * * * * *
+	
+	
+	
+	

@@ -1002,20 +1002,20 @@ mission "Liekedeeler Intro Finale"
 			label meetup1
 			`	She taps on her datapad before looking up at you. "I've sent you coordinates to rendezvous at. Plug them in and head down to the maglev transit system. Oh, and wear something nice." After exchanging goodbyes, you peruse your wardrobe, sync your datapad to Earth's transportation network, and head to the transfer station below the multi-tiered spaceport.`
 			`	The transportation system, encased within the monolithic concrete spaceport, is a tantalizing spiderweb of confusing maps, terminals, and security checkpoints. With a little luck and some guidance from several terse transportation officers, you make it to the correct terminal. Your datapad points you to a maglev shuttle bound for Dresden.`
-			`	Before long, you reach the heart of the city. A short walk takes you to Dresden's grand opera house - one of the last remaining architectural achievements of the ancient city. You used to wonder why people took pilgrimages to Earth's cities, the cradle of humanity having long since abandoned extravagance and eclectic design in favor of standardized utility. But as you enter this opulent holdover from the past, you feel a spark of ancestral curiosity.
+			`	Before long, you reach the heart of the city. A short walk takes you to Dresden's grand opera house - one of the last remaining architectural achievements of the ancient city. You used to wonder why people took pilgrimages to Earth's cities, the cradle of humanity having long since abandoned extravagance and eclectic design in favor of standardized utility. But as you enter this opulent holdover from the past, you feel a spark of ancestral curiosity.`
 			`	Alexandra appears before you, dressed in a stylish yet humble ball gown of modern design and comfort. "<first>! Welcome, welcome."`
 			choice
-				`	"Quaint little place you have here."`
-					goto quaint
+				`	"Oh, Alexandra, you should have just asked for a date! You didn't have to lead me on with that nonsense about a job opportunity."`
+					goto date
 				`	"I feel, uh, underdressed."`
 					goto underdressed
 				`	"An opera house? This is the most inconspicuous meeting place you could think of?"`
 					goto inconspicuous
-			label quaint
-			`	She smiles politely. "Of course. It's not much, but we do our best. But if you can lower your standards for just a little longer, we should find our seats!"`
+			label date
+			`	She scoffs and punches you hard in the shoulder. "That is NOT why we're here. Come on." It's tough to tell from behind, but you're pretty sure you caught a smile in there somewhere.`
 				goto meetup2
 			label underdressed
-			`	She holds back a grin. "Nonsense. Even the opera enthusiasts don't mind a casual purveyor of the arts. We'll try to avoid all the exceptionally fancy people."`
+			`	She holds back a grin. "Nonsense. Even the enthusiasts don't mind a casual purveyor of the arts. We'll try to avoid all the exceptionally fancy people."`
 				goto meetup2
 			label inconspicuous
 			`	She holds your gaze. "Those noisy frontier bars with the crappy drinks aren't exactly bastions of security. Follow me."`
@@ -1031,7 +1031,7 @@ mission "Liekedeeler Intro Finale"
 					goto meetup3
 			label pamphlet
 			`	She smiles, looking out over the railing, then turns to you. "This is a good one. It's about a time-traveling cosplayer who falls in love with a medieval princess. He has to decide whether to stay and win her over while navigating the drama and intrigue of court life, or go back to his familiar-yet-dull timeline before it's too late. The story's been done before, but this is the best version. At least, that's what critics say."`
-			`	You find it difficult to believe that this would draw a crowd, but before long, hundreds of spectators fill out the spacious interior.
+			`	You find it difficult to believe that this would draw a crowd, but before long, hundreds of spectators fill out the spacious interior.`
 				goto meetup3
 			label tell
 			`	She glances over the balcony, then turns to you. "I'll give you the juicy details as soon as the performance starts. But it's actually three jobs. Long-term, with pay."`
@@ -1058,7 +1058,7 @@ mission "Liekedeeler Intro Finale"
 			`	"Interesting, but I definitely didn't come here to learn the intricacies of modern opera."`
 				goto talk
 			label never
-			`	She smiles. "Well, if you read the pamphlet, you'll notice this is a transcendant noir drama, so I assume it'll be obvious."`
+			`	She smiles. "Well, it's more of a musical than a true opera. But if you read the pamphlet, you'll notice this is a transcendant noir drama, so I assume it'll be obvious."`
 				goto meetup4
 			label talk
 			`	She nods. "Of course."`
@@ -1068,28 +1068,131 @@ mission "Liekedeeler Intro Finale"
 			`	The music dies down, and a young woman in an exceptionally gaudy dress - presumably the princess - appears on stage. "Dear departed mother, what doth am I to doeth? My faith is plain to see, my beauty turns all to me, and more humble I cannot be. But valued am I for naught but my immense social status! Can doth no man unlocketh the key to mine heart?"`
 			`	Alexandra palms her face as the princess begins singing, accompanied by electric guitars. She turns to you. "Navy Intelligence has been cracking down on near-Earth smuggling, and with the resources pulled from the South, they've got plenty of manpower to do it. Old buildings like this aren't built for snooping networks, and the dim lights and noise reduce the risk further. Plus, classier than dive bars."`
 			choice
-				`	"Actually, I'm kind of getting into it. I never expected opera to be so modern. Anyway, where do I come in?"`
+				`	"I think I'm actually getting into it. Anyway, where do I come in?"`
 				`	"Got it. So what kind of offers do you have for me?"`
-			branch freeworlds
+			`	She clears her throat and speaks in a strong, low tone. "We'd like to bring you on as an independent smuggler. Straight credits for each run. No more contracts. Our little operation is expanding rapidly, and we need reliable pilots who can think for themselves and operate without constant direction. We'll also spread the word to our contacts, allowing you to pick up jobs from operations within Republic space. The flipside is that any liabilities you incur will be your own; we'll do our best to get you out of tricky situations, but we can't promise your safety." She pauses a moment. "For now, we need smugglers for three of our core operations."`
+			branch freeworlds1
 				"event: war begins" = 1
-			`	She clears her throat and speaks in a strong, low tone. "You've probably heard of the Southern Defense Pact. Things are heating up between them and the Republic; unfair taxation, imbalanced trade, and reduced security. The usual suspects. But recently, it's gotten serious. There's been an uptick in underground activity, and that means tightened Republic restrictions and a black-market demand for everything from guns to unofficially incarcerated sympathizers on both sides. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from unscrupulous individuals on both sides."`
+			`	"You've probably heard of the Southern Defense Pact. Things are heating up between them and the Republic; unfair taxation, imbalanced trade, and reduced security. The usual suspects. But recently, it's gotten serious. There's been an uptick in underground activity, and that means tightened Republic restrictions and a black-market demand for everything from guns to unofficially incarcerated sympathizers on both sides. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from unscrupulous individuals on both sides."`
 				goto meetup5
-			label freeworlds
-			`	She clears her throat and speaks in a strong, low tone. "Unless you've been hiding inside an asteroid, you've probably heard that the Free Worlds has officially declared independence from the Republic. I won't get into the details, but suffice to say, that means no more trade between the Republic and the South. But no trade means everybody gets a little desperate; Republic planets still need goods from the South and vice versa. Paranoia has also gotten the better of both sides, with stranded pilots and sympathizers being imprisoned. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from unscrupulous individuals on both sides."`
+			label freeworlds1
+			`	"Unless you've been hiding inside an asteroid, you've probably heard that the Free Worlds has officially declared independence from the Republic. I won't get into the details, but suffice to say, that means no more trade between the Republic and the South. But no trade means everybody gets a little desperate; Republic planets still need goods from the South and vice versa. Paranoia has also gotten the better of both sides, with stranded pilots and sympathizers being imprisoned. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from unscrupulous individuals on both sides."`
 			label meetup5
 			`	"But the great lumbering beast has plenty to clean up in their own backyard. The Paradise Worlds always need certain luxuries, and various wealthy families need their improprieties cleaned up. Drugs, banned medicines, stolen artifacts, and illegal ship equipment are in high demand across Republic space. The Syndicate, bless their hearts, have their own share of black marks, mostly due to the fact that they have free reign to treat their citizens like crap. Liekedeeler is considering expanding into Syndicate space, but we need someone savvy enough to play both sides of the fence when appropriate."`
-			`	"Additionally, Liekedeeler Enterprises recently established tentative ties to several pirate lords in the North and South. Medicine, 'safe' pharmeceuticals, and high-quality weapons are in high demand on all pirate planets. But it gets a little more interesting than that. The Northern pirates want to push back the Republic and establish a legally-recognized Anarchic confederation, so they need lots of weapons, capital, and Navy deployment plans. The Southern pirates are taking advantage of the instability to provide mercenary fleets and raid planets, but they seem to have long-term ambitions. So, those are all the roads we're looking for a brave young soul to walk down. Does any of that strike your fancy?" She smiles at you.`
+			`	"Additionally, Liekedeeler Enterprises recently established tentative ties to several pirate lords in the North and South. Medicine, 'safe' pharmeceuticals, and high-quality weapons are in high demand on all pirate planets. But it gets a little more interesting than that. The Northern Pirates want to push the envelope, so to speak, and the Southern Pirates are taking advantage of the instability to provide mercenary fleets and raid planets." She smiles. "So, those are all the roads we're looking for a brave young soul to walk down. Does any of that strike your fancy?"`
 			label choose
 			choice
-				`	"Tell me more about the illicit opportunities between the Republic and the South."`
-				`	"I'd like to hear more about this Republic / Syndicate smuggling."`
+				`	"Tell me more about what's going on between the Republic and the South."`
+					goto south
+				`	"I'd like to hear about smuggling opportunities within the Republic."`
+					goto internal
 				`	"Fill me in on these pirate contacts."`
+					goto pirate
 				`	"I'm sorry. I don't think any of that is for me."`
+					goto no
 			
+			label south
+			`	Alexandra leans in closer. "If you went that route, Liekedeeler would put you in contact with a few desperate sources on both sides of the conflict. I can only speculate on the nature of goods needing moved, but it's most likely anything from restricted items, to ship tech, to weapons. There are players on both sides looking for information to use against the other, as well, and that could mean treason..."`
+			choice
+				`	"Playing both sides, eh? Sure, I'll help stir up some trouble."`
+					goto yessouth
+				`	"Maybe. But I'd like to hear about the operations going on inside the Republic."`
+					goto internal
+				`	"Not treasonous enough for me. Tell me about the deal with the pirates."`
+					goto pirate
+				`	"Sorry, I don't think any of this is right for me."`
+					goto no
 			
+			label internal
+			`	Alexandra nods. "Like I said, it's all pretty simple stuff, but the demand is consistent. Dirt Belt colonies are a good source of low-grade drugs in both directions, as well as getting access to restricted medicines the Republic keeps a lid on. The Paradise World dandies are always looking for luxuries to sate their expensive tastes. Oh, and the Syndicate's latest crackdown on freedom, civil rights, and religion has sparked quite the interest in censored materials. So, that kind of stuff."`
+			choice
+				`	"You almost make it sound like a public service. I'm in."`
+					goto yesinternal
+				`	"Got it. Not sure yet, though. Tell me about the South again."`
+					goto south
+				`	"Drugs? Medicine? Censored materials? Boring. Tell me about your work with the pirates again."`
+					goto pirate
+				`	"On second thought, I don't think this smuggling business is my calling."`
+					goto no
 			
-
-
+			label pirate
+			`	Alexandra glances at the stage for a moment before turning back to you. "The Northern Pirates are starting to get organized. Certain Pirate Lords want to set up a legally-recognized Anarchic confederation. Ironic, I know, but the basic aim is to establish rules of warfare against the Republic and break the endless cycle of teens blowing themselves up for drugs and money. Between you and me, I think it's a ruse for one of the Pirate Lords to set themselves up as king, and every lord thinks it's going to be them. Regardless, they need guns, credits, and anything they can use against the Navy."`
+			`	"The Southern Pirates are taking advantage of tensions in the South. They're weak and poor, but they're looking to change that. A few of them have set themselves up as War Merchants, buying and selling weapons, raiding poorly-defended planets, and establishing mercenary fleets. They have the basic needs any pirate world does, but they'll need people to smuggle wanted individuals in and around the Republic and bring weapons and manufacturing equipment down South."`
+			choice
+				`	"That's more like it. I'd like to lend the Pirates a hand."`
+					goto yespirate
+				`	"On second thought, tell me about things in the South again."`
+					goto south
+				`	"Not quite what I'm looking for. What's going on inside the Republic, exactly?"`
+					goto internal
+				`	"Definitely not. I'm sorry, I don't see any of this working for me."`
+					goto no
+			
+			label no
+			`	She nods. "If you're concerned about the moral quandary, I will reiterate that the line between illegal and immoral is not as clearly defined as we would like. But if certain jobs trouble your conscience, you don't have to do them. You'll be working independently, and that means using your best judgement with minimal interference from us. Consider yourself warned, though; the groups you work with will not all be as flexible."`
+			choice
+				`	"Alright, alright. What's going on between the Republic and the South?"`
+					goto south
+				`	"Fine. Tell me more about smuggling operations within the Republic."`
+					goto internal
+				`	"Speaking of illegal and immoral, fill me in on these pirate contacts."`
+					goto pirate
+				`	"It's a wonderful opportunity for someone else. I can't get involved in something like this right now."`
+					goto endno
+			
+			label yessouth
+			apply 
+				set "south smuggling"
+			`	"Seems like your type of shindig." She glances at you, then back to the stage.`
+				goto meetup6
+			label yesinternal
+			apply 
+				set "republic smuggling"
+			`	"I thought you might like that option." She brushes her hair back.`
+				goto meetup6
+			label yespirate
+			apply 
+				set "pirate smuggling"
+			`	"Ah, yes, a rebel to the core." She smiles.`
+				goto meetup6
+			
+			label meetup6
+			`	"Welcome aboard, <first>. I'll contact you here in a few days with the next step. And look, the show isn't even quite over. Mushiro hasn't made his crucial decision yet."`
+			choice
+				`	[Stay and see how it ends.]`
+					goto stay
+				`	[Leave.]`
+					goto leave
+			
+			label leave
+			`	You get up and try to exchange goodbyes over the din of numerous instruments. Alexandra shakes your hand and smiles. "Talk to you soon, <first>." She turns back to the show.`
+				decline
+			label stay
+			`	You decide to enjoy the rest of the opera before leaving. A priest dressed in flamboyant purple robes and a ridiculously ornamented hat appears on the stage, surrounded by chubby male and female clergy members wearing similarly ornamented clothing. His holographic ferraiolo cape plays a looped sequence of coins falling into golden grails.`
+			`	"Brothers and Sisters, who was it that first thought of God? What a fool, a simpleton! Add one letter, and you have man's true savior - Gold! Hallelujah!" The assembled clergy people clap merrily as coins rain from the ceiling. Several actors take their hats off to catch the coins with. The sequence ends as the clergy retreats from the stage, leaving the lone priest.`
+			`	He flings his cloak away, now holding a flaming gold guitar. He growls, "Crusades!", bursts into song, and begins playing heavy metal riffs. A massive pipe organ is wheeled in as knights and janissaries, suspended in harmonized flight, play a collection of brass and string instruments as they circle the pipe organ. Amidst the din, Mushiro hauls the priest's chest of gold off the stage.`
+			`	The rest of the play centers around Mushiro using his newly-acquired wealth to bring prosperity to the peasants of the princess's father's land, while teaching them how to play games and design costumes. During a particularly climactic scene, the peasants fool an invading army into retreating by wearing their homemade knight costumes. Ultimately, his strong heart wins over the princess despite their class difference. As the Black Plague encroaches upon the kingdom, his kiss saves her from certain death, but has the side-effect of sending him back to modern times.`
+			label finalanalysis
+			`	The curtain falls, the actors emerge, and the audience goes wild. Alexandra gives a polite clap before leading you to the exit. "So, your first play. What did you think?"`
+			choice
+				`	"That was terrible. Everything in that play has been done before, and better. The historical authenticity was questionable at best, and an outright atrocity at worst. The flagrant misuse of stereotypes and oversimplicity of historical issues was laughable and offensive."`
+					goto terrible
+				`	"That was incredible. Everything was so raw, so passionate. They captured the spirit of history like lightning in a bottle. By accentuating the key issues of medieval times, you could almost see the daily struggles of all these classes of people."`
+					goto incredible
+				`	[Crying.] "Why couldn't Mushiro end up with the princess? They deserved more! They deserved each other!"`
+					goto crying
+			label terrible
+			`	"It must be difficult to capture the mindset of people so long ago. I mean, assuming they were even trying." She smiles. "I'll be in contact. Have a wonderful evening, <first.>" You head back to the spaceport.`
+			label incredible
+			`	"I'm glad you enjoyed it so much! I didn't think it would be your type of thing." She smiles. "I'll be in contact. Have a wonderful evening, <first.>" You head back to the spaceport.`
+			label crying
+			`	"I never took you for a romantic." She rolls her eyes and smiles. "I'll be in contact. Have a wonderful evening, <first.>" You head back to the spaceport.`
+			
+			label endno
+			`	She stares at the stage for a moment, then smiles politely. "That's a shame. And here I was looking forward to attending more operas with you." You exchange goodbyes and head back to the spaceport.`
+				decline
+				
+			
 # * * * * *  BOUNTY CHAIN * * * * *
 # If the player aborts or declines too many missions.
 mission "Liekedeeler Bounty Hunters [Alexandra]"
@@ -1102,7 +1205,7 @@ mission "Liekedeeler Bounty Hunters [Alexandra]"
 	
 	on offer
 		conversation
-			`As you land, Alexandra opens a transmission.`
+			`As you land, Alexandra opens a transmission. You can't shake the feeling that it has to do with your broken contract...`
 			choice
 				`	[Answer it.]`
 				`	[Ignore it.]`

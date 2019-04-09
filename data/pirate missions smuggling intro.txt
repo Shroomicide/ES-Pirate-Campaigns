@@ -5,22 +5,16 @@
 #		b. You may notice "goto" markers just prior to the dialogue label they are meant to be paired with. This is to cut down on mistakes during editing / additions to conversations.
 #		c. "branch" markers are linked to "branchX" labels to keep track of branch labels vs. regular dialogue labels vs. meetup labels.
 #		d. "questions" is a special label I use for certain missions where the player can ask a series of questions, but eventually has to say "yes" or "no". These are single-line recursive; they take up less space and do not visibly repeat in-game.
-
-
-#Jenny notes: Make three choices sound more distinct.
-#Hint at censorship / internal smuggling route sound more fun.
-
-
+#
 # * * * * * * * * * *  "INTRO"  * * * * * * * * * *
 mission "Liekedeeler Intro"
 	invisible
 	landing
 	
 	to offer
-		random < 12
-		"year" == 3013
-		"month" > 10
+		random < 10
 		"unpaid mortgages" > 100000
+		"unpaid mortgages" < 500000
 		
 	source
 		government Republic
@@ -50,7 +44,7 @@ mission "Liekedeeler Intro"
 				`	"Oh, that puny thing? That's not my ship. My ship is that big one... Over there."`
 				`	"She's a real beauty, isn't she? The '<ship>'."`
 					goto beauty
-				`	"Well, not much to look at, really. I'll be piloting something much nicer soon enough."`
+				`	"Not much to look at, really. I'll be piloting something much nicer soon enough."`
 					goto notmuch
 			`	You point to a well-polished, impressively-painted Firebird. The woman laughs and skeptically asks, "Oh, really?" She reads off the name printed across the hull. "'The Wandering Rogue'. That's a really impressive ship you've got there, captain. But you better run - it looks like they're taking off without you."`
 			choice
@@ -74,7 +68,7 @@ mission "Liekedeeler Intro"
 			`	The woman nods. "'<ship>? That's a wonderful name. And hey, if she flies straight and shoots straight, she's a beauty in my book."`
 				goto meetup2
 			label notmuch
-			`	The woman stares thoughtfully at your ship. "I don't know about that; I mean, she's yours. So even if she isn't as big as some other ships, she's the one you've got to pin your hopes on, right? But I can't fault your ambition!"`
+			`	The woman stares thoughtfully at your ship. "I don't know, I think she's a fine ship; I mean, she's yours. So even if she isn't as big as some other ships, she's the one you've got to pin your hopes on, right? But I can't fault your ambition!"`
 				goto meetup2
 		
 			label meetup2
@@ -90,13 +84,13 @@ mission "Liekedeeler Intro"
 			`	The woman appears genuinely surprised. "You might be right. But don't we have one of those excesses right here? How long did you have to dream about this moment before it became a reality? How hard did you have to work? And now they're breaking your back for more - and interest! It's disgusting. Shouldn't there be a middle ground?"`
 				goto meetup3
 			label guess
-			`	The woman stares thoughtfully. "Temperance is a wonderful thing to have. But I wonder if that kind of uncertainty is what allows banks to exploit new pilots with so-called 'financial aid'."`
+			`	The woman stares thoughtfully. "That's fair. But I wonder if that kind of uncertainty is what allows banks to exploit new pilots with so-called 'financial aid'."`
 				goto meetup3
 			label burn
 			`	The woman laughs, then in a raucous tone responds, "A bonfire of banknotes! And kindling of the bankers! All debts forgiven!"`
 				goto meetup3
 			label disparity
-			`	The woman nods. "That's a surprisingly detailed criticism. Most people who disagree with the private finance industry are far less eloquent. I think it might serve you well, once you get out from under your current obligation to it."`
+			`	The woman nods. "That's a surprisingly detailed criticism. Most people who disagree with the private finance industry are far less eloquent. I think it'll serve you well, once you get out from under your current obligation to it."`
 			
 			label meetup3
 			`	You feel a small pang of nausea at the mention of your own outstanding debt. The woman offers a look of pity and understanding. "I'm sorry. No matter how you look at it, it's just not fair."`
@@ -110,7 +104,7 @@ mission "Liekedeeler Intro"
 				goto meetup4
 			
 			label meetup4
-			`	"I'm a scout for a special courier firm. Basically, we look for new captains who bought their ships in debt, and are struggling to make due. We front enough money to forgive their debt in return for a few deliveries, passenger runs, you get the gist. Sort of like a network of amateur couriers spread across the Republic."`
+			`	"I'm a scout for a special courier firm. We look for new captains who bought their ships in debt, and are struggling to make due. We front enough money to forgive their debt in return for a few deliveries, passenger runs, you get the gist. Sort of like a network of amateur couriers spread across the Republic."`
 			choice
 				`	"That sounds a lot like spaceport job postings. What's the difference?"`
 					goto postings
@@ -118,19 +112,20 @@ mission "Liekedeeler Intro"
 					goto forgive
 			
 			label postings
-			`	Alexandra smiles knowingly. "The difference is, we have a reliable courier, so we can cut expenses, and you get paid up front, so you can pay off your debt immediately - no loan interest spoiling every delivery you make. I mean, if you took out a 500,000 credit loan to buy your ship, that's over 295,000 credits in interest by the end of the year. And all that assuming the bank gave you a 'fair' 0.3% daily interest rate."`
+			`	Alexandra smiles knowingly. "The difference is, we have a reliable courier, so we can cut expenses. We pass the savings on to couriers like you so you can get out of debt immediately. Supposing you took out a 500,000 credit loan to buy your ship, that's over 295,000 credits in interest by the end of the year. And all that assuming the bank gave you a 'fair' 0.3% daily interest rate."`
+				goto meetup5
 			label forgive
-			`	Alexandra nods. "Too good to be true, right? Here." She hands you her datapad. Graphs and statistics convey a detailed yet readable analysis. "As you can see, by spreading our network of couriers out, the average delivery time from request to delivery is cut by over 40%. Combined with a near-zero tolerance policy of abandoned cargo, high-end clients are willing to pay a hefty sum for faster and more reliable couriers. And since you're independent, we don't need to bring in a professional shipping company, which allows couriers the lion's share of profit from each run."`
+			`	Alexandra nods. "Too good to be true, right? Here." She hands you her datapad. Graphs and statistics convey a detailed yet readable analysis. "As you can see, by spreading out our network of couriers, the average time from request to delivery is cut by over 40%. Combined with a near-zero tolerance policy of abandoned cargo, high-end clients are willing to pay hefty sums for the faster, more reliable courier service we provide." She pauses as you examine the analysis. "In essence, we try to provide the key benefits of a professional shipping company without the bureaucracy, which nets our couriers the lion's share of profit from each run."`
 			choice
 				`	"Sounds straightforward enough to me."`
 					goto straightforward
 				`	"I'm not buying it. How do you justify passing that much money on to a new courier?"`
 					goto buying
 			label straightforward
-			`	She smiles. "And I haven't even mentioned the best part; you'll get paid up front, so you can pay your debt immediately - no loan interest spoiling every delivery you make. I mean, if you took out a 500,000 credit loan to buy your ship, that's over 295,000 credits in interest by the end of the year. And all that assuming the bank gave you a 'fair' 0.3% daily interest rate.`
+			`	She smiles. "And I haven't even mentioned the best part; you'll get paid up front, so you can pay your debt immediately - no loan interest spoiling every delivery you make." She takes the datapad back. "Assuming you took out a 500,000 credit loan to buy your ship, that's over 295,000 credits in interest by the end of the year. And all that assuming the bank gave you a 'fair' 0.3% daily interest rate.`
 				goto meetup5
 			label buying
-			`	She rubs her chin thoughtfully. "I won't sugarcoat it. The 'new courier' branch of Liekedeeler is more of a charity service for struggling pilots. But with enough couriers, it keeps us in business while testing the waters for skilled couriers interested in working with us beyond their initial debt. Of course, most pilots are happy to walk out right there, seeing as they've paid off a 500,000 credit loan. I don't blame them, since they've also avoided paying close to 295,000 credits in interest. And all that assuming the bank gave them a 'fair' 0.3% daily interest rate."`
+			`	She rubs her chin thoughtfully. "I won't sugarcoat it. The 'new courier' branch of Liekedeeler is more of a charity service for struggling pilots. But with enough couriers, it keeps us in business while testing the waters for skilled couriers interested in working with us beyond their initial debt." She takes the datapad back. "Most pilots are happy to walk out right there, seeing as they've paid off a 500,000 credit loan. I don't blame them, since they've also avoided paying close to 295,000 credits in interest. And all that assuming the bank gave a 'fair' 0.3% daily interest rate."`
 				goto meetup5
 			
 			label meetup5
@@ -149,7 +144,7 @@ mission "Liekedeeler Intro"
 			`	Alexandra sighs. "Which is exactly why I'm here."`
 				goto meetup6
 			label why
-			`	"No catch; it's a lot like job postings, except you don't have to wait for a perfect job to come around, and we don't have to wait for the perfect pilot." Alexandra smiles.`
+			`	"No catch; it's a lot like job postings, except you don't have to wait for a perfect job to come around, and we don't have to wait for the perfect pilot. That's all there is to it." Alexandra smiles.`
 				goto meetup6
 				
 			label meetup6
@@ -164,36 +159,38 @@ mission "Liekedeeler Intro"
 					goto yes
 				`	"Anything for you, angel."`
 					goto angel
-				`	"What happens if I only do a couple?"`
+				`	"On the hook? What happens if I only do a couple?"`
 					goto hook
 				`	"What would I be hauling?"`
+					goto hauling
 				`	"When can I expect my first job?"`
 					goto when
 				`	"Do I need to go somewhere in particular?"`
 					goto somewhere
 				`	"Sorry, I'm not interested. I'll make my own way."`
 					goto no
-			`	"TBD - simple goods and maybe passengers. Depends on what's needed at the time. Nothing a too large, though. What do you say?"`
-				goto questions
 			label hook
-			`	She looks saddened. "Well, we'll keep asking you, but if you aren't there when you're needed too often, we'll have to report you to the Republic for breaking contract and collect our 500,000 again. It should go without saying, but abandoning deliveries and missing deadlines is a big no-no. But you don't look like the type of person who would do that! So what do you say?"`
+			`	She gives you a sad look. "Well, we'll keep asking you, but if you don't make the runs you've agreed to, we'll have to report you to the Republic for breaking contract and collect our 500,000. It should go without saying, but abandoning deliveries and missing deadlines is a big no-no. But you don't look like the type of person who would do that!"`
+				goto questions
+			label hauling
+			`	"TBD - simple goods and maybe passengers. Depends on what's needed at the time. Nothing too large, though."`
 				goto questions
 			label when
-			`	Alexandra looks at her datapad and taps the screen rapidly. "I'm guessing we'll have something for you within a couple weeks. Of course, we'll only contact you when you're the closest courier, but you can expect to be called up about 10 days after each run."`
+			`	Alexandra looks at her datapad and taps the screen rapidly. "I'm guessing we'll have something for you within a couple weeks. We'll only call you when you're the closest courier, but the average wait time is about ten days after every run."`
 				goto questions
 			label somewhere
 			`	"Not really. Most of our work is in Republic space, and we would prefer it if you tried to stay close. But if you want to catch a few extra jobs here or there, feel free!"`
 				goto questions
 			
 			label yes
-			`	Alexandra smiles. "Great! I'll be in touch, <first>. In the meantime, enjoy your new-found freedom!"`
+			`	Alexandra smiles. "Great! I'll transfer the money to you right away, <first>. We'll be in touch. In the meantime, enjoy your new-found freedom!"`
 				goto meetup7
 			label angel
-			`	Alexandra laughs. "Oh, this is going to be fun. I'm looking forward to working with you, <first>. And, no more debt! Enjoy your freedom!"`
+			`	Alexandra laughs. "Oh, this is going to be fun. I'll transfer the money to you right away -  I'm looking forward to working with you, <first>. Enjoy your freedom!"`
 				goto meetup7
 			
 			label meetup7
-			`	When you make it back to your ship, you wonder if what Alexandra said is too good to be true; but sure enough, 500,000 credits have been transferred to your account; more money than you thought you'd see in a lifetime, and more than enough to pay off your debt.`
+			`	When you make it back to your ship, you wonder if what Alexandra said is too good to be true; but sure enough, 500,000 credits have been transferred to your account; more money than you thought you'd have in a lifetime, and more than enough to pay off your debt.`
 				accept
 		
 			label no
@@ -224,6 +221,7 @@ mission "Liekedeeler Delivery [1]"
 	name "Liekedeeler delivery to <planet>"
 	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises by <date>."
 	blocked `Alexandra contacts you just as you touch down on <origin>. "We have a job for you, <first>, but you're going to need <capacity>. Remember - we have a contract! Drop whatever you're doing and come back."`
+	deadline
 	deadline 2
 	landing
 	cargo "Care Packages" 7
@@ -297,7 +295,7 @@ mission "Liekedeeler Delivery [1]"
 				
 			label deferred
 			`Almost immediately after powering down your ship, you receive another transmission from Alexandra.`
-			`	"Alright, <first> - you've had a nice break, and we're ready for you to do some deliveries! Same deal as before; pick up the shipment waiting there on <origin>, and take it to <destination> by <day>. Okay?"`
+			`	"Alright, <first> - you missed the last run, but you've had a nice break, and we're ready for you to do some deliveries! Same deal as before; pick up the shipment waiting there on <origin>, and take it to <destination> by <day>. Okay?"`
 				goto questions
 			
 			label strikes
@@ -326,6 +324,8 @@ mission "Liekedeeler Delivery [1]"
 		"rejected liekedeeler" += 1
 		set "deferred liekedeeler delivery 1"
 		event "Defer Liekedeeler Delivery 1" 8
+		dialog
+			`You've failed to deliver Liekedeeler's promised cargo in time. Alexandra will be upset.`
 		
 	on complete
 		event "Liekedeeler Delivery 2" 8
@@ -346,10 +346,11 @@ event "Liekedeeler Delivery 2"
 
 mission "Liekedeeler Delivery [2]"
 	name "Liekedeeler delivery to <planet>"
-	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises."
+	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises by <date>."
 	blocked `Alexandra contacts you just as you touch down on <origin>. "We have a job for you, <first>, but you're going to need <capacity>. Remember - we have a contract! Drop whatever you're doing and come back."`
 	landing
 	cargo "Decorations" 3
+	deadline
 	deadline 2
 	stopover
 		planet "Chiron"
@@ -413,7 +414,9 @@ mission "Liekedeeler Delivery [2]"
 			`	You hear a light metallic thud on the other end of the line. "It's no slight to you or the dockworkers on <planet>, but most of our Paradise World clients are very particular about who handles their cargo."`
 			choice
 				`	"Alright, makes sense. I'm on my way." [End the transmission]`
+					accept
 				`	"I guess having several billion credits gives you the right to be a little particular about your deliveries. I'm on my way." [End the transmission]`
+					accept
 			
 			label no
 			`	"Sorry, I think the transmission cut out - what was that?"`
@@ -454,6 +457,8 @@ mission "Liekedeeler Delivery [2]"
 		"rejected liekedeeler" += 1
 		set "deferred liekedeeler delivery 2"
 		event "Defer Liekedeeler Delivery 2" 8
+		dialog
+			`You've failed to deliver Liekedeeler's promised cargo in time. Alexandra will be upset.`
 	
 	on stopover
 		conversation
@@ -486,11 +491,9 @@ mission "Event: Stolen Art [Text]"
 		has "event: Stolen Art"
 	
 	on offer
-		decline
-	
-	on decline
-		dialog
+		conversation
 			`As you wander <planet>'s spaceport, a newscast grabs your attention. "...with a combined worth of over 24.5 million credits, authorities are feverishly searching for any leads on the art theft on Chiron..."`
+			decline
 		
 
 #* * *  (Mission 2 END)  * * *
@@ -502,7 +505,7 @@ event "Liekedeeler Delivery 3"
 
 mission "Liekedeeler Delivery [3]"
 	name "Liekedeeler passenger transport to <planet>"
-	description "Deliver a businessman to <destination> for Liekedeeler Enterprises."
+	description "Deliver a businessman to <destination> for Liekedeeler Enterprises by <date>."
 	blocked `Alexandra contacts you just as you touch down on <origin>. "We have a job for you, <first>, but you're going to need <capacity>. Remember - we have a contract! Drop whatever you're doing and come back."`
 	landing
 	passengers 1
@@ -602,6 +605,8 @@ mission "Liekedeeler Delivery [3]"
 		"rejected liekedeeler" += 1
 		set "deferred liekedeeler delivery 3"
 		event "Defer Liekedeeler Delivery 3" 8 14
+		dialog
+			`You've failed to deliver Liekedeeler's promised cargo in time. Alexandra will be upset.`
 	
 	on stopover
 		conversation
@@ -640,10 +645,11 @@ event "Liekedeeler Delivery 4"
 
 mission "Liekedeeler Delivery [4]"
 	name "Liekedeeler Delivery to <planet>"
-	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises."
+	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises by <date>."
 	blocked `Alexandra contacts you just as you touch down on <origin>. "We have a job for you, <first>, but you're going to need <capacity>. Remember - we have a contract! Drop whatever you're doing and come back."`
 	landing
 	cargo "Personal Defense Weapons" 10
+	deadline
 	deadline 2
 	infiltrating
 	stopover
@@ -738,6 +744,8 @@ mission "Liekedeeler Delivery [4]"
 		"rejected liekedeeler" += 1
 		set "deferred liekedeeler delivery 4"
 		event "Defer Liekedeeler Delivery 4" 10 14
+		dialog
+			`You've failed to deliver Liekedeeler's promised cargo in time. Alexandra will be upset.`
 	
 	on stopover
 		conversation
@@ -775,10 +783,11 @@ event "Liekedeeler Delivery 5"
 
 mission "Liekedeeler Delivery [5]"
 	name "Delivery to <planet>"
-	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises."
+	description "Deliver <cargo> to <destination> for Liekedeeler Enterprises by <date>."
 	blocked `Alexandra contacts you just as you touch down on <origin>. "We have a job for you, <first>, but you're going to need <capacity>. Remember - we have a contract! Drop whatever you're doing and come back."`
 	landing
 	cargo "Baking Supplies" 12
+	deadline
 	deadline 2
 	
 	stopover
@@ -833,17 +842,19 @@ mission "Liekedeeler Delivery [5]"
 	
 	on fail
 		"rejected liekedeeler" = 3
+		dialog
+			`You've failed to deliver Liekedeeler's promised cargo in time. Alexandra will be upset.`
 	
 	on stopover
 		conversation
 			`You land on <stopovers>'s spaceport and oversee the cargo transfer. After exchanging pleasantries with you, the dockworkers begin loading several unmarked crates onto your ship.`
-			`	You notice a pair of Republic security officers watching you closely as you sign the manifest. When you prepare to leave, you see them talking quite energetically to one of the dockworkers who loaded your ship.`
+			`	You notice a pair of Republic security officers watching you closely as you sign the manifest. As you prepare to leave, you see them talking quite energetically to one of the dockworkers who loaded your ship.`
 
 	on complete
 		event "Liekedeeler Intro Finale" 6
 		conversation
-			`Following an uneventful trip, you land on <planet>'s pristine spaceport. A few exceptionally professional dockworkers begin unloading your cargo. You take the opportunity to observe and relax a little. But something feels off...`
-			`	Everything happens at once - you hear a series of shouts and yells as Republic security officers, dressed in full tactical gear, swarm your ship. Several point weapons at you, while others begin breaking into the locked cargo inside and outside your hold.`
+			`Following an uneventful trip, you land on <planet>'s pristine spaceport. A few exceptionally professional dockworkers begin unloading your cargo. You take the opportunity to relax a little. But something feels off...`
+			`	Everything happens at once - you hear a series of shouts and yells as Republic security officers, dressed in full tactical gear, swarm your ship. Several point weapons at you, while others begin breaking into the locked cargo inside and outside your hold. The dockworkers scatter.`
 			choice
 				`	[Put your hands up.] "Woah, woah, what's going on here?!?"`
 				`	"Hey! Get your grubby hands off my stuff!"`
@@ -855,7 +866,7 @@ mission "Liekedeeler Delivery [5]"
 			`	"Pop 'em, boys!" Ironside points dramatically at your cargo. The officers simultaneously bust the lids off the crates, sending them clattering onto the ground. You watch, aghast, as white, chalky powder spills from each and every one. Ironside smiles, chuckling through his massive cigar as smoke bellows out.`
 			`	"Well, kid, the jig is up. You had your chance to play by our rules - the rules of freedom and justice - but you just had to go laugh in the face of liberty. You won't be laughing when-" One of the security officers pulls off his helmet and interrupts Ironside. "Sir..."`
 			`	Ironside pulls his cigar out of his mouth and shouts, "Don't interrupt me! Now, kid, you're going to spend the rest of your rotten life sitting in a 2x4 cell with nothing to keep you company but your own-" The security officer interrupts him again. "But, sir..."`
-			`	"What!?!" The officer fidgets awkwardly, then says, "It's, uh... It's baking soda, sir." Ironside gasps and coughs, choking on his cigar smoke. "Baking soda!?!" The security officer clears his throat. "And, uh... Flour, sir."` 
+			`	"What!?!" The officer fidgets awkwardly, then says, "It's, uh... It's baking soda, sir." Ironside gasps and coughs, choking on his cigar smoke. "Baking soda!?!" The security officer clears his throat. "And, uh... Flour, sir. Vegan flour."` 
 			choice
 				`	[Tug at your shirt suavely.] "Well, Lieutenant, I believe our business is done here. Now, if you would kindly ask your people to repair the damage they've done to my cargo..."`
 				`	"So... I'm not in trouble?"`
@@ -864,7 +875,7 @@ mission "Liekedeeler Delivery [5]"
 			label trouble
 			`	"It was a surefire tip..." He sighs, glances around, and puts his hand on your shoulder apologetically. "I'm sorry, kid. To tell you the truth, I don't even smoke cigars. I just thought it would look cool." Ironside sighs and stamps out the end of his cigar on a cargo crate. "Listen, if you wouldn't mind keeping quiet about this, uh, accident here..." He puts the dormant cigar in your shirt pocket. "...I think that would be best. Wrap it up, boys."`
 			`	The Republic officers glance at each other, then set about replacing the lids and re-securing the cargo. A short time later, the Republic personnel shuffle off.`
-			`	You wait for someone to pick up the baking supplies, but after awhile, you head off and allow the dockmaster to send the crates to unclaimed storage. Perhaps Alexandra will shed some light on the situation. Nevertheless, you are quite relieved to have finished your contractual obligation.`
+			`	You wait for someone to pick up the baking supplies, but after awhile, you head off and allow the dockmaster to send the crates to unclaimed storage. Nevertheless, you are quite relieved to have finished your contractual obligation. Perhaps Alexandra will shed some light on the situation.`
 
 #* * *  (Mission 5 END)  * * *
 
@@ -887,26 +898,15 @@ mission "Liekedeeler Intro Finale"
 	
 	on offer
 		conversation
-			`Almost as soon as you land on <planet>, Alexandra opens a comm line. "I forgot to congratulate you on finishing your deliveries! You must be so excited." Her voice sounds a touch more cynical than you're used to.`
+			`Almost as soon as you land on <planet>, Alexandra opens a comm line. "I forgot to congratulate you on finishing your deliveries! You must be so excited."`
 			choice
 				`	"It was a heck of a deal, if you ask me. Too good..."`
 					goto deal
 				`	"I'm just glad it's over. I don't want to be involved in this kind of stuff anymore."`
 					goto glad
 				`	"What the hell did you get me into? My ship was raided by Navy officers!"`
-			
-			`	You hear an outburst of laughter. "Oh, come on, <first>. It's not like they found anything. And you lived to tell the tale, right?"`
-			choice
-				`	"Yes, but that's not the point - why did they come after me in the first place?"`
-				`	"You used me as a decoy for a drug run, didn't you?"`
-					goto decoy
-			`	Alexandra giggles. "You must look suspicious! I guess it's the face."`
-			choice
-				`	"Har-har. You used me as a decoy for some kind of drug run, didn't you?"`
-			label decoy
-			`	There is a short pause before Alexandra continues, her tone only slightly more serious. "Quite frankly, yes. But don't tell me you bought the line about 'ultra-vego baking goods.' I think you're smarter than that."`
-				goto meetup1
-				
+					goto into
+					
 			label deal
 			`	You hear Alexandra clear her throat. "Of course! Bad deals come from banks. Good deals are for hard-working couriers like you!"`
 			choice
@@ -919,7 +919,20 @@ mission "Liekedeeler Intro Finale"
 			choice
 				`	"Oh, you know. The usual - transporting definitely stolen art, acting as a decoy for a drug run..."`
 				`	"Let's see. Smuggling stolen art, transporting a probable criminal out of Republic reach..."`
-			`	Alexandra's tone turns distinctly to pretend surprise. "Oh, my! What villainy! Horrors upon horrors! Who would ask you to do such things?"`
+			`	Alexandra's tone turns to pretend surprise. "Oh, my! What villainy! Horrors upon horrors! Who would ask you to do such things?"`
+				goto meetup1
+			
+			label into
+			`	You hear an outburst of laughter. "Oh, come on, <first>. It's not like they found anything. And you lived to tell the tale, right?"`
+			choice
+				`	"Yes, but that's not the point - why did they come after me in the first place?"`
+				`	"You used me as a decoy for a drug run, didn't you?"`
+					goto decoy
+			`	Alexandra giggles. "You must look suspicious! I guess it's the face."`
+			choice
+				`	"Har-har. You used me as a decoy for some kind of drug run, didn't you?"`
+			label decoy
+			`	There is a short pause before Alexandra continues, her tone only slightly more serious. "Quite frankly, yes. But don't tell me you bought the line about 'ultra-vego baking goods.' I think you're smarter than that."`
 				goto meetup1
 				
 			label meetup1
@@ -934,14 +947,14 @@ mission "Liekedeeler Intro Finale"
 			
 			label meetup2
 			choice
-				`	"Honestly, if the rest of Liekedeeler's work pays this well, sign me up!"`
+				`	"Honestly, I don't even care. If the rest of Liekedeeler's work pays this well, sign me up!"`
 				`	"What about all those runs I did? Were they all illegal?"`
 					goto illegal
 				`	"What if I got suspicious and opened some of that cargo? What if I reported you to the Republic? "`
 					goto reported
 				`	"Like I said, I'm just glad it's over."`
 					goto over
-			`	Alexandra laughs politely. "I'm glad to hear it! In retrospect, it makes you feel cool, right? Running around with a big secret nobody knows... Putting one over the lumbering Navy... And I did promise you more work, so if you're interested, head to Earth."`
+			`	Alexandra laughs. "I'm glad to hear it! In retrospect, it makes you feel cool, right? Running around with a big secret nobody knows... Putting one over the lumbering Navy... And I did promise you more work, so if you're interested, head to Earth."`
 				goto meetup3
 				
 			label illegal
@@ -950,7 +963,7 @@ mission "Liekedeeler Intro Finale"
 				`	"You're right - I am dang sneaky. I guess I'm pretty good at this stuff, eh?"`
 					goto sneaky
 				`	"I don't care if I wasn't caught; I could have been! I don't want to be involved in this."`
-			`	She sighs. "Well, good news! You've completed your contract, and as far as Liekedeeler is concerned, you're off the radar." After a brief pause, Alexandra continues. "But you still did a good job, pretending to be completely ignorant and all. If you change your mind, head to Earth.`
+			`	She sighs. "Well, good news! You've completed your contract, and as far as Liekedeeler is concerned, you're good to go." After a brief pause, Alexandra continues. "But you still did a good job, pretending to be completely ignorant and all. If you change your mind, head to Earth.`
 				goto meetup3
 			label sneaky
 			`	Alexandra chuckles. "Sneaky, and just naive enough. A great combination for a- a completely honest and above-board courier. So if you want to put those skills to good use, you should head to Earth."`
@@ -962,11 +975,11 @@ mission "Liekedeeler Intro Finale"
 				`	"I was just curious. That's about how I would imagine it playing out."`
 					goto curious
 				`	"Prison would be worth it just to break one small link in this cruel charade!"`
-			`	Alexandra laughs. "Slow down there, tiger. You think we're just here for the profit? Yeah, there's a lot of illegal stuff that's also wrong, but between illegal and immoral, there's a pretty gray line. Wrongfully-convicted criminals, untaxed goods for Dirt Belt workers, and whatever the Republic decides is evil tomorrow. You're sounding pretty high and noble up there. Let's wait until your family is dying of a Dirt Belt disease and the only medicine left to try has been outlawed."`
-			`	She pauses a moment. "And of course, we also smuggle a lot of drugs, because who doesn't love 'em? And if you don't want to get involved, no one is forcing you. But if you have a change of heart for any reason, why don't you head on over to Earth?"`
+			`	Alexandra laughs. "Slow down there, tiger. You think we're just here for the profit? Yeah, there's a lot of illegal stuff that's also wrong, but between illegal and immoral, there's a pretty gray line. Wrongfully-convicted criminals, untaxed goods for Dirt Belt workers, and whatever the Republic decides is evil tomorrow. You're sounding pretty high and noble up there. Let's wait until your family is dying of a Dirt Belt disease and the only medicine left to try has been outlawed or red-taped behind Republic bureaucracy."`
+			`	She pauses a moment. "And of course, we also smuggle a lot of drugs, because who doesn't love 'em? Look, if you don't want to get involved, no one is forcing you. But if you have a change of heart for any reason, why don't you head on over to Earth?"`
 				goto meetup3
 			label curious
-			`	You hear a small metallic tap on the other end. "Well, now you know! And if you want to do more than imagine being in prison, why don't you head on over to Earth? We have plenty of work for our best couriers. Just kidding about the prison part - if you're smart, you'll never see the inside of a cell. But head to Earth if you're interested in doing a little more."`
+			`	You hear a small metallic tap on the other end. "Well, now you know! And if you want to do more than imagine being in prison, why don't you head on over to Earth? We have plenty of work for our best couriers. I'm kidding about the prison part - if you're smart, you'll never see the inside of a cell. But head to Earth if you're interested in doing a little more."`
 				goto meetup3
 				
 			label over
@@ -986,7 +999,7 @@ mission "Liekedeeler Intro Finale"
 			`You arrive at the massive concrete complex that is Earth's spaceport. It takes a surprising amount of time for the space traffic controller to direct you to an open landing site, but at long last, you're able to touch down.`
 			`	It's refreshing to call Alexandra for once, rather than the other way around. She answers your transmission almost instantly, and her cheery face appears on your console. "I wasn't sure you would show up."`
 			choice
-				`	"How could I pass up an offer for work like that? Usually I have to hang around the spaceport until some unwashed man in a trench coat approaches me."`
+				`	"How could I pass up an offer for work like that? Usually I have to hang around the spaceport until some unwashed guy in a trench coat approaches me."`
 					goto pass
 				`	"Honestly, I'm still not sure it was such a good idea."`
 					goto honestly
@@ -1008,14 +1021,14 @@ mission "Liekedeeler Intro Finale"
 			`	Before long, you reach the heart of the city. A short walk takes you to Dresden's grand opera house - one of the last remaining architectural achievements of the ancient city. You used to wonder why people took pilgrimages to Earth's cities, the cradle of humanity having long since abandoned extravagance and eclectic design in favor of standardized utility. But as you enter this opulent holdover from the past, you feel a spark of ancestral curiosity.`
 			`	Alexandra appears before you, dressed in a stylish yet humble ball gown of modern design and comfort. "<first>! Welcome, welcome."`
 			choice
-				`	"Oh, Alexandra, you should have just asked for a date! You didn't have to lead me on with that nonsense about a job opportunity."`
+				`	"Oh, Alexandra, you should have just asked for a date! You didn't have to lead me on with that nonsense about a job."`
 					goto date
 				`	"I feel, uh, underdressed."`
 					goto underdressed
 				`	"An opera house? This is the most inconspicuous meeting place you could think of?"`
 					goto inconspicuous
 			label date
-			`	She scoffs and punches you hard in the shoulder. "That is NOT why we're here. Come on." It's tough to tell from behind, but you're pretty sure you caught a smile in there somewhere.`
+			`	She scoffs and punches you hard in the shoulder. "That is NOT why we're here. Come on." It's tough to tell from behind, but you're pretty confident you caught a smile in there somewhere.`
 				goto meetup2
 			label underdressed
 			`	She holds back a grin. "Nonsense. Even the enthusiasts don't mind a casual purveyor of the arts. We'll try to avoid all the exceptionally fancy people."`
@@ -1028,13 +1041,14 @@ mission "Liekedeeler Intro Finale"
 			choice
 				`	[Read pamphlet]. "Mushiro's Dilemma..."`
 					goto pamphlet
+			label pamphlet
+			`	She smiles, looking out over the railing, then turns to you. "Oh, yeah. This is a good one. It's about a time-traveling cosplayer who falls in love with a medieval princess. He has to decide whether to stay and win her over while navigating the drama and intrigue of court life, or go back to his familiar-yet-dull timeline before it's too late. The story's been done before, but this is the best version. At least, that's what critics say."`
+			`	You find it difficult to believe that this would draw a crowd, but before long, hundreds of spectators fill out the spacious interior.`
+			choice
 				`	"So, tell me about this job."`
 					goto tell
 				`	[Say nothing.]`
 					goto meetup3
-			label pamphlet
-			`	She smiles, looking out over the railing, then turns to you. "This is a good one. It's about a time-traveling cosplayer who falls in love with a medieval princess. He has to decide whether to stay and win her over while navigating the drama and intrigue of court life, or go back to his familiar-yet-dull timeline before it's too late. The story's been done before, but this is the best version. At least, that's what critics say."`
-			`	You find it difficult to believe that this would draw a crowd, but before long, hundreds of spectators fill out the spacious interior.`
 				goto meetup3
 			label tell
 			`	She glances over the balcony, then turns to you. "I'll give you the juicy details as soon as the performance starts. But it's actually three jobs. Long-term, with pay."`
@@ -1052,14 +1066,14 @@ mission "Liekedeeler Intro Finale"
 				goto meetup3
 			
 			label meetup3
-			`	The last stragglers wander to their seats, the lights dim, and the performance begins. A lone trumpet sounds, slowly accompanied by a flute and electric bagpipes. Alexandra points to a technician on one of the stage balconies. "He controls the sound AI and modulates its performance; he can change the sound quality based on where the scene takes place, add new instruments, and even change the routine if necessary."`
+			`	The last stragglers wander to their seats, the lights dim, and the performance begins. A lone trumpet sounds, slowly accompanied by a flute and electric bagpipes. Alexandra points to a technician on one of the stage balconies. "He controls the sound AI linked to each of the instruments; he can change the audio quality based on where the scene takes place and add synchronized instruments on the fly."`
 			choice
-			`	"Huh. I've never been to the opera before, though. You might need to tell me when I'm supposed to cry."`
-				goto never
-			`	"I see. Well, shall we get down to it?"`
-				goto talk
-			`	"Interesting, but I definitely didn't come here to learn the intricacies of modern opera."`
-				goto talk
+				`	"Huh. I've never been to the opera before, though. You might need to tell me when I'm supposed to cry."`
+					goto never
+				`	"I see. Well, shall we get down to it?"`
+					goto talk
+				`	"Interesting, but I definitely didn't come here to learn the intricacies of modern opera."`
+					goto talk
 			label never
 			`	She smiles. "Well, it's more of a musical than a true opera. But if you read the pamphlet, you'll notice this is a transcendant noir drama, so I assume it'll be obvious."`
 				goto meetup4
@@ -1068,21 +1082,21 @@ mission "Liekedeeler Intro Finale"
 				goto meetup4
 			
 			label meetup4
-			`	The music dies down, and a young woman in an exceptionally gaudy dress - presumably the princess - appears on stage. "Dear departed mother, what doth am I to doeth? My faith is plain to see, my beauty turns all to me, and more humble I cannot be. But valued am I for naught but my immense social status! Can doth no man unlocketh the key to mine heart?"`
-			`	Alexandra palms her face as the princess begins singing, accompanied by electric guitars. She turns to you. "Navy Intelligence has been cracking down on near-Earth smuggling, and with the resources pulled from the South, they've got plenty of manpower to do it. Old buildings like this aren't built for snooping networks, and the dim lights and noise reduce the risk further. Plus, classier than dive bars."`
+			`	The music dies down, and a young woman in an exceptionally gaudy dress - presumably the princess - appears on stage. "Dear departed mother, what doth am I to doeth? My faith is plain to see, my beauty turns all to me, and more humble I cannot be. But valued am I for naught but my immense social status! Can doth no man unlocketh the key to my heart?"`
+			`	The princess begins singing, accompanied by chanting servants and acoustic guitars. Alexandra turns to you. "Navy Intelligence has been cracking down on near-Earth smuggling, and with the resources pulled from the South, they've got plenty of manpower to do it. Old buildings like this aren't built for snooping networks, and the dim lights and noise reduce the risk further. Plus, classier than dive bars."`
 			choice
-				`	"I think I'm actually getting into it. Anyway, where do I come in?"`
+				`	"Much classier. I'm already getting into the very nuanced drama. Anyway, where do I come in?"`
 				`	"Got it. So what kind of offers do you have for me?"`
-			`	She clears her throat and speaks in a strong, low tone. "We'd like to bring you on as an independent smuggler. Straight credits for every job. No more contracts. Our little operation is expanding rapidly, and we need reliable pilots who can think for themselves and operate without constant direction. We'll also spread the word to our contacts, allowing you to pick up jobs from operations within Republic space. The flipside is that any liabilities you incur will be your own; we'll do our best to get you out of tricky situations, but we can't promise your safety." She pauses a moment. "For now, we need smugglers for three of our core operations."`
+			`	She clears her throat and speaks in a strong, low tone. "We'd like to bring you on as an independent smuggler. Straight credits for every job, no more contracts, and a happier you! Our little operation is expanding rapidly, and we need reliable pilots who can think for themselves. We'll also spread the word to our contacts, so you can pick up jobs from operations within Republic space. The flipside is that any liabilities you incur will be your own; we'll do our best to get you out of tricky situations, but we can't promise your safety." She pauses a moment. "For now, we need smugglers for three of our core operations."`
 			branch freeworlds1
 				"event: war begins" = 1
-			`	"You've probably heard of the Southern Defense Pact. Things are heating up between them and the Republic; unfair taxation, imbalanced trade, and reduced security. There's been an uptick in underground activity, and that means tightened Republic restrictions, a black-market for guns, and high-value targets who need secure delivery."`
+			`	"You've probably heard of the Southern Defense Pact. Things are heating up between them and the Republic; unfair taxation, imbalanced trade, and reduced security. The eternal complaint of frontier colonies, am I right? That means an opening for more, shall we say, non-commercial movement of goods."`
 				goto meetup5
 			label freeworlds1
-			`	"Unless you've been hiding inside an asteroid, you've probably heard that the Free Worlds has officially declared independence from the Republic. That means no more trade between the Republic and the South. But Republic planets still need goods from the South and vice versa. "`
+			`	"Unless you've been hiding inside an asteroid, you've probably heard that the Free Worlds has officially declared independence from the Republic. Which comes as no great surprise to anyone but the Republic. Anyway, that means no more 'legal' trade, and a whole mess of politically volatile figures who need covert transportation."`
 			label meetup5
-			`	"But the Republic has plenty to clean up in their own backyard. The Paradise Worlds always need dirty little jobs done. Drugs, banned medicines, stolen artifacts, and illegal ship equipment are in high demand across Republic space. The Syndicate treat their citizens like crap and have an according demand for banned materials."`
-			`	"Additionally, Liekedeeler Enterprises recently established tentative ties to several pirate lords in the North and South. Medicine, 'safe' pharmeceuticals, and high-quality weapons are in high demand on all pirate planets. But it gets a little more interesting than that. The Northern Pirates are gearing up for a fight, and the Southern Pirates are taking advantage of the instability to provide mercenary fleets and raid planets." She smiles. "So, those are all the roads we're looking for a brave young soul to walk down. Does any of that strike your fancy?"`
+			`	"But the Republic has plenty to clean up in their own backyard. The Paradise Worlds always need dirty deeds done dirt cheap. Drugs, banned medicines, stolen artifacts, and illegal ship equipment are in high demand across Republic space. The Syndicate treat their citizens like crap and have an according demand for anything people without rights want, including banned materials."`
+			`	"Additionally, Liekedeeler Enterprises recently established tentative ties to several pirate lords in the North and South. Food, Medicine, 'safe' pharmeceuticals, and high-quality weapons are in high demand on all pirate planets. But it gets a little more interesting than that. The Northern Pirates are gearing up for a fight, and the Southern Pirates are taking advantage of the instability to provide mercenary fleets and raid planets." She smiles. "So, those are all the roads we're looking for a brave young soul to walk down. Does any of that strike your fancy?"`
 			label choose
 			choice
 				`	"Tell me more about what's going on between the Republic and the South."`
@@ -1097,11 +1111,10 @@ mission "Liekedeeler Intro Finale"
 			label south
 			branch freeworlds2
 				"event: war begins" = 1
-			`	Alexandra leans in closer. "The Souther Mutual Defense Pact isn't a recognized combat fleet, so the Republic doesn't like them to have military-grade equipment. Of course, where there's a will, there's a way. There are also wanted individuals on both sides trying to leverage the position of each faction in what many consider an inevitable conflict. You know, convince so-and-so to agitate tensions, prepare defenses, stay loyal, yadda yadda. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from individuals on both sides."`
+			`	Alexandra leans in closer. "The Southern Mutual Defense Pact isn't a recognized combat fleet, so the Republic doesn't like them having military-grade equipment. But as they say, where there's a will, there's a way! There are also wanted individuals on both sides trying to leverage the position of each faction in what many consider an inevitable conflict. You know, convince so-and-so to agitate, prepare defenses, stay loyal, yadda yadda. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from individuals on both sides. But the situation is already boiling over, so a misstep might leave you with surprisingly few places to go for the holidays."`
 				goto freeworlds2end
 			label freeworlds2
-			`	Alexandra leans in closer. "If you went that route, we would put you in contact with a few desperate sources on both sides of the conflict. Manufacturers are looking for cheaper alternatives for restricted raw materials. Sympathizers, stranded pilots, and other politically radioactive individuals also need transportation between the Free Worlds and the Republic. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from individuals on both sides."`
-			
+			`	Alexandra leans in closer. "If you went that route, we would put you in contact with a few desperate sources on both sides of the conflict. Manufacturers are looking for cheaper alternatives for restricted raw materials. Sympathizers, stranded pilots, and other politically radioactive individuals also need transportation between the Free Worlds and the Republic. It's a perfect opportunity for Liekedeeler to step in, provide a much-needed service, and acquire favors from individuals on both sides. The situation is already bad, so a misstep might leave you with surprisingly few places to go for the holidays."`
 			
 			label freeworlds2end
 			choice
@@ -1115,11 +1128,11 @@ mission "Liekedeeler Intro Finale"
 					goto no
 			
 			label internal
-			`	Alexandra nods. "It's all pretty simple stuff, but the demand is consistent. Dirt Belt colonies are a good source of low-grade drugs in both directions, as well as getting access to restricted medicines the Republic keeps a lid on. The Paradise World dandies are always looking for luxuries to sate their expensive tastes and covert clean-up of their indulgences. Oh, and the Syndicate's latest crackdown on freedom, civil rights, and religion has sparked quite the interest in censored materials. So, that kind of stuff."`
+			`	Alexandra nods. "It's all pretty simple stuff, but the demand is consistent. Dirt Belt colonies are a good source of low-grade drugs in both directions, as well as getting access to restricted medicines the Republic keeps a lid on. The Paradise World dandies are always looking for luxuries to sate their expensive tastes and covert clean-up of their indulgences. Oh, and the Syndicate's latest crackdown on freedom, civil rights, and religion has sparked quite the interest in censored materials. For example, Feminist groups all over Syndicate space have been clamoring for some recently-banned ancient manuscript by the name of 'Jane Eyre' So, that kind of stuff. Security is as arbitrary as ever, and you can expect the Navy and the Syndicate to deal justice in their own inscrutible ways."`
 			choice
 				`	"You almost make it sound like a public service. I'm in."`
 					goto yesinternal
-				`	"Got it. Not sure yet, though. Tell me about the South again."`
+				`	"Got it. Not sure yet, though. Tell me more about the South."`
 					goto south
 				`	"Drugs? Medicine? Censored materials? Boring. Tell me about your work with the pirates again."`
 					goto pirate
@@ -1128,11 +1141,11 @@ mission "Liekedeeler Intro Finale"
 			
 			label pirate
 			`	Alexandra glances at the stage for a moment before turning back to you. "The Northern Pirates are starting to get organized. Certain Pirate Lords want to set up a legally-recognized Anarchic confederation. Ironic, I know, but the basic aim is to establish rules of warfare against the Republic and break the endless cycle of teens blowing themselves up for drugs and money. Between you and me, I think it's a ruse for one of the Pirate Lords to set themselves up as king, and every lord thinks it's going to be them. Regardless, they need guns, credits, and anything they can use against the Navy."`
-			`	"The Southern Pirates are taking advantage of tensions in the South. They're weak and poor, but they're looking to change that. A few of them have set themselves up as War Merchants, buying and selling weapons, raiding poorly-defended planets, and establishing mercenary fleets. They have the basic needs any pirate world does, but they'll need people to smuggle wanted individuals in and around the Republic and bring weapons and manufacturing equipment down South."`
+			`	"The Southern Pirates are taking advantage of tensions in the South. They're weak and poor, but they're looking to change that. A few of them have set themselves up as War Merchants, buying and selling weapons, raiding poorly-defended planets, and establishing mercenary fleets. They have the basic needs any pirate world does, but they'll need people to smuggle wanted individuals in and out of the Republic and bring weapons and manufacturing equipment down South. But I'm going to warn you; our deals with the pirates are fragile at best. Liekedeeler has not agreed to deal in any operations labelled as 'crimes against humanity', but that doesn't mean they won't ask you. Be very, very careful who you deal with."`
 			choice
 				`	"That's more like it. I'd like to lend the Pirates a hand."`
 					goto yespirate
-				`	"On second thought, tell me about things in the South again."`
+				`	"On second thought, tell me more about things in the South."`
 					goto south
 				`	"Not quite what I'm looking for. What's going on inside the Republic, exactly?"`
 					goto internal
@@ -1140,7 +1153,7 @@ mission "Liekedeeler Intro Finale"
 					goto no
 			
 			label no
-			`	She nods. "If you're concerned about the moral quandary, I will reiterate that the line between illegal and immoral is not as clearly defined as we would like. But if certain jobs trouble your conscience, you don't have to do them. You'll be working independently, and that means using your best judgement with minimal interference from us. Consider yourself warned, though; the groups you work with will not all be as flexible."`
+			`	She nods. "If you're concerned about the moral quandary, I will reiterate that the line between illegal and immoral is not as clearly defined as we would like. But if certain jobs trouble your conscience, you don't have to do them. You'll be working independently, and that means using your best judgement with minimal interference from us. But... the groups you work with will not all be as flexible."`
 			choice
 				`	"Alright, alright. What's going on between the Republic and the South?"`
 					goto south
@@ -1154,7 +1167,7 @@ mission "Liekedeeler Intro Finale"
 			label yessouth
 			apply 
 				set "south smuggling"
-			`	"Seems like your type of shindig." She glances at you, then back to the stage.`
+			`	"Seems like your type of shindig!" She glances at you, then back to the stage.`
 				goto meetup6
 			label yesinternal
 			apply 
@@ -1164,7 +1177,7 @@ mission "Liekedeeler Intro Finale"
 			label yespirate
 			apply 
 				set "pirate smuggling"
-			`	"Ah, yes, a rebel to the core." She smiles.`
+			`	"A rebel to the core, as always! I'm a little impressed. But only a little." She smiles.`
 				goto meetup6
 			
 			label meetup6
@@ -1193,15 +1206,15 @@ mission "Liekedeeler Intro Finale"
 				`	[Crying.] "Why couldn't Mushiro end up with the princess? They deserved more! They deserved each other!"`
 					goto crying
 				`	"Best date I've ever been on."`
-					goto date
+					goto best
 			label terrible
 			`	"It must be difficult to capture the mindset of people so long ago. I mean, assuming they were even trying."`
 			label incredible
 			`	"I'm glad you enjoyed it so much! I didn't think it would be your type of thing."`
 			label crying
 			`	Alexandra rolls her eyes. "I never took you for a romantic."`
-			label date
-			`	Alexandra growls, "This was NOT a date. I'm way out of your league, after all. She smiles."`
+			label best
+			`	Alexandra growls, "This was NOT a date. This was a business meeting. I'm way out of your league, after all." She smiles.`
 			label meetup7
 			`	"Anyway, I'll be in contact. Have a wonderful evening, <first.>" You find your way back to the maglev station, enjoying the ancient city's sights on the way, and head back to the spaceport.`
 				decline
